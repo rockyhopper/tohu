@@ -1,0 +1,34 @@
+<execution-results>
+	<result identifier="changes">
+		<org.tohu.xml.ChangeCollector>
+			<delete>
+				<org.tohu.xml.ItemId>
+					<id>planetNext</id>
+				</org.tohu.xml.ItemId>
+                <org.tohu.InvalidAnswer>
+                  <questionId>planetNext</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+			</delete>
+			<update>
+				<org.tohu.Question>
+					<id>stayingOnEarth</id>
+					<presentationStyles>first</presentationStyles>
+					<active>true</active>
+					<preLabel>Which planet will you next live on for 12 months or more?</preLabel>
+					<postLabel>Earth</postLabel>
+					<required>true</required>
+					<answerType>boolean</answerType>
+					<booleanAnswer>true</booleanAnswer>
+				</org.tohu.Question>
+				<org.tohu.Note>
+					<id>picture</id>
+					<presentationStyles>image</presentationStyles>
+					<active>true</active>
+					<label>images/earth.jpg</label>
+				</org.tohu.Note>
+			</update>
+		</org.tohu.xml.ChangeCollector>
+	</result>
+	<fact-handle identifier="changes" externalForm="0:-1:0:17981330:117" />
+</execution-results>

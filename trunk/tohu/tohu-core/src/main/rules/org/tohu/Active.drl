@@ -1,0 +1,106 @@
+/*
+ * Copyright 2009 Solnet Solutions Limited (http://www.solnetsolutions.co.nz/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Damon Horrell
+ */
+package org.tohu
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+rule "return from navigation branch"
+salience 5 # before : activate top-level item (if Questionnaire.activeItem is used)
+when
+	questionnaire : Questionnaire(activeItem == "#return");
+then
+	questionnaire.navigationReturn();
+	update(questionnaire);
+end
+
+rule "activate top-level item (if Questionnaire.activeItem is used)"
+no-loop
+salience 4 # before: "activate/deactivate lower-level items (if Questionnaire.activeItem is used)"
+when
+	questionnaire : Questionnaire(activeItem != null);
+	item : Item(id memberOf questionnaire.items, id == questionnaire.activeItem, active == false);
+then
+	item.setActive(true);
+	update(item);
+end
+
+rule "deactivate top-level items (if Questionnaire.activeItem is used)"
+no-loop
+salience 4 # before: "activate/deactivate lower-level items (if Questionnaire.activeItem is used)"
+when
+	questionnaire : Questionnaire(activeItem != null);
+	item : Item(id memberOf questionnaire.items, id != questionnaire.activeItem, active == true);
+then
+	item.setActive(false);
+	update(item);
+end
+
+rule "activate/deactivate lower-level items (if Questionnaire.activeItem is used)"
+no-loop
+salience 3 # before: "activate/deactivate InvalidAnswers"
+when
+	questionnaire : Questionnaire(activeItem != null);
+	item : Item(id != questionnaire.id, id not memberOf questionnaire.items);
+	groups : ArrayList() from collect (Group(id != questionnaire.id, items contains item.id));
+then
+	boolean groupActive = false;
+	for (Iterator iterator = groups.iterator(); iterator.hasNext();) {
+		Group group = (Group)iterator.next();
+		if (group.isActive()) {
+			groupActive = true;
+			break;
+		}
+	}
+	// an item is active if and only if it is in a group that is active
+	if (item.isActive() != groupActive) {
+		item.setActive(groupActive);
+		update(item);
+	}
+end
+
+rule "activate everything (if Questionnaire.activeItem is not used)"
+salience 3 # before: "activate/deactivate InvalidAnswers"
+when
+	questionnaire : Questionnaire(activeItem == null);
+	item : Item(id != questionnaire.id, active == false);
+then
+	item.setActive(true);
+	update(item);
+end
+
+rule "activate/deactivate InvalidAnswers"
+salience 2 # before: "propagate readonly from group to questions or subgroups"
+when
+	question : Question();
+	invalidAnswer : InvalidAnswer(questionId == question.id, active != question.active);
+then
+	invalidAnswer.setActive(question.isActive());
+	update(invalidAnswer);
+end
+
+rule "deactivate orphan InvalidAnswers"
+salience 2 # before: "propagate readonly from group to questions or subgroups"
+when
+	invalidAnswer : InvalidAnswer(active == true);
+	not(exists(Question(id == invalidAnswer.questionId)));
+then
+	invalidAnswer.setActive(false);
+	update(invalidAnswer);
+end

@@ -1,0 +1,48 @@
+<execution-results>
+	<result identifier="changes">
+		<org.tohu.xml.ChangeCollector>
+			<delete>
+			</delete>
+			<create>
+				<entry>
+					<org.tohu.Question>
+						<id>extraQuestion2</id>
+						<active>true</active>
+						<preLabel>Extra question 2:</preLabel>
+						<required>true</required>
+						<answerType>text</answerType>
+					</org.tohu.Question>
+				</entry>
+				<entry>
+					<org.tohu.Question>
+						<id>extraQuestion1</id>
+						<active>true</active>
+						<preLabel>Extra question 1:</preLabel>
+						<required>true</required>
+						<answerType>text</answerType>
+					</org.tohu.Question>
+				</entry>
+			</create>
+			<update>
+				<org.tohu.Group>
+					<id>group1</id>
+					<presentationStyles>section</presentationStyles>
+					<active>true</active>
+					<label>1</label>
+					<items>
+						flight,passport,extraQuestion1,extraQuestion2,nationality,surname,givenNames,dob,occupation,address,birthPlanet,destination
+					</items>
+				</org.tohu.Group>
+				<org.tohu.Question>
+					<id>passport</id>
+					<active>true</active>
+					<preLabel>Passport number</preLabel>
+					<required>true</required>
+					<answerType>text</answerType>
+					<textAnswer>A1234</textAnswer>
+				</org.tohu.Question>
+			</update>
+		</org.tohu.xml.ChangeCollector>
+	</result>
+	<fact-handle identifier="changes" externalForm="0:-1:0:4849471:183" />
+</execution-results>

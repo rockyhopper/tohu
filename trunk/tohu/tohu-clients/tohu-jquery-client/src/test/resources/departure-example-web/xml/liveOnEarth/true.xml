@@ -1,0 +1,127 @@
+<execution-results>
+	<result identifier="changes">
+		<org.tohu.xml.ChangeCollector>
+			<delete>
+                <org.tohu.InvalidAnswer>
+                  <questionId>liveOnEarth</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+			</delete>
+			<create>
+				<entry>
+					<org.tohu.MultipleChoiceQuestion>
+						<id>residentDuration</id>
+						<presentationStyles>radio</presentationStyles>
+						<active>true</active>
+						<preLabel>I have lived on Earth for:</preLabel>
+						<required>true</required>
+						<answerType>text</answerType>
+						<possibleAnswers>L=less than 12 months,M=12 months +</possibleAnswers>
+					</org.tohu.MultipleChoiceQuestion>
+				</entry>
+				<entry>
+					<org.tohu.Group>
+						<id>awayPermanentlyRow</id>
+						<presentationStyles>row</presentationStyles>
+						<active>true</active>
+						<items>awayPermanently,tripDuration,tripDurationUnits
+						</items>
+					</org.tohu.Group>
+				</entry>
+				<entry>
+					<org.tohu.Question>
+						<id>awayPermanently</id>
+						<presentationStyles>first</presentationStyles>
+						<active>true</active>
+						<preLabel>How long will you be away from Earth?</preLabel>
+						<postLabel>permanently</postLabel>
+						<required>true</required>
+						<answerType>boolean</answerType>
+						<booleanAnswer>false</booleanAnswer>
+					</org.tohu.Question>
+				</entry>
+				<entry>
+					<org.tohu.InvalidAnswer>
+						<questionId>residentDuration</questionId>
+						<reason>You must answer this question</reason>
+						<type>requiredMissing</type>
+					</org.tohu.InvalidAnswer>
+				</entry>
+				<entry>
+					<org.tohu.Question>
+						<id>tripDuration</id>
+						<presentationStyles>short</presentationStyles>
+						<active>true</active>
+						<preLabel>or</preLabel>
+						<required>true</required>
+						<answerType>number</answerType>
+					</org.tohu.Question>
+				</entry>
+				<entry>
+					<org.tohu.MultipleChoiceQuestion>
+						<id>tripDurationUnits</id>
+						<active>true</active>
+						<required>true</required>
+						<answerType>text</answerType>
+						<textAnswer>D</textAnswer>
+						<possibleAnswers>D=Days,M=Months,Y=Years</possibleAnswers>
+					</org.tohu.MultipleChoiceQuestion>
+				</entry>
+				<entry>
+					<org.tohu.MultipleChoiceQuestion>
+						<id>tripPurpose</id>
+						<active>true</active>
+						<preLabel>What is the MAIN purpose of your trip?</preLabel>
+						<required>true</required>
+						<answerType>text</answerType>
+						<possibleAnswers>null=Please specify...,F=Visiting friends or
+							relatives,B=Business,H=Holiday/Vacation,C=Conference/Convention,E=Education,O=Other
+						</possibleAnswers>
+					</org.tohu.MultipleChoiceQuestion>
+				</entry>
+				<entry>
+					<org.tohu.Question>
+						<id>tripPlanet</id>
+						<active>true</active>
+						<preLabel>Which planet will you spend most time on while away?</preLabel>
+						<required>true</required>
+						<answerType>text</answerType>
+					</org.tohu.Question>
+				</entry>
+				<entry>
+					<org.tohu.InvalidAnswer>
+						<questionId>tripDuration</questionId>
+						<reason>You must answer this question</reason>
+						<type>requiredMissing</type>
+					</org.tohu.InvalidAnswer>
+				</entry>
+				<entry>
+					<org.tohu.InvalidAnswer>
+						<questionId>tripPurpose</questionId>
+						<reason>You must answer this question</reason>
+						<type>requiredMissing</type>
+					</org.tohu.InvalidAnswer>
+				</entry>
+				<entry>
+					<org.tohu.InvalidAnswer>
+						<questionId>tripPlanet</questionId>
+						<reason>You must answer this question</reason>
+						<type>requiredMissing</type>
+					</org.tohu.InvalidAnswer>
+				</entry>
+			</create>
+			<update>
+				<org.tohu.Question>
+					<id>liveOnEarth</id>
+					<presentationStyles>radio</presentationStyles>
+					<active>true</active>
+					<preLabel>Do you live on Earth, or did you until today?</preLabel>
+					<required>true</required>
+					<answerType>boolean</answerType>
+					<booleanAnswer>true</booleanAnswer>
+				</org.tohu.Question>
+			</update>
+		</org.tohu.xml.ChangeCollector>
+	</result>
+	<fact-handle identifier="changes" externalForm="0:-1:0:33507544:134" />
+</execution-results> 
