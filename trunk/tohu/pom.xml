@@ -88,7 +88,7 @@
     -->
     <repository>
       <id>temp.local</id>
-      <url>file:lib</url>
+      <url>http://anonsvn.jboss.org/repos/tohu/trunk/tohu/lib/</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
