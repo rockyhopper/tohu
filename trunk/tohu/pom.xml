@@ -172,10 +172,17 @@
       </plugin>
     </plugins>
   </reporting>
+  <distributionManagement>
+    <site>
+	 <id>website</id>
+         <url>file://${site-deploy}../maven-site</url>
+    </site>
+  </distributionManagement>
   <properties>
-    <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
-    <cobertura.total-branch-rate>80</cobertura.total-branch-rate>
-    <cobertura.total-line-rate>80</cobertura.total-line-rate>
-    <cobertura.halt-on-failure>false</cobertura.halt-on-failure>
+     <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
+     <cobertura.total-branch-rate>80</cobertura.total-branch-rate>
+     <cobertura.total-line-rate>80</cobertura.total-line-rate>
+     <cobertura.halt-on-failure>false</cobertura.halt-on-failure>
+     <site-deploy>${basedir}/</site-deploy>
   </properties>
 </project>
