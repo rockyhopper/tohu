@@ -1,5 +1,0 @@
-<change-set xs:schemaLocation="http://drools.org/drools-5.0/change-set drools-change-set-5.0.xsd" xmlns="http://drools.org/drools-5.0/change-set" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
-                  <add>
-                    <resource type="DRL" source="file:/C:/Users/Damon/Work/Drools%20DUI/project/solnetoss/Tohu/drools-execution-server/rule.drl"></resource>
-                  </add>
-                </change-set>
