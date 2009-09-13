@@ -45,6 +45,11 @@
       <version>5.1.0.SNAPSHOT.tohu1</version>
     </dependency>
     <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-transformer-xstream</artifactId>
+      <version>5.1.0.SNAPSHOT.tohu1</version>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>core</artifactId>
       <version>3.4.2.v_883_R34x</version>
@@ -83,7 +88,7 @@
     -->
     <repository>
       <id>temp.local</id>
-      <url>file:lib</url>
+      <url>file:../lib</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
