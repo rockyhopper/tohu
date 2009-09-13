@@ -44,10 +44,17 @@
       <artifactId>drools-core</artifactId>
       <version>5.1.0.SNAPSHOT.tohu1</version>
     </dependency>
+    <!-- TODO this dependency shouldn't be at this level as it is only needed by some end applications -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-transformer-xstream</artifactId>
       <version>5.1.0.SNAPSHOT.tohu1</version>
+    </dependency>
+    <!-- TODO this dependency shouldn't be at this level as it is only needed by some end applications -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-execution-server</artifactId>
+      <version>0.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
