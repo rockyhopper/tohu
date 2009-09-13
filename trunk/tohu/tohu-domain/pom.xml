@@ -25,7 +25,7 @@
   <parent>
     <artifactId>tohu</artifactId>
     <groupId>org.tohu</groupId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>tohu-domain</artifactId>
@@ -68,7 +68,7 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
   </dependencies>
