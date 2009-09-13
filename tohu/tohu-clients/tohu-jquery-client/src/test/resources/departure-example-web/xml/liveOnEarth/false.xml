@@ -1,0 +1,94 @@
+<execution-results>
+	<result identifier="changes">
+		<org.tohu.xml.ChangeCollector>
+			<delete>
+				<org.tohu.xml.ItemId>
+					<id>residentDuration</id>
+				</org.tohu.xml.ItemId>
+				<org.tohu.xml.ItemId>
+					<id>awayPermanentlyRow</id>
+				</org.tohu.xml.ItemId>
+				<org.tohu.xml.ItemId>
+					<id>awayPermanently</id>
+				</org.tohu.xml.ItemId>
+                <org.tohu.InvalidAnswer>
+                  <questionId>residentDuration</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+				<org.tohu.xml.ItemId>
+					<id>tripDuration</id>
+				</org.tohu.xml.ItemId>
+				<org.tohu.xml.ItemId>
+					<id>tripDurationUnits</id>
+				</org.tohu.xml.ItemId>
+				<org.tohu.xml.ItemId>
+					<id>tripPurpose</id>
+				</org.tohu.xml.ItemId>
+				<org.tohu.xml.ItemId>
+					<id>tripPlanet</id>
+				</org.tohu.xml.ItemId>
+                <org.tohu.InvalidAnswer>
+                  <questionId>tripDuration</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+                <org.tohu.InvalidAnswer>
+                  <questionId>tripPurpose</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+                <org.tohu.InvalidAnswer>
+                  <questionId>tripPlanet</questionId>
+                  <reason>You must answer this question</reason>
+                </org.tohu.InvalidAnswer>
+			</delete>
+			<create>
+				<entry>
+					<org.tohu.Group>
+						<id>visitDurationRow</id>
+						<presentationStyles>row</presentationStyles>
+						<active>true</active>
+						<items>visitDuration,visitDurationUnits</items>
+					</org.tohu.Group>
+				</entry>
+				<entry>
+					<org.tohu.Question>
+						<id>visitDuration</id>
+						<presentationStyles>first,short</presentationStyles>
+						<active>true</active>
+						<preLabel>On this visit I have been on Earth for a period of:</preLabel>
+						<required>true</required>
+						<answerType>number</answerType>
+					</org.tohu.Question>
+				</entry>
+				<entry>
+					<org.tohu.MultipleChoiceQuestion>
+						<id>visitDurationUnits</id>
+						<active>true</active>
+						<required>true</required>
+						<answerType>text</answerType>
+						<textAnswer>D</textAnswer>
+						<possibleAnswers>D=Days,M=Months,Y=Years</possibleAnswers>
+					</org.tohu.MultipleChoiceQuestion>
+				</entry>
+				<entry>
+					<org.tohu.InvalidAnswer>
+						<questionId>visitDuration</questionId>
+						<reason>You must answer this question</reason>
+						<type>requiredMissing</type>
+					</org.tohu.InvalidAnswer>
+				</entry>
+			</create>
+			<update>
+				<org.tohu.Question>
+					<id>liveOnEarth</id>
+					<presentationStyles>radio</presentationStyles>
+					<active>true</active>
+					<preLabel>Do you live on Earth, or did you until today?</preLabel>
+					<required>true</required>
+					<answerType>boolean</answerType>
+					<booleanAnswer>false</booleanAnswer>
+				</org.tohu.Question>
+			</update>
+		</org.tohu.xml.ChangeCollector>
+	</result>
+	<fact-handle identifier="changes" externalForm="0:-1:0:4849471:183" />
+</execution-results>
