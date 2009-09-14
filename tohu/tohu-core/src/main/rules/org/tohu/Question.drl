@@ -40,7 +40,7 @@ then
 	String basicAnswerType = question.getBasicAnswerType();
 	String answerValue = answer.getValue();
 	// Convert blank string and "null" string to real null
-	// TODO should we really be handling "null" - see Jira 72
+	// TODO should we really be handling "null" - see TOHU-3
 	if (answerValue != null && (answerValue.equals("") || answerValue.equals("null"))) {
 		answerValue = null;
 	}
