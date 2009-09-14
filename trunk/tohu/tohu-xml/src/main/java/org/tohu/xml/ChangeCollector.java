@@ -329,7 +329,7 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 			clientAnswers = new HashMap<String, String>();
 		}
 		String answerValue = answer.getValue();
-		// TODO should we really be handling "null" - see Jira 72
+		// TODO should we really be handling "null" - see TOHU-3
 		if (answerValue != null && (answerValue.equals("") || answerValue.equals("null"))) {
 			answerValue = null;
 		}
