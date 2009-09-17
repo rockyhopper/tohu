@@ -541,42 +541,44 @@ function deleteAnyObjectType(obj) {
 function getObjectClass(obj) {
 	if (window.onGetObjectClass) {
 		// Application-specific override.
-		return onGetObjectClass(obj);
+		var objectClass = onGetObjectClass(obj);
+		if (!isNull(objectClass)) {
+			return objectClass;
+		}
 	}
-	else {
-		// Default.
-		var retVal = "";
-		switch (obj.objType) {
-		case QUESTIONNAIRE_OBJECT:
-			retVal += "Questionnaire";
-			break;
-		case GROUP_OBJECT:
-			retVal += "Group";
-			break;
-		case QUESTION_OBJECT:
-			retVal += "Question clearfix";
-			break;
-		case NOTE_OBJECT:
-			retVal += "Note";
-			break;
-		case ERROR_OBJECT:
-			retVal += "InvalidAnswer";
-			if (obj.type != null) {
-				retVal += " " + obj.type;
-			}
-			break;
-		case ACTION_OBJECT:
-			retVal += "Control";
-			break;
+
+	// Default.
+	var retVal = "";
+	switch (obj.objType) {
+	case QUESTIONNAIRE_OBJECT:
+		retVal += "Questionnaire";
+		break;
+	case GROUP_OBJECT:
+		retVal += "Group";
+		break;
+	case QUESTION_OBJECT:
+		retVal += "Question clearfix";
+		break;
+	case NOTE_OBJECT:
+		retVal += "Note";
+		break;
+	case ERROR_OBJECT:
+		retVal += "InvalidAnswer";
+		if (obj.type != null) {
+			retVal += " " + obj.type;
 		}
-		if (obj.presentationStyles != null) {
-			retVal += " " + obj.presentationStyles.replace(/,/g, " ");
-		}
-		if (obj.required) {
-			retVal += " required";
-		}
-		return retVal;
+		break;
+	case ACTION_OBJECT:
+		retVal += "Control";
+		break;
 	}
+	if (obj.presentationStyles != null) {
+		retVal += " " + obj.presentationStyles.replace(/,/g, " ");
+	}
+	if (obj.required) {
+		retVal += " required";
+	}
+	return retVal;
 }
 
 /**
