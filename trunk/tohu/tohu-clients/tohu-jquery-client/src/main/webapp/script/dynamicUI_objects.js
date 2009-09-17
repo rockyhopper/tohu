@@ -222,7 +222,8 @@ function objectToString(obj) {
 		switch (obj.objType) {
 		case QUESTIONNAIRE_OBJECT: 
 			retVal = "QUESTIONNAIRE: id=" + obj.id + " items=" + arrayToString(obj.items)
-				+ " activeItem=" + obj.activeItem + " factHandle=" + obj.factHandle;
+				+ " activeItem=" + obj.activeItem + " hasErrors=" + obj.hasErrors
+				+ " factHandle=" + obj.factHandle;
 			break;
 		case GROUP_OBJECT: 
 			retVal = "GROUP: id=" + obj.id + " items=" + arrayToString(obj.items) + " hierarchy="

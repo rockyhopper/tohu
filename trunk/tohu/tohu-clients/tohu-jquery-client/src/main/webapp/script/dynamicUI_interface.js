@@ -442,67 +442,71 @@ function sortByHierarchy(obj1, obj2) {
 function getQuestionnaireActions(questionnaire) {
 	if (window.onGetQuestionnaireActions) {
 		// Allow application-specific override of actions.
-		return onGetQuestionnaireActions(questionnaire);
+		var questionnaireActions = onGetQuestionnaireActions(questionnaire);
+		if (!isNull(questionnaireActions)) {
+			return questionnaireActions;
+		}
 	}
-	else {
-		// Default actions.
-		var retVal = new Array();
-		var obj = null;
-		var activeIndex = null;
-		if (questionnaire.activeItem && (questionnaire.activeItem != "")) {
-			activeIndex = jQuery.inArray(questionnaire.activeItem, questionnaire.items);
-		}
-		if (activeIndex >  0) {
-			// Not first item.
-			obj = new ActionObject();
-			obj.id = questionnaire.id + "_action_0";
-			obj.presentationStyles = "previous";
-			obj.label = "Previous";
-			obj.actionType = "setActive";
-			obj.action = questionnaire.items[activeIndex - 1];
-			obj.hierarchy = new HierarchyObject(questionnaire.id, 0, 1, false);
-			retVal.push(obj);
-		}
-		if ((activeIndex == null) || (activeIndex == (questionnaire.items.length - 1))) {
-			// Last item.
-			obj = new ActionObject();
-			obj.id = questionnaire.id + "_action_1";
-			var isReturn = questionnaire.completionAction == "#return"; 
-			if (isReturn) {
-				obj.presentationStyles = "next,return";
-				obj.label = "Return";
-			} else {
-				obj.presentationStyles = "next,done";
-				obj.label = "Done";
-			}
-			if (questionnaire.hasErrors) {
-				obj.actionType = "showError";
-				obj.action = "You must fix all errors first.";
-			}
-			else {
-				if (isReturn) {
-					obj.actionType = "setActive";
-				} else {
-					obj.actionType = "completion";
-				}
-				obj.action = questionnaire.completionAction;
-			}
-			obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
-			retVal.push(obj);
+
+	// Default actions.
+	var retVal = new Array();
+	var obj = null;
+	var activeIndex = null;
+	if (questionnaire.activeItem && (questionnaire.activeItem != "")) {
+		activeIndex = jQuery.inArray(questionnaire.activeItem, questionnaire.items);
+	}
+	if (activeIndex >  0) {
+		// Not first item.
+		obj = new ActionObject();
+		obj.id = questionnaire.id + "_action_0";
+		obj.presentationStyles = "previous";
+		obj.label = "Previous";
+		obj.actionType = "setActive";
+		obj.action = questionnaire.items[activeIndex - 1];
+		obj.hierarchy = new HierarchyObject(questionnaire.id, 0, 1, false);
+		retVal.push(obj);
+	}
+	if ((activeIndex == null) || (activeIndex == (questionnaire.items.length - 1))) {
+		// Last item.
+		obj = new ActionObject();
+		obj.id = questionnaire.id + "_action_1";
+		var isReturn = questionnaire.completionAction == "#return"; 
+		if (isReturn) {
+			obj.presentationStyles = "next,return";
+			obj.label = "Return";
 		}
 		else {
-			// Not last item.
-			obj = new ActionObject();
-			obj.id = questionnaire.id + "_action_1";
-			obj.presentationStyles = "next";
-			obj.label = "Next";
-			obj.actionType = "setActive";
-			obj.action = questionnaire.items[activeIndex + 1];
-			obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
-			retVal.push(obj);
+			obj.presentationStyles = "next,done";
+			obj.label = "Done";
 		}
-		return retVal;
+		if (questionnaire.hasErrors) {
+			obj.actionType = "showError";
+			obj.action = "You must fix all errors first.";
+		}
+		else {
+			if (isReturn) {
+				obj.actionType = "setActive";
+			}
+			else {
+				obj.actionType = "completion";
+			}
+			obj.action = questionnaire.completionAction;
+		}
+		obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
+		retVal.push(obj);
 	}
+	else {
+		// Not last item.
+		obj = new ActionObject();
+		obj.id = questionnaire.id + "_action_1";
+		obj.presentationStyles = "next";
+		obj.label = "Next";
+		obj.actionType = "setActive";
+		obj.action = questionnaire.items[activeIndex + 1];
+		obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
+		retVal.push(obj);
+	}
+	return retVal;
 }
 
 /**
