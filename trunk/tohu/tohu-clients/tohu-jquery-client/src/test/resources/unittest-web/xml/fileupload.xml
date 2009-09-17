@@ -11,7 +11,7 @@
 					<active>true</active>
 					<label>Questionnaire 1</label>
 					<items>group1</items>
-					<completionAction>#return</completionAction>
+					<completionAction>upload</completionAction>
 					<invalidAnswers>false</invalidAnswers>
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="questionnaire1Handle" />
@@ -29,13 +29,11 @@
 			<row>
 				<org.tohu.Question>
 					<id>item_1_1</id>
-					<presentationStyles>file item_1_1Style</presentationStyles>
+					<presentationStyles>file,item_1_1Style</presentationStyles>
 					<active>true</active>
 					<preLabel>Item 1.1</preLabel>
 					<postLabel>File Upload</postLabel>
-					<required>true</required>
 					<answerType>text</answerType>
-					<textAnswer>images/earth.jpg</textAnswer>
 				</org.tohu.Question>
 				<fact-handle externalForm="item_1_1Handle" />
 			</row>

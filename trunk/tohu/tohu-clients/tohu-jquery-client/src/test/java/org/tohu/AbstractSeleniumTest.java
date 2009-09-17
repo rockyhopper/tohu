@@ -39,10 +39,10 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * 
  * @author John Bebbington
  */
-public abstract class AbstractSeleniumTest /* extends TestCase */{
+public abstract class AbstractSeleniumTest {
 	/** Supported browser types */
 	public static enum BrowserType {
-		FIREFOX, IEXPLORER, SAFARI
+		FIREFOX, IEXPLORER
 	};
 
 	/** Supported Answer types */
@@ -52,7 +52,7 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 
 	/** Supported HTML widget types */
 	public static enum WidgetType {
-		FIELD, TEXTAREA, SELECT, RADIO, DATEPICKER, BUTTON, LINK, IMAGE, CHECKBOX, PARAGRAPH
+		FIELD, TEXTAREA, SELECT, RADIO, DATEPICKER, BUTTON, LINK, IMAGE, CHECKBOX, PARAGRAPH, FILE
 	};
 
 	/** The selenium browser handle */
@@ -103,14 +103,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 		String browserString = null;
 		switch (browserType) {
 			case FIREFOX:
-				browserString = "*chrome";
+				browserString = "*firefoxproxy";
+				//browserString = "*chrome";
 				break;
 			case IEXPLORER:
 				browserString = "*iexploreproxy";
 				break;
-			case SAFARI:
-				browserString = "*safariproxy";
-				break;
+			//case SAFARI:
+			//	browserString = "*safariproxy";
+			//	break;
 		}
 
 		if (!isHTTPServerRunning("localhost", 4444)) {
@@ -153,7 +154,7 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 
 		debug("AbstractSeleniumTest.basicSetUp() Starting browser");
 		selenium = new DefaultSelenium("localhost", 4444, browserString, baseURL);
-		selenium.setSpeed("100");
+		//selenium.setSpeed("100");
 		// Uncomment for debugging.
 		//selenium.setBrowserLogLevel("debug");
 		selenium.start();
@@ -234,6 +235,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	}
 
 	/**
+	 * Activates the specified action.
+	 * @param quesionID
+	 */
+	protected void clickControl(String actionID) {
+		selenium.click(actionID);
+		waitWhileGUIIsBusy("clickControl: actionID=" + actionID);
+	}
+
+	/**
 	 * Toggles the checkbox for the specified question.
 	 * @param quesionID
 	 */
@@ -256,6 +266,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 			}
 		}
 		waitWhileGUIIsBusy("clickCheckboxAnswer: questionID=" + questionID);
+	}
+
+	/**
+	 * Returns the current checkbox value for the specified question.
+	 * @param quesionID
+	 * @return boolean
+	 */
+	protected boolean getCheckboxAnswer(String questionID) {
+		return selenium.isChecked(questionID + "_input");
 	}
 
 	/**
@@ -285,6 +304,24 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	}
 
 	/**
+	 * Gets the current value of the radio button group for the specified question.
+	 * @param quesionID
+	 * @return The answer
+	 */
+	protected String getRadioButtonAnswer(String questionID) {
+		if (browserType == BrowserType.IEXPLORER) {
+			return selenium.getAttribute("//span[@id='"
+					+ questionID
+					+ "_input']/input[@type='radio' and @checked='true']/@value");
+		}
+		else {
+			return selenium.getAttribute("//span[@id='"
+					+ questionID
+					+ "_input']/input[@type='radio' and @checked='']/@value");
+		}
+	}
+
+	/**
 	 * Sets the drop-down list for the specified question to the specified answer value.
 	 * @param quesionID
 	 * @param answer
@@ -292,6 +329,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	protected void selectDropDownAnswer(String questionID, String answer) {
 		selenium.select(questionID + "_input", "value=" + answer);
 		waitWhileGUIIsBusy("selectDropDownAnswer: questionID=" + questionID);
+	}
+
+	/**
+	 * Gets the selected drop-down list value for the specified question.
+	 * @param quesionID
+	 * @return the Answer
+	 */
+	protected String getDropDownAnswer(String questionID) {
+		return selenium.getSelectedValue(questionID + "_input");
 	}
 
 	/**
@@ -304,6 +350,7 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	 * @param preLabel The question pre-label text to check for (null means don't check). 
 	 * @param postLabel The question post-label text to check for (null means don't check).
 	 * @param required Flag indicating if the question is required (null means don't check).
+	 * @param readonly Flag indicating if the question is readonly (null means don't check).
 	 * @param answerType The question answerType to check for (null means don't check). 
 	 * @param possibleAnswers List of possible answers, 1st element Value, 2nd element Label (null means don't check). 
 	 * @param errors List of possible errors, 1st element Type, 2nd element Reason (null means don't check). 
@@ -316,6 +363,7 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 			String preLabel,
 			String postLabel,
 			Boolean required,
+			Boolean readonly,
 			AnswerType answerType,
 			String answer,
 			String[][] possibleAnswers,
@@ -366,6 +414,12 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 							Boolean.parseBoolean(answer),
 							selenium.isChecked(fullPath + "/input[@id='" + id + "_input']"));
 					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath + "/div[@class='readonly_overlay']"));
+					}
 					break;
 				case RADIO:
 					assertTrue(id + " no radio group", selenium.isElementPresent(fullPath
@@ -400,6 +454,18 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 								+ answer.toLowerCase()
 								+ "']"));
 					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly true button",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath
+									+ "/span/div[@class='readonly_overlay'][1]"));
+						assertEquals(
+							id + " wrong readonly false button",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath
+									+ "/span/div[@class='readonly_overlay'][2]"));
+					}
 					break;
 				default:
 					fail(id + " Invalid widget/answerType for Question");
@@ -420,6 +486,12 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 								+ id
 								+ "_input']"));
 					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath + "/div[@class='readonly_overlay']"));
+					}
 					break;
 				case TEXTAREA:
 					assertTrue(id + " no textarea", selenium.isElementPresent(fullPath
@@ -433,6 +505,12 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 								+ "/textarea[@id='"
 								+ id
 								+ "_input']"));
+					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath + "/div[@class='readonly_overlay']"));
 					}
 					break;
 				case RADIO:
@@ -474,6 +552,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 											+ i
 											+ "']"));
 							}
+							if (readonly != null) {
+								assertEquals(
+									id + " wrong readonly radio button " + i,
+									readonly.booleanValue(),
+									selenium.isElementPresent(fullPath
+											+ "/span/div[@class='readonly_overlay']["
+											+ (i + 1)
+											+ "]"));
+							}
 						}
 					}
 					break;
@@ -504,6 +591,12 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 										+ "_input']"));
 						}
 					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath + "/div[@class='readonly_overlay']"));
+					}
 					break;
 				case DATEPICKER:
 					assertTrue(id + " no input", selenium.isElementPresent(fullPath
@@ -520,6 +613,20 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 								+ id
 								+ "_input']"));
 					}
+					if (readonly != null) {
+						assertEquals(
+							id + " wrong readonly",
+							readonly.booleanValue(),
+							selenium.isElementPresent(fullPath + "/div[@class='readonly_overlay']"));
+					}
+					break;
+				case FILE:
+					assertTrue(id + " no input", selenium.isElementPresent(fullPath
+							+ "/input[@id='"
+							+ id
+							+ "_input' and @name='"
+							+ id
+							+ "' and @type='file']"));
 					break;
 				default:
 					fail(id + " Invalid widget/answerType for Question");
@@ -574,12 +681,20 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 		}
 		if (label != null) {
 			if (widget == WidgetType.IMAGE) {
-				assertTrue(id + " no image", selenium.isElementPresent(fullPath
-						+ "/img[@id='"
-						+ id
-						+ "_image' and @src='"
-						+ label
-						+ "']"));
+				if (browserType == BrowserType.IEXPLORER) {
+					assertTrue(id + " no image", selenium.isElementPresent(fullPath
+							+ "/img[@id='"
+							+ id
+							+ "_image']"));
+				}
+				else {
+					assertTrue(id + " no image", selenium.isElementPresent(fullPath
+							+ "/img[@id='"
+							+ id
+							+ "_image' and @src='"
+							+ label
+							+ "']"));
+				}
 			}
 			else {
 				assertEquals(id + " wrong label", label, selenium.getText(fullPath
@@ -665,12 +780,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 		}
 		if (items != null) {
 			for (int i = 0; i < items.length; i++) {
-				assertEquals(id + " item " + i + " missing", items[i], selenium.getAttribute(fullPath
-					+ "/div[@id='"
-					+ id
-					+ "_items']/div["
-					+ (i + 1)
-					+ "]/@id"));
+				assertEquals(
+					id + " item " + i + " missing",
+					items[i],
+					selenium.getAttribute(fullPath
+							+ "/div[@id='"
+							+ id
+							+ "_items']/div["
+							+ (i + 1)
+							+ "]/@id"));
 			}
 		}
 	}
@@ -690,9 +808,13 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 			String label,
 			String[] items) {
 		String fullPath = baseXPath + "/form[@id='" + id + "_form']";
-		assertTrue("Questionnaire form " + id + " not found at " + fullPath, selenium.isElementPresent(fullPath));
+		assertTrue(
+			"Questionnaire form " + id + " not found at " + fullPath,
+			selenium.isElementPresent(fullPath));
 		fullPath += "/div[@id='" + id + "']";
-		assertTrue("Questionnaire group " + id + " not found at " + fullPath, selenium.isElementPresent(fullPath));
+		assertTrue(
+			"Questionnaire group " + id + " not found at " + fullPath,
+			selenium.isElementPresent(fullPath));
 		if (presentationStyles != null) {
 			String classAttr = selenium.getAttribute(fullPath + "/@class");
 			debug("AbstractSeleniumTest.checkGroup() classAttr=" + classAttr);
@@ -709,12 +831,15 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 		}
 		if (items != null) {
 			for (int i = 0; i < items.length; i++) {
-				assertEquals(id + " item " + i + " missing", items[i], selenium.getAttribute(fullPath
-					+ "/div[@id='"
-					+ id
-					+ "_items']/div["
-					+ (i + 1)
-					+ "]/@id"));
+				assertEquals(
+					id + " item " + i + " missing",
+					items[i],
+					selenium.getAttribute(fullPath
+							+ "/div[@id='"
+							+ id
+							+ "_items']/div["
+							+ (i + 1)
+							+ "]/@id"));
 			}
 		}
 	}
@@ -741,6 +866,16 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	}
 
 	/**
+	 * Checks that the specified message is displayed in an alert box.
+	 * 
+	 * @param message The message text.
+	 */
+	protected void checkAlert(String message) {
+		assertTrue("Alert '" + message + "' not displayed", selenium.isAlertPresent());
+		assertEquals("Alert '" + message + "' not displayed", message, selenium.getAlert());
+	}
+
+	/**
 	 * Returns true if an item with the specified ID is present on the page.
 	 * @param itemID
 	 * @return boolean
@@ -755,6 +890,7 @@ public abstract class AbstractSeleniumTest /* extends TestCase */{
 	protected static void handleException(String msg, Exception ex) throws Exception {
 		error(msg, ex);
 		System.err.println(selenium.retrieveLastRemoteControlLogs());
+		//Thread.sleep(60000);
 		throw ex;
 	}
 

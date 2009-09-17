@@ -17,6 +17,7 @@
 						<type>ErrorType1</type>
 						<reason>Item 3.1 Error 1</reason>
 					</org.tohu.InvalidAnswer>
+					<fact-handle externalForm="item_3_1Error1Handle"/> 
 				</entry>
 				<entry>
 					<org.tohu.Question>
@@ -29,6 +30,7 @@
 						<answerType>text</answerType>
 						<textAnswer>Item 3.1.1 Text</textAnswer>
 					</org.tohu.Question>
+					<fact-handle externalForm="item_3_1_1Handle"/> 
 				</entry>
 			</create>
 			<update>
@@ -63,5 +65,5 @@
 			</update>
 		</org.tohu.xml.ChangeCollector>
 	</result>
-	<fact-handle identifier="changes" externalForm="0:-1:0:33507544:134" />
+	<fact-handle identifier="changes" externalForm="changesHandle" />
 </execution-results> 
