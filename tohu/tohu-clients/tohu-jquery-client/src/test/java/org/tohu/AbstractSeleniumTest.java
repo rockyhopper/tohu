@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.locks.LockSupport;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.lang.StringUtils;
@@ -42,7 +43,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
 public abstract class AbstractSeleniumTest {
 	/** Supported browser types */
 	public static enum BrowserType {
-		FIREFOX, IEXPLORER
+		FIREFOX, IEXPLORER, SAFARI
 	};
 
 	/** Supported Answer types */
@@ -109,9 +110,9 @@ public abstract class AbstractSeleniumTest {
 			case IEXPLORER:
 				browserString = "*iexploreproxy";
 				break;
-			//case SAFARI:
-			//	browserString = "*safariproxy";
-			//	break;
+			case SAFARI:
+				browserString = "*safariproxy";
+				break;
 		}
 
 		if (!isHTTPServerRunning("localhost", 4444)) {
@@ -157,7 +158,23 @@ public abstract class AbstractSeleniumTest {
 		//selenium.setSpeed("100");
 		// Uncomment for debugging.
 		//selenium.setBrowserLogLevel("debug");
-		selenium.start();
+		try {
+			selenium.start();
+		}
+		catch (Exception ex) {
+			debug("AbstractSeleniumTest.basicSetUp() exception=" + ex);
+			if (((browserType == BrowserType.SAFARI) && ex.toString().contains(
+				"java.lang.RuntimeException: Safari could not be found in the path!"))
+					|| ((browserType == BrowserType.FIREFOX) && ex.toString().contains(
+						"java.lang.RuntimeException: Firefox could not be found in the path!"))
+					|| ((browserType == BrowserType.IEXPLORER) && ex.toString().contains(
+						"java.lang.RuntimeException: Internet Explorer could not be found in the path!"))) {
+				// Browser not installed, treat this as a successful test.
+				debug("AbstractSeleniumTest.basicSetUp() browser not installed.");
+				assumeTrue(false);
+			}
+			throw ex;
+		}
 		debug("AbstractSeleniumTest.basicSetUp() done");
 	}
 
