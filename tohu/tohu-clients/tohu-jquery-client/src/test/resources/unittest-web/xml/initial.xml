@@ -5,17 +5,79 @@
 				<identifier>object</identifier>
 			</identifiers>
 			<row>
+				<org.tohu.Question>
+					<id>item_2_1</id>
+					<presentationStyles>item_2_1Style</presentationStyles>
+					<active>true</active>
+					<preLabel>Item 2.1</preLabel>
+					<postLabel>Simple Text Field</postLabel>
+					<required>true</required>
+					<answerType>text</answerType>
+					<textAnswer>Item 2.1 Text</textAnswer>
+				</org.tohu.Question>
+				<fact-handle externalForm="item_2_1Handle" />
+			</row>
+			<row>
+				<org.tohu.Note>
+					<id>item_1_1</id>
+					<presentationStyles>item_1_1Style1,image,item_1_1Style2</presentationStyles>
+					<active>true</active>
+					<label>images/earth.jpg</label>
+				</org.tohu.Note>
+				<fact-handle externalForm="item_1_1Handle" />
+			</row>
+			<row>
+				<org.tohu.Group>
+					<id>group3</id>
+					<presentationStyles>group3Style</presentationStyles>
+					<active>true</active>
+					<label>Group 3</label>
+					<items>item_3_1,item_3_2,item_3_3</items>
+				</org.tohu.Group>
+				<fact-handle externalForm="group3Handle" />
+			</row>
+			<row>
+				<org.tohu.InvalidAnswer>
+					<questionId>item_4_3</questionId>
+					<reason>Item 4.3 Error 2</reason>
+					<type>ErrorType2</type>
+				</org.tohu.InvalidAnswer>
+				<fact-handle externalForm="item4_3Error2" />
+			</row>
+			<row>
+				<org.tohu.Group>
+					<id>group4</id>
+					<presentationStyles>group4Style</presentationStyles>
+					<active>true</active>
+					<label>Group 4</label>
+					<items>item_4_1,item_4_2,item_4_3</items>
+				</org.tohu.Group>
+				<fact-handle externalForm="group4Handle" />
+			</row>
+			<row>
 				<org.tohu.Questionnaire>
 					<id>questionnaire1</id>
 					<presentationStyles>questionnaire1Style</presentationStyles>
 					<active>true</active>
 					<label>Questionnaire 1</label>
-					<items>group1,group2,group3</items>
-					<activeItem>group2</activeItem>
+					<items>group1,group2,group3,group6</items>
+					<activeItem>group1</activeItem>
 					<completionAction>#return</completionAction>
-					<invalidAnswers>false</invalidAnswers>
+					<invalidAnswers>true</invalidAnswers>
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="questionnaire1Handle" />
+			</row>
+			<row>
+				<org.tohu.Question>
+					<id>item_4_1</id>
+					<presentationStyles>item_4_1Style</presentationStyles>
+					<active>true</active>
+					<preLabel>Item 4.1</preLabel>
+					<postLabel>Boolean Checkbox</postLabel>
+					<required>true</required>
+					<answerType>boolean</answerType>
+				</org.tohu.Question>
+				<fact-handle externalForm="item_4_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -38,35 +100,6 @@
 				<fact-handle externalForm="group2Handle" />
 			</row>
 			<row>
-				<org.tohu.Group>
-					<id>group3</id>
-					<presentationStyles>group3Style</presentationStyles>
-					<active>true</active>
-					<label>Group 3</label>
-					<items>item_3_1,item_3_2,item_3_3</items>
-				</org.tohu.Group>
-				<fact-handle externalForm="group3Handle" />
-			</row>
-			<row>
-				<org.tohu.Group>
-					<id>group4</id>
-					<presentationStyles>group4Style</presentationStyles>
-					<active>true</active>
-					<label>Group 4</label>
-					<items>item_4_1,item_4_2,item_4_3</items>
-				</org.tohu.Group>
-				<fact-handle externalForm="group4Handle" />
-			</row>
-			<row>
-				<org.tohu.Note>
-					<id>item_1_1</id>
-					<presentationStyles>item_1_1Style1,image,item_1_1Style2</presentationStyles>
-					<active>true</active>
-					<label>images/earth.jpg</label>
-				</org.tohu.Note>
-				<fact-handle externalForm="item_1_1Handle" />
-			</row>
-			<row>
 				<org.tohu.Note>
 					<id>item_1_2</id>
 					<presentationStyles>item_1_2Style</presentationStyles>
@@ -87,19 +120,6 @@
 					<dateAnswer>2009-06-16 13:14:43.390 NZST</dateAnswer>
 				</org.tohu.Question>
 				<fact-handle externalForm="item_1_3Handle" />
-			</row>
-			<row>
-				<org.tohu.Question>
-					<id>item_2_1</id>
-					<presentationStyles>item_2_1Style</presentationStyles>
-					<active>true</active>
-					<preLabel>Item 2.1</preLabel>
-					<postLabel>Simple Text Field</postLabel>
-					<required>true</required>
-					<answerType>text</answerType>
-					<textAnswer>Item 2.1 Text</textAnswer>
-				</org.tohu.Question>
-				<fact-handle externalForm="item_2_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -169,18 +189,6 @@
 			</row>
 			<row>
 				<org.tohu.Question>
-					<id>item_4_1</id>
-					<presentationStyles>item_4_1Style</presentationStyles>
-					<active>true</active>
-					<preLabel>Item 4.1</preLabel>
-					<postLabel>Boolean Checkbox</postLabel>
-					<required>true</required>
-					<answerType>boolean</answerType>
-				</org.tohu.Question>
-				<fact-handle externalForm="item_4_1Handle" />
-			</row>
-			<row>
-				<org.tohu.Question>
 					<id>item_4_3</id>
 					<presentationStyles>radio,item_4_3Style</presentationStyles>
 					<active>true</active>
@@ -207,14 +215,6 @@
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
 				<fact-handle externalForm="item4_3Error1" />
-			</row>
-			<row>
-				<org.tohu.InvalidAnswer>
-					<questionId>item_4_3</questionId>
-					<reason>Item 4.3 Error 2</reason>
-					<type>ErrorType2</type>
-				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item4_3Error2" />
 			</row>
 		</query-results>
 	</result>
