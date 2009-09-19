@@ -15,11 +15,9 @@
  */
 package org.tohu;
 
-import org.tohu.AbstractSeleniumTest.BrowserType;
-
 /**
  * Test Case for the JQuery Client in Internet Explorer.
- *
+ * 
  * @author John Bebbington
  */
 public class IExplorerJQueryClientTest extends BaseJQueryClientTest {
@@ -28,11 +26,7 @@ public class IExplorerJQueryClientTest extends BaseJQueryClientTest {
 	public static void oneTimeSetUp() throws Exception {
 		DEBUG = true;
 		debug("IExplorerJQueryClientTest.oneTimeSetUp()");
-		basicSetUp(
-			BrowserType.IEXPLORER,
-			"http://localhost:9999/unittest-web",
-			"isGUIBusy",
-			"/html/body/div[@id='bodyContent']");
+		basicSetUp(BrowserType.IEXPLORER, "http://localhost:9999/unittest-web", "isGUIBusy", "/html/body/div[@id='bodyContent']");
 	}
 
 }
