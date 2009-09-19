@@ -15,11 +15,9 @@
  */
 package org.tohu;
 
-import org.tohu.AbstractSeleniumTest.BrowserType;
-
 /**
  * Test Case for the JQuery Client in Firefox.
- *
+ * 
  * @author John Bebbington
  */
 public class FirefoxJQueryClientTest extends BaseJQueryClientTest {
@@ -28,11 +26,7 @@ public class FirefoxJQueryClientTest extends BaseJQueryClientTest {
 	public static void oneTimeSetUp() throws Exception {
 		DEBUG = true;
 		debug("FirefoxJQueryClientTest.oneTimeSetUp()");
-		basicSetUp(
-			BrowserType.FIREFOX,
-			"http://localhost:9999/unittest-web",
-			"isGUIBusy",
-			"/html/body/div[@id='bodyContent']");
+		basicSetUp(BrowserType.FIREFOX, "http://localhost:9999/unittest-web", "isGUIBusy", "/html/body/div[@id='bodyContent']");
 	}
 
 }
