@@ -1,0 +1,21 @@
+<archetype>
+  <id>tohu-archetype</id>
+  <resources>
+	<resource>src/main/resources/org/tohu/utility/agent/tohu.xml</resource>
+	<resource>src/main/resources/rules/Questionnaire.drl</resource>
+    <resource>src/main/webapp/index.jsp</resource>
+    <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>src/main/webapp/css/style.css</resource>
+    <resource filtered="false">src/main/webapp/images/background.png</resource>
+    <resource filtered="false">src/main/webapp/images/button_standard.gif</resource>
+    <resource>src/main/webapp/script/extras.js</resource>
+	<resource>src/main/java/org/drools/executionserver/ExecutionServerHelper.java</resource>
+	<resource>src/main/java/org/tohu/utility/pdf/PdfServlet.java</resource>
+  </resources>
+  <!-- 
+  <sources>
+	<source>src/main/java/org/drools/executionserver/ExecutionServerHelper.java</source>
+	<source>src/main/java/org/tohu/utility/pdf/PdfServlet.java</source>
+  </sources>
+  -->
+</archetype>
