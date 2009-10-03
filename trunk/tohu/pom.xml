@@ -177,6 +177,11 @@
 	 <id>website</id>
          <url>file://${site-deploy}../maven-site</url>
     </site>
+    <repository>
+      <id>jboss-releases</id>
+      <name>JBoss Releases Repository</name>
+      <url>dav:https://svn.jboss.org/repos/repository.jboss.org/maven2</url>
+    </repository>
   </distributionManagement>
   <properties>
      <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
