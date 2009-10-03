@@ -18,11 +18,10 @@ class ExecutionServerHelper(val session: HttpSession) {
   	def getKnowledgeSession =	session.getAttribute(KNOWLEDGE_SESSION).asInstanceOf[StatefulKnowledgeSession]
     
 	  def removeKnowledgeSession = {
-      getKnowledgeSession match {
-        case knowledgeSession: StatefulKnowledgeSession => {
-           knowledgeSession.dispose
-           session.removeAttribute(KNOWLEDGE_SESSION)
-        }
+      val knowledgeSession = getKnowledgeSession
+      if (knowledgeSession != null && knowledgeSession.isInstanceOf[StatefulKnowledgeSession]) {
+        knowledgeSession.dispose
+        session.removeAttribute(KNOWLEDGE_SESSION)
       }
 	  }
 
