@@ -187,4 +187,11 @@
 		</dependency>
 
 	</dependencies>
+  <distributionManagement>
+    <repository>
+      <id>jboss-releases</id>
+      <name>JBoss Releases Repository</name>
+      <url>dav:https://svn.jboss.org/repos/repository.jboss.org/maven2</url>
+    </repository>
+  </distributionManagement>
 </project>
