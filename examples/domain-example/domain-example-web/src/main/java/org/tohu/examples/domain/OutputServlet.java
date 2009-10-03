@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.drools.ClassObjectFilter;
-import org.drools.executionserver.ExecutionServerHelper;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.tohu.examples.domain.Person;
 import org.tohu.util.QueryHelper;
+
+import drools.rex.ExecutionServerHelper;
 
 /**
  * @author Damon Horrell
