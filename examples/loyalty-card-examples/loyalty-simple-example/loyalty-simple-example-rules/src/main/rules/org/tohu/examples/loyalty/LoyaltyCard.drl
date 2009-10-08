@@ -46,6 +46,9 @@ then
 		"email",
 		"phone"});
 	insertLogical(personalDetails);		
+/*
+		"canContact",
+*/
 	
 	Group mainAddress = new Group("MainAddress");
 	mainAddress.setLabel("2");
@@ -63,6 +66,19 @@ then
 	postalAddress.setItems({"differentPostalAddress", "additionalPostalFields"});
 	insertLogical(postalAddress);			
 end
+
+/*
+rule "canContact"
+dialect "mvel" 
+when
+	Question(id == "email", answer != null)
+then
+	Question question = new Question("canContact");
+	question.setAnswerType(Question.TYPE_BOOLEAN);
+	question.setPreLabel("Can we email you");
+	insertLogical(question);
+end
+*/
 
 
 rule "personalDetailsSection"
