@@ -471,15 +471,23 @@ function getQuestionnaireActions(questionnaire) {
 		obj = new ActionObject();
 		obj.id = questionnaire.id + "_action_1";
 		var isReturn = questionnaire.completionAction == "#return"; 
+		var enforceErrors = true;
 		if (isReturn) {
 			obj.presentationStyles = "next,return";
 			obj.label = "Return";
+			
+			if (questionnaire.hasErrors && window.overrideReturnEnforceErrors) {
+				enforceErrors = overrideReturnEnforceErrors();
+			}
 		}
 		else {
 			obj.presentationStyles = "next,done";
 			obj.label = "Done";
 		}
-		if (questionnaire.hasErrors) {
+		// TODO Add configurable ability to report on errors
+		// based on the BRANCHED pages only
+		
+		if (questionnaire.hasErrors && enforceErrors) {
 			obj.actionType = "showError";
 			obj.action = "You must fix all errors first.";
 		}
