@@ -42,7 +42,7 @@
                 <artifactItem>
                   <groupId>org.tohu</groupId>
                   <artifactId>tohu-jquery-client</artifactId>
-                  <version>1.0.0</version>
+                  <version>1.0.1-SNAPSHOT</version>
                   <type>jar</type>
                 </artifactItem>
               </artifactItems>
@@ -91,6 +91,19 @@
         <enabled>false</enabled>
       </releases>
     </repository>
+    <!--
+      TODO this is only temporary until the release versions of drools-execution-server and tohu are in the jboss.org maven repository
+    -->
+    <repository>
+      <id>temp.local</id>
+      <url>http://anonsvn.jboss.org/repos/tohu/trunk/tohu/lib/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
   </repositories>
   
   
@@ -130,13 +143,13 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-xml</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
