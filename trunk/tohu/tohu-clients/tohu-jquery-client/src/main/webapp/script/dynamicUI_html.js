@@ -380,7 +380,8 @@ function createQuestion(obj) {
 	html += "<span id=\"" + obj.id + "_preLabel\" class=\"preLabel\">" + obj.preLabel + "</span>&nbsp";
 	html += buildQuestionInput(obj);
 	html += "&nbsp;<span id=\"" + obj.id + "_postLabel\" class=\"postLabel\">" + obj.postLabel + "</span>";
-	html += "<div id=\"" + obj.id + "_errors\" class=\"questionErrors\"/></div>";
+	html += "<div id=\"" + obj.id + "_errors\" class=\"questionErrors\"></div>";
+	html += "</div>";
 	var result = addToParent(obj.hierarchy, html);
 	attachChangeHandler(obj);
 	addQuestionWidgets(obj);
