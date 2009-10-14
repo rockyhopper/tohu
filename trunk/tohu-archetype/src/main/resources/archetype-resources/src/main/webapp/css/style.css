@@ -27,44 +27,46 @@ div,p {
 	width: 28em;
 }
 
-.Controls {
+.Controls,
+.yesNoControls {
 	text-align: center;
 	height: 22px;
-	margin-top: 3em;
+	/*margin-top: 3em;*/
+	margin:1em 0;
 	width: 100%;
 }
 
-.Controls a:link,.Controls a:visited,.Controls a:hover,.Controls a:focus,.Controls a:active,a.button:link,a.button:visited,a.button:hover,a.button:focus,a.button:active
-	{
-	background: transparent url(../images/button_standard.gif) center center
-		no-repeat;
-	color: #F8E9D9;
-	height: 22px;
-	width: 135px;
-	line-height: 22px;
-	text-decoration: none;
-	text-align: center;
-	font-weight: normal;
-	display: block;
+.Controls a.disabled:link, .Controls a.disabled:visited, .Controls a.disabled:hover, .Controls a.disabled:focus, a.disabled:link, a.disabled:visited, a.disabled:hover, a.disabled:focus {
+	color:#000000;
+}
+.Controls a:link, .Controls a:visited, .Controls a:hover, .Controls a:focus, .Controls a:active {
+	margin:0 auto;
+}
+.Controls a:link, .Controls a:visited, .Controls a:hover, .Controls a:focus, .Controls a:active, a.Control:link, a.Control:visited, a.Control:hover, a.Control:focus, a.Control:active,
+.yesNoControls a:link,.yesNoControls a:visited,.yesNoControls a:hover,.yesNoControls a:focus,.yesNoControls a:active {
+	background:transparent url(../images/button_standard.gif) no-repeat scroll center center;
+	color:#F8E9D9;
+	display:block;
+	font-weight:400;
+	height:22px;
+	line-height:22px;
+	text-align:center;
+	text-decoration:none;
+	width:135px;
 }
 
-.Controls a:link,.Controls a:visited,.Controls a:hover,.Controls a:focus,.Controls a:active
-	{
-	margin: 0 auto;
-}
-
-.Controls a.disabled:link,.Controls a.disabled:visited,.Controls a.disabled:hover,.Controls a.disabled:focus,a.disabled:link,a.disabled:visited,a.disabled:hover,a.disabled:focus
-	{
-	color: black;
-}
-
-a.back {
+.Controls .previous {
 	float: left;
 }
 
-a.next {
+.Controls .next {
 	float: right;
 }
+
+a.back, a.next {
+	float:left;
+}
+
 
 #bodyContent {
 	width: 80%;
@@ -82,7 +84,7 @@ a.next {
 	min-height: 4em;
 }
 
-#PersonalDetails_label,#MainAddress_label,#PostalAddress_label {
+.section > p {
 	width: 1em;
 	text-align: center;
 	color: yellow;
@@ -97,14 +99,14 @@ a.next {
 	z-index: 5;
 }
 
-#PersonalDetails_items,#MainAddress_items,#PostalAddress_items {
+.section > .GroupItems {
 	margin: -60px 0 0 80px;
 	z-index: -5;
 	padding: 0 0 10px 0;
 	border-top: 1px solid #242424;
 }
 
-#Tohu_label {
+#LoyaltyCard_label {
 	font-size: 1.5em;
 	margin: 0 auto;
 	width: 60%;
@@ -151,3 +153,22 @@ a.next {
 div.InvalidAnswer.requiredMissing {
 	display: none;
 }
+
+.yesNoButtons {
+	margin: 0.5em 0;
+}
+
+.yesNoButtons input {
+	display: none;
+}
+
+.yesNoButtons .yesNoControls a {
+	display: inline-block;
+	float: none;
+}
+
+.yesNoButtons .answer {
+	width: 2em;
+	display: inline-block;
+}
+
