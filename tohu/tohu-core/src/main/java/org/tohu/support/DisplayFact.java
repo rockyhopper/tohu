@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tohu.util;
+package org.tohu.support;
 
 import java.io.Serializable;
 
@@ -52,6 +52,11 @@ public class DisplayFact implements Serializable {
 	 * nested branching capabilities.
 	 */
 	private String keyPageElementId;
+	
+	/**
+	 * Primarily used by consequence related "display" facts.
+	 */
+	private String reason;
 	
 	/**
 	 * Normal constructor.
@@ -109,6 +114,14 @@ public class DisplayFact implements Serializable {
 
 	public void setKeyPageElementId(String keyPageElementId) {
 		this.keyPageElementId = keyPageElementId;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	
 

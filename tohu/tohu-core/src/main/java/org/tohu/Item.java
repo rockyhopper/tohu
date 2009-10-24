@@ -34,6 +34,11 @@ public abstract class Item extends TohuObject {
 	 * Styles are represented internally as a comma-delimited string.
 	 */
 	private String presentationStyles;
+	
+	/**
+	 * This is a way of optionally abstractly grouping elements for use outside Tohu.
+	 */
+	private String category;
 
 	public Item() {
 	}
@@ -47,6 +52,24 @@ public abstract class Item extends TohuObject {
 	 */
 	public String getId() {
 		return id;
+	}
+
+	/**
+	 * Return an optional abstract grouping identifying string
+	 * 
+	 * @return
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * Sets an (optional) abstract grouping identifying string.
+	 * 
+	 * To be used outside of Tohu.
+	 */
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	/**

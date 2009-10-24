@@ -17,10 +17,21 @@
  */
 package org.tohu
 
+import org.tohu.support.Consequence;
+import org.tohu.support.Variable;
+
 query "activeObjects"
 	object : TohuObject(active == true);
 end
 
 query "answeredQuestions"
 	question : Question(answered == true);
+end
+
+query "tohuConsequences"
+	consequence : Consequence(answered == true);
+end
+
+query "tohuVariables"
+	variable : Variable(answered == true);
 end
