@@ -29,6 +29,7 @@ import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 import org.tohu.Answer;
 import org.tohu.Question;
+import org.tohu.support.Consequence;
 
 /**
  * TODO need to decide what goes in here and whether this is the right place for it
@@ -59,6 +60,22 @@ public class QueryHelper {
 			answers.put(question.getId(), question.getAnswer());
 		}
 		return answers;
+	}
+
+	/**
+	 * Returns a map of consequence ids and answers sorted by consequence id.
+	 *
+	 * @return
+	 */
+	public SortedMap<String, Object> getConsequences() {
+		SortedMap<String, Object> consequences = new TreeMap<String, Object>();
+		QueryResults queryResults = knowledgeSession.getQueryResults("tohuConsequences");
+		for (Iterator<QueryResultsRow> iterator = queryResults.iterator(); iterator.hasNext();) {
+			QueryResultsRow row = iterator.next();
+			Consequence consequence = (Consequence) row.get("consequence");
+			consequences.put(consequence.getId(), consequence.getAnswer());
+		}
+		return consequences;
 	}
 
 	/**

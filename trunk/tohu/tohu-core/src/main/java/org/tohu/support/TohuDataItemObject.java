@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tohu;
+package org.tohu.support;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.tohu.support.TohuAnswerContainer;
-import org.tohu.support.TohuAnswerTypeManager;
-import org.tohu.support.TohuAnswerTypes;
-
 /**
  * <p>
- * Represents a question to be answered by a user.
+ * Represents a Data point that may be represented a number of ways.
  * </p>
  * 
  * <p>
- * <code>Question</code> has an <code>answerType</code> which must be one of:
+ * <code>DataItem</code> has an <code>answerType</code> which must be one of:
  * </p>
  * 
  * <ul>
@@ -50,79 +42,85 @@ import org.tohu.support.TohuAnswerTypes;
  * </p>
  * 
  * <p>
- * The answer to a <code>Question</code> is maintained internally by the object. use <code>DomainModelAssociation</code> to
+ * The answer to a <code>DataItem</code> is maintained internally by the object. use <code>DomainModelAssociation</code> to
  * map the answers to a real domain model.
  * </p>
  * 
- * @author Damon Horrell
+ * @author Derek Rendall
  */
-public class Question extends Item implements TohuAnswerContainer, TohuAnswerTypes {
+
+public abstract class TohuDataItemObject implements Serializable, TohuAnswerContainer, TohuAnswerTypes {
 
 	private static final long serialVersionUID = 1L;
+	
+	private String id;
 
-	private String preLabel;
-
-	private String postLabel;
-
-	private boolean required;
+	/**
+	 * This is a way of optionally abstractly grouping elements for use outside Tohu.
+	 */
+	private String category;
 
 	private TohuAnswerTypeManager answerType;
 
-	@AnswerField
 	private String textAnswer;
 
-	@AnswerField
 	private Long numberAnswer;
 
-	@AnswerField
 	private BigDecimal decimalAnswer;
 
-	@AnswerField
 	private Boolean booleanAnswer;
 
-	@AnswerField
 	private Date dateAnswer;
 
-	public Question() {
+	public TohuDataItemObject() {
+		this(null);
 	}
 
-	public Question(String id) {
-		super(id);
+	public TohuDataItemObject(String id) {
+		super();
+		setId(id);
 	}
-
-	public Question(String id, String label) {
-		super(id);
-		this.preLabel = label;
-	}
-
-	public String getPreLabel() {
-		return preLabel;
-	}
-
-	public void setPreLabel(String preLabel) {
-		this.preLabel = preLabel;
-	}
-
-	public String getPostLabel() {
-		return postLabel;
-	}
-
-	public void setPostLabel(String postLabel) {
-		this.postLabel = postLabel;
-	}
-
-	public boolean isRequired() {
-		return required;
+	
+	/**
+	 * @see org.tohu.TohuObject#getId()
+	 */
+	public String getId() {
+		return id;
 	}
 
 	/**
-	 * If set to true then the Pixie Dust will create an <code>InvalidAnswer</code> if this question is not answered.
+	 * Return an optional abstract grouping identifying string
 	 * 
-	 * @param required
+	 * @return
 	 */
-	public void setRequired(boolean required) {
-		this.required = required;
+	public String getCategory() {
+		return category;
 	}
+
+	/**
+	 * Sets an (optional) abstract grouping identifying string.
+	 * 
+	 * To be used outside of Tohu.
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * Sets the unique id for this item which must be non-null and cannot contain any commas or dots.
+	 * 
+	 * @param id
+	 */
+	public void setId(String id) {
+		if (id == null || id.contains(",") || id.contains(".")) {
+			throw new IllegalArgumentException("Invalid item id");
+		}
+		if (this.id != null && !this.id.equals(id)) {
+			throw new IllegalStateException("id may not be changed");
+		}
+		this.id = id;
+	}
+
 
 	public String getAnswerType() {
 		if (answerType == null) {
@@ -249,15 +247,8 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + " preLabel=" + getPreLabel() + " postLabel=" + getPostLabel() + " answerType="
-				+ getAnswerType() + " answer=" + getAnswer() + " required=" + required;
+		return this.getClass().getName() + ": id=" + id + " answerType="
+				+ getAnswerType() + " answer=" + getAnswer() + " category=" + getCategory();
 	}
-
-	/**
-	 * Annotation used by the ChangeCollector to identify answer fields.
-	 */
-	@Retention(RUNTIME) @Target({FIELD})
-	public @interface AnswerField {
-	}
-
+	
 }
