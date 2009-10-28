@@ -45,7 +45,7 @@ public class Group extends Item {
 	private String label;
 
 	/**
-	 * Items are represented internally as a comma-delimited string.
+	 * Items are represented internally as a comma-delimited string for efficient XML transport.
 	 */
 	private String items;
 
