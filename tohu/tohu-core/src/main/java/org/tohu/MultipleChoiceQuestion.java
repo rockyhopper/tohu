@@ -35,7 +35,7 @@ public class MultipleChoiceQuestion extends Question {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Possible answers are represented internally as comma-delimited value/label pairs i.e. value1=label1,value2=label2,...
+	 * Possible answers are represented internally as comma-delimited value/label pairs i.e. value1=label1,value2=label2,... for efficient XML transport.
 	 * 
 	 * Any commas within the labels are escaped to \,
 	 * 

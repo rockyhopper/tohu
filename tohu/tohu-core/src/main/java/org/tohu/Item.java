@@ -31,7 +31,7 @@ public abstract class Item extends TohuObject {
 	private String id;
 
 	/**
-	 * Styles are represented internally as a comma-delimited string.
+	 * Styles are represented internally as a comma-delimited string for efficient XML transport.
 	 */
 	private String presentationStyles;
 	
