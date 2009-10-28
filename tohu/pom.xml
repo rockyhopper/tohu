@@ -117,6 +117,7 @@
         <configuration>
           <argLine>-Xmx1024m</argLine>
         </configuration>
+        <version>2.3</version>
         <inherited>true</inherited>
       </plugin>
     </plugins>
