@@ -49,7 +49,7 @@ import java.util.List;
  * 
  * @author Derek Rendall
  */
-public class Consequence extends Variable {
+public class Consequence extends TohuDataItemObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -66,7 +66,8 @@ public class Consequence extends Variable {
 	}
 
 	public Consequence(String id, String name) {
-		super(id, name);
+		super(id);
+		this.name = name;
 	}
 
 	public String getName() {
