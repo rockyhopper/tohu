@@ -23,10 +23,6 @@ import java.lang.annotation.Target;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.tohu.support.TohuAnswerContainer;
-import org.tohu.support.TohuAnswerTypeManager;
-import org.tohu.support.TohuAnswerTypes;
-
 /**
  * <p>
  * Represents a question to be answered by a user.
@@ -56,9 +52,19 @@ import org.tohu.support.TohuAnswerTypes;
  * 
  * @author Damon Horrell
  */
-public class Question extends Item implements TohuAnswerContainer, TohuAnswerTypes {
+public class Question extends Item {
 
 	private static final long serialVersionUID = 1L;
+
+	public static String TYPE_TEXT = "text";
+
+	public static String TYPE_NUMBER = "number";
+
+	public static String TYPE_DECIMAL = "decimal";
+
+	public static String TYPE_BOOLEAN = "boolean";
+
+	public static String TYPE_DATE = "date";
 
 	private String preLabel;
 
@@ -66,7 +72,7 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 
 	private boolean required;
 
-	private TohuAnswerTypeManager answerType;
+	private String answerType;
 
 	@AnswerField
 	private String textAnswer;
@@ -125,18 +131,21 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 	}
 
 	public String getAnswerType() {
-		if (answerType == null) {
-			return null;
-		}
-		return answerType.getAnswerType();
+		return answerType;
 	}
 
 	public void setAnswerType(String answerType) {
-		if (this.answerType == null) {
-			this.answerType = new TohuAnswerTypeManager(answerType, this);
+		String previousBasicAnswerType = answerTypeToBasicAnswerType(this.answerType);
+		String basicAnswerType = answerTypeToBasicAnswerType(answerType);
+		if (basicAnswerType == null
+				|| (!basicAnswerType.equals(TYPE_TEXT) && !basicAnswerType.equals(TYPE_NUMBER)
+						&& !basicAnswerType.equals(TYPE_DECIMAL) && !basicAnswerType.equals(TYPE_BOOLEAN) && !basicAnswerType
+						.equals(TYPE_DATE))) {
+			throw new IllegalArgumentException("answerType " + answerType + " is invalid");
 		}
-		else {
-			this.answerType.setAnswerType(answerType);
+		this.answerType = answerType;
+		if (!basicAnswerType.equals(previousBasicAnswerType)) {
+			clearAnswer();
 		}
 	}
 
@@ -146,12 +155,19 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 	 * @return
 	 */
 	public String getBasicAnswerType() {
+		return answerTypeToBasicAnswerType(answerType);
+	}
+
+	private String answerTypeToBasicAnswerType(String answerType) {
 		if (answerType == null) {
 			return null;
 		}
-		return answerType.getBasicAnswerType();
+		int i = answerType.indexOf('.');
+		if (i >= 0) {
+			return answerType.substring(0, i);
+		}
+		return answerType;
 	}
-
 
 	public String getTextAnswer() {
 		checkType(TYPE_TEXT);
@@ -207,14 +223,45 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 		if (answerType == null) {
 			throw new IllegalStateException("answerType has not been specified");
 		}
-		answerType.setAnswer(answer);
+		String basicAnswerType = getBasicAnswerType();
+		if (basicAnswerType.equals(TYPE_TEXT)) {
+			setTextAnswer((String) answer);
+		}
+		if (basicAnswerType.equals(TYPE_NUMBER)) {
+			setNumberAnswer((Long) answer);
+		}
+		if (basicAnswerType.equals(TYPE_DECIMAL)) {
+			setDecimalAnswer((BigDecimal) answer);
+		}
+		if (basicAnswerType.equals(TYPE_BOOLEAN)) {
+			setBooleanAnswer((Boolean) answer);
+		}
+		if (basicAnswerType.equals(TYPE_DATE)) {
+			setDateAnswer((Date) answer);
+		}
 	}
 
 	public Object getAnswer() {
 		if (answerType == null) {
 			throw new IllegalStateException("answerType has not been specified");
 		}
-		return answerType.getAnswer();
+		String basicAnswerType = getBasicAnswerType();
+		if (basicAnswerType.equals(TYPE_TEXT)) {
+			return textAnswer;
+		}
+		if (basicAnswerType.equals(TYPE_NUMBER)) {
+			return numberAnswer;
+		}
+		if (basicAnswerType.equals(TYPE_DECIMAL)) {
+			return decimalAnswer;
+		}
+		if (basicAnswerType.equals(TYPE_BOOLEAN)) {
+			return booleanAnswer;
+		}
+		if (basicAnswerType.equals(TYPE_DATE)) {
+			return dateAnswer;
+		}
+		throw new IllegalStateException();
 	}
 
 	public boolean isAnswered() {
@@ -230,13 +277,17 @@ public class Question extends Item implements TohuAnswerContainer, TohuAnswerTyp
 		if (this.answerType == null) {
 			throw new IllegalStateException("answerType has not been specified");
 		}
-		this.answerType.checkType(answerType);
+		String basicAnswerType = getBasicAnswerType();
+		if (!basicAnswerType.equals(answerType)) {
+			throw new IllegalStateException("Supplied answer type " + answerType + " differs from the expected type "
+					+ basicAnswerType + " for " + getId());
+		}
 	}
 
 	/**
 	 * Clears any previous answer (which may be of a different data type).
 	 */
-	public void clearAnswer() { 
+	private void clearAnswer() {
 		textAnswer = null;
 		numberAnswer = null;
 		decimalAnswer = null;
