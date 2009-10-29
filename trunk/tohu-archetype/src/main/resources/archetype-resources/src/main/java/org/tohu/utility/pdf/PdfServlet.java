@@ -50,7 +50,6 @@ public class PdfServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).getKnowledgeSession();
 		Map<String, Object> answers = new QueryHelper(knowledgeSession).getAnswers();
-		Map<String, Object> consequences = new QueryHelper(knowledgeSession).getConsequences();
 		try {
 			Document document = new Document();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -59,6 +58,7 @@ public class PdfServlet extends HttpServlet {
 			Paragraph title = new Paragraph("SOLNET LOYALTY CARD");
 			title.setAlignment("center");
 			document.add(title);
+			
 			// Questions
 			document.add(new Paragraph("Questions:"));
 			document.add(new Paragraph(" "));
@@ -68,16 +68,6 @@ public class PdfServlet extends HttpServlet {
 				table.addCell(entry.getValue().toString());
 			}
 			document.add(table);
-
-			document.add(new Paragraph(" "));
-			document.add(new Paragraph("Consequences:"));
-			document.add(new Paragraph(" "));
-			PdfPTable table2 = new PdfPTable(2);
-			for (Map.Entry<String, Object> entry : consequences.entrySet()) {
-				table2.addCell(entry.getKey());
-				table2.addCell(entry.getValue().toString());
-			}
-			document.add(table2);
 
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
