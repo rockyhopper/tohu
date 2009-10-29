@@ -363,7 +363,11 @@ function handleActionEvent(actionID, actionType, action) {
 			showError(action);
 		    break;
 		case "completion":
-			document.myform.action = actionURL + action;
+			// This could be changed to be more dynamic if we added in another attribute 
+			// to the questionaire Object indicating whether a new tab is required when 
+			// completion.e,g, an enum set of different actions to take when completing the rules
+			document.myform.target = '_blank';			
+			document.myform.action = actionURL + action;			
 			document.myform.submit();
 			break;
 		default:
