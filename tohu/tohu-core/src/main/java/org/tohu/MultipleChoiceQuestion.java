@@ -170,6 +170,9 @@ public class MultipleChoiceQuestion extends Question {
 			}
 		}
 		if (pos != null) {
+			if ((getAnswer() != null) && (getAnswer().equals(pos.getValue()))) {
+				setAnswer(null);
+			}
 			list.remove(pos);
 			setPossibleAnswers(list.toArray());
 		}
