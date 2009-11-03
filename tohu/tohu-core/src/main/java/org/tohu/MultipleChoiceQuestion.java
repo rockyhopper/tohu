@@ -17,6 +17,7 @@ package org.tohu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -53,16 +54,8 @@ public class MultipleChoiceQuestion extends Question {
 	public MultipleChoiceQuestion(String id, String label) {
 		super(id, label);
 	}
-
-	/**
-	 * Gets list of possible answers.
-	 * 
-	 * @return
-	 */
-	public PossibleAnswer[] getPossibleAnswers() {
-		if (possibleAnswers == null) {
-			return null;
-		}
+	
+	protected List<PossibleAnswer> getListOfPossibleAnswers() {
 		List<PossibleAnswer> result = new ArrayList<PossibleAnswer>();
 		String[] split = split(possibleAnswers, ",");
 		for (int i = 0; i < split.length; i++) {
@@ -78,7 +71,30 @@ public class MultipleChoiceQuestion extends Question {
 			}
 			result.add(new PossibleAnswer(value, label));
 		}
+		return result;
+	}
+
+	/**
+	 * Gets list of possible answers.
+	 * 
+	 * @return
+	 */
+	public PossibleAnswer[] getPossibleAnswers() {
+		if (possibleAnswers == null) {
+			return null;
+		}
+		List<PossibleAnswer> result = getListOfPossibleAnswers();
 		return result.toArray(new PossibleAnswer[] {});
+	}
+	
+	protected String formatValue(String valueStr) {
+		if (valueStr != null) {
+			if (valueStr.contains(",")) {
+				throw new IllegalArgumentException();
+			}
+			valueStr = valueStr.replaceAll("=", "\\\\=");
+		}
+		return valueStr;
 	}
 
 	/**
@@ -96,13 +112,7 @@ public class MultipleChoiceQuestion extends Question {
 					if (sb.length() > 0) {
 						sb.append(",");
 					}
-					String value = possibleAnswers[i].value;
-					if (value != null) {
-						if (value.contains(",")) {
-							throw new IllegalArgumentException();
-						}
-						value = value.replaceAll("=", "\\\\=");
-					}
+					String value = formatValue(possibleAnswers[i].value);
 					sb.append(value);
 					sb.append('=');
 					if (possibleAnswers[i].label != null) {
@@ -138,6 +148,71 @@ public class MultipleChoiceQuestion extends Question {
 		} else {
 			setPossibleAnswers((PossibleAnswer[]) Arrays.asList(possibleAnswers).toArray(new PossibleAnswer[] {}));
 		}
+	}
+	
+	/**
+	 * Adds a possible answer.
+	 * 
+	 * This method is provided to support the dynamic alteration of possible answers.
+	 * 
+	 * <b>Do not use for creation of lists</b>. Instead use {@link #setPossibleAnswers(PossibleAnswer[])}
+	 * 
+	 * 
+	 * @param theValue of the possibleAnswer
+	 */
+	public void removePossibleAnswer(String theValue) {
+		List<PossibleAnswer> list = getListOfPossibleAnswers();
+		PossibleAnswer pos = null;
+		for (PossibleAnswer pa : list) {
+			if ((pa.getValue() != null) && (pa.getValue().equals(theValue))) {
+				pos = pa;
+				break;
+			}
+		}
+		if (pos != null) {
+			list.remove(pos);
+			setPossibleAnswers(list.toArray());
+		}
+	}
+
+	/**
+	 * Checks to see if there is a possible answer with the value passed in.
+	 * 
+	 * This method is provided to support the dynamic alteration of possible answers.
+	 * Uses String.indexOf internally.  
+	 * 
+	 * @param theValue of the possibleAnswer
+	 * @return
+	 */
+	public boolean hasPossibleAnswer(String theValue) {
+		String value = formatValue(theValue) + "=";
+		if (possibleAnswers.indexOf(value) >= 0) {
+			return true;
+		}
+		return false;
+	}
+
+	
+	/**
+	 * Removes a possible answer.
+	 * 
+	 * This method is provided to support the dynamic alteration of possible answers.
+	 * 
+	 * <b>Do not use for creation of lists</b>. Instead use {@link #setPossibleAnswers(PossibleAnswer[])}
+	 * 
+	 * 
+	 * @param possibleAnswer
+	 * @param atIndex If >= size of array then the answer is added to the end
+	 */
+	public void insertPossibleAnswer(PossibleAnswer possibleAnswer, int atIndex) {
+		List<PossibleAnswer> list = getListOfPossibleAnswers();
+		if (list.size() <= atIndex) {
+			list.add(possibleAnswer);
+		}
+		else {
+			list.add(atIndex, possibleAnswer);
+		}
+		setPossibleAnswers(list.toArray());
 	}
 
 	/**
