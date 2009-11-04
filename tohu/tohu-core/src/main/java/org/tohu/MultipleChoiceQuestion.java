@@ -17,7 +17,6 @@ package org.tohu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -170,7 +169,7 @@ public class MultipleChoiceQuestion extends Question {
 			}
 		}
 		if (pos != null) {
-			if ((getAnswer() != null) && (getAnswer().equals(pos.getValue()))) {
+			if ((getAnswerType() != null) && (getAnswer() != null) && (getAnswer().equals(pos.getValue()))) {
 				setAnswer(null);
 			}
 			list.remove(pos);
@@ -189,6 +188,11 @@ public class MultipleChoiceQuestion extends Question {
 	 */
 	public boolean hasPossibleAnswer(String theValue) {
 		String value = formatValue(theValue) + "=";
+		if (possibleAnswers.startsWith(value)) {
+			return true;
+		}
+		// try and avoid an issue where we have an = sign in the description
+		value = "," + value;
 		if (possibleAnswers.indexOf(value) >= 0) {
 			return true;
 		}
@@ -208,6 +212,16 @@ public class MultipleChoiceQuestion extends Question {
 	 * @param atIndex If >= size of array then the answer is added to the end
 	 */
 	public void insertPossibleAnswer(PossibleAnswer possibleAnswer, int atIndex) {
+		if (possibleAnswers == null) {
+			// Really should be discouraged from doing this! Least efficient way of building up the list.
+			PossibleAnswer[] pa = new PossibleAnswer[1];
+			pa[0] = possibleAnswer;
+			setPossibleAnswers(pa);
+			return;
+		}
+		if (atIndex < 0) {
+			atIndex = 0;
+		}
 		List<PossibleAnswer> list = getListOfPossibleAnswers();
 		if (list.size() <= atIndex) {
 			list.add(possibleAnswer);
@@ -228,6 +242,15 @@ public class MultipleChoiceQuestion extends Question {
 	 * @deprecated
 	 */
 	public String getPossibleAnswersAsString() {
+		return possibleAnswers;
+	}
+
+	/**
+	 * Gets list of item ids as a comma delimited string. Implemented for testing purpose only - package visibility
+	 * 
+	 * @return
+	 */
+	String getInternalPossibleAnswersAsString() {
 		return possibleAnswers;
 	}
 
