@@ -17,6 +17,9 @@ package org.tohu;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -28,7 +31,6 @@ import org.tohu.MultipleChoiceQuestion.PossibleAnswer;
  */
 public class PossibleAnswersTest {
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetPossibleAnswers() {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
@@ -42,7 +44,7 @@ public class PossibleAnswersTest {
 				.getPossibleAnswers());
 		assertEquals(
 				"null=select...,a=apple,b=banana,c=carrot\\, cucumber\\, or cauliflower,d=,e\\=?=e\\=mc^2,\\=\\=\\==\\=equals\\=",
-				question.getPossibleAnswersAsString());
+				question.getInternalPossibleAnswersAsString());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -57,7 +59,7 @@ public class PossibleAnswersTest {
 				.getPossibleAnswers());
 		assertEquals(
 				"null=select...,a=apple,b=banana,c=carrot\\, cucumber\\, or cauliflower,d=,e\\=?=e\\=mc^2,\\=\\=\\==\\=equals\\=",
-				question.getPossibleAnswersAsString());
+				question.getInternalPossibleAnswersAsString());
 	}
 
 	@Test
@@ -71,13 +73,12 @@ public class PossibleAnswersTest {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetPossibleAnswersNull() {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
 		question.setPossibleAnswers(null);
 		assertArrayEquals(null, question.getPossibleAnswers());
-		assertEquals(null, question.getPossibleAnswersAsString());
+		assertEquals(null, question.getInternalPossibleAnswersAsString());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -86,16 +87,15 @@ public class PossibleAnswersTest {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
 		question.setPossibleAnswersAsString(null);
 		assertArrayEquals(null, question.getPossibleAnswers());
-		assertEquals(null, question.getPossibleAnswersAsString());
+		assertEquals(null, question.getInternalPossibleAnswersAsString());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testSetPossibleAnswersEmpty() {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
 		question.setPossibleAnswers(new PossibleAnswer[0]);
 		assertArrayEquals(null, question.getPossibleAnswers());
-		assertEquals(null, question.getPossibleAnswersAsString());
+		assertEquals(null, question.getInternalPossibleAnswersAsString());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -104,7 +104,60 @@ public class PossibleAnswersTest {
 		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
 		question.setPossibleAnswersAsString("");
 		assertArrayEquals(null, question.getPossibleAnswers());
-		assertEquals(null, question.getPossibleAnswersAsString());
+		assertEquals(null, question.getInternalPossibleAnswersAsString());
 	}
+	
+	
+	@Test
+	public void testInsertAndRemovePossibleAnswer() {
+		// Remember - building up using insert is inefficient. it 
+		// is only for amending a list once created
+		
+		// insert tests
+		MultipleChoiceQuestion question = new MultipleChoiceQuestion();
+		assertEquals(null, question.getInternalPossibleAnswersAsString());
+		question.insertPossibleAnswer(new PossibleAnswer("b", "banana"), -10);
+		assertEquals("b=banana", question.getInternalPossibleAnswersAsString());
+		question.insertPossibleAnswer(new PossibleAnswer("d", "dock"), 10);
+		assertEquals("b=banana,d=dock", question.getInternalPossibleAnswersAsString());
+		question.insertPossibleAnswer(new PossibleAnswer("e", "egg"), 2);
+		assertEquals("b=banana,d=dock,e=egg", question.getInternalPossibleAnswersAsString());
+		question.insertPossibleAnswer(new PossibleAnswer("c", "carrot"), 1);
+		assertEquals("b=banana,c=carrot,d=dock,e=egg", question.getInternalPossibleAnswersAsString());
+		question.insertPossibleAnswer(new PossibleAnswer("a", "apple"), 0);
+		assertEquals("a=apple,b=banana,c=carrot,d=dock,e=egg", question.getInternalPossibleAnswersAsString());
+		
+		// has tests
+		assertTrue("Did not contain Apple", question.hasPossibleAnswer("a"));
+		assertTrue("Did not contain Banana", question.hasPossibleAnswer("b"));
+		assertTrue("Did not contain egg", question.hasPossibleAnswer("e"));
+		assertFalse("Contains false entry [k]", question.hasPossibleAnswer("k"));
+		
+		// remove tests
+		question.removePossibleAnswer("e");
+		assertFalse("Contains removed entry [e]", question.hasPossibleAnswer("e"));
+		question.insertPossibleAnswer(new PossibleAnswer("e=?", "e=mc^2"), 4);
+		assertFalse("Contains removed entry [e] after inserting [e=?]", question.hasPossibleAnswer("e"));
+		assertTrue("Did not contain entry [e=?]", question.hasPossibleAnswer("e=?"));
+		question.removePossibleAnswer("a");
+		assertFalse("Contains removed entry [a]", question.hasPossibleAnswer("a"));
+		question.removePossibleAnswer("c");
+		assertFalse("Contains removed entry [c]", question.hasPossibleAnswer("c"));
+		question.removePossibleAnswer("e=?");
+		assertEquals("b=banana,d=dock", question.getInternalPossibleAnswersAsString());
+		
+		// test removing chosen item
+		question.setAnswerType(Question.TYPE_TEXT);
+		question.setAnswer("b");
+		question.insertPossibleAnswer(new PossibleAnswer("a", "apple"), 0);
+		assertEquals("a=apple,b=banana,d=dock", question.getInternalPossibleAnswersAsString());
+		assertTrue("Did not contain Apple", question.hasPossibleAnswer("a"));
+		assertEquals("b", question.getAnswer());
+		question.removePossibleAnswer("a");
+		assertEquals("b", question.getAnswer());
+		question.removePossibleAnswer("b");
+		assertNull("The answer was not set to null when the associated possible answer was removed", question.getAnswer());
+	}
+	
 
 }
