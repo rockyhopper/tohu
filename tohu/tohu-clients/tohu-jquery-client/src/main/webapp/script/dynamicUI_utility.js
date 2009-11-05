@@ -351,9 +351,9 @@ function splitWithEscapes(text, delimiter) {
 }
 
 /**
- * Escapes xml special characters within some text.
+ * Escapes xml special characters within some text. Note: some browsers do not recognise &apos;, so &#39; is used instead.
  * 
- * '  &apos;
+ * '  &#39;
  * "  &quot;
  * <  &lt;
  * >   &gt;
@@ -361,7 +361,7 @@ function splitWithEscapes(text, delimiter) {
  * 
  */
 function xmlEscape(text) {
-	return text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	return text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /**
