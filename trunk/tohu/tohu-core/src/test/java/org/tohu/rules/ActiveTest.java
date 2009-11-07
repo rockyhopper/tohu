@@ -44,7 +44,7 @@ import org.tohu.Questionnaire;
 /**
  * @author Damon
  * 
- * TODO add tests for InvalidAnswer - should be active only if question is active (and exists of course)
+ *         TODO add tests for InvalidAnswer - should be active only if question is active (and exists of course)
  */
 public class ActiveTest {
 
@@ -68,11 +68,11 @@ public class ActiveTest {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
-			questionnaire.setItems(new String[]{"group1","group2","note4"});
+			questionnaire.setItems(new String[] { "group1", "group2", "note4" });
 			Group group1 = new Group("group1");
-			group1.setItems(new String[]{"note1","note2"});
+			group1.setItems(new String[] { "note1", "note2" });
 			Group group2 = new Group("group2");
-			group2.setItems(new String[]{"note3"});
+			group2.setItems(new String[] { "note3" });
 			Note note1 = new Note("note1");
 			Note note2 = new Note("note2");
 			Note note3 = new Note("note3");
@@ -127,7 +127,7 @@ public class ActiveTest {
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			group1.setItems(new String[]{"note1","note2","note5"});
+			group1.setItems(new String[] { "note1", "note2", "note5" });
 			knowledgeSession.update(handleGroup1, group1);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
@@ -136,7 +136,7 @@ public class ActiveTest {
 					new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2", "note5" })),
 					itemIds);
 
-			group1.setItems(new String[]{"note1","note2"});
+			group1.setItems(new String[] { "note1", "note2" });
 			knowledgeSession.update(handleGroup1, group1);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
@@ -153,11 +153,11 @@ public class ActiveTest {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
-			questionnaire.setItems(new String[]{"group1","group2"});
+			questionnaire.setItems(new String[] { "group1", "group2" });
 			Group group1 = new Group("group1");
-			group1.setItems(new String[]{"note1","note1"});
+			group1.setItems(new String[] { "note1", "note1" });
 			Group group2 = new Group("group2");
-			group2.setItems(new String[]{"note2"});
+			group2.setItems(new String[] { "note2" });
 			Note note1 = new Note("note1");
 			Note note2 = new Note("note2");
 			FactHandle handleQuestionnaire = knowledgeSession.insert(questionnaire);
@@ -170,23 +170,22 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays
+					.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })), itemIds);
 
 			questionnaire.setActiveItem("group2");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note2" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("unknown");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -204,15 +203,15 @@ public class ActiveTest {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
-			questionnaire.setItems(new String[]{"group1","group2"});
+			questionnaire.setItems(new String[] { "group1", "group2" });
 			Group group1 = new Group("group1");
-			group1.setItems(new String[]{"group3","group4"});
+			group1.setItems(new String[] { "group3", "group4" });
 			Group group2 = new Group("group2");
-			group2.setItems(new String[]{"note2"});
+			group2.setItems(new String[] { "note2" });
 			Group group3 = new Group("group3");
-			group3.setItems(new String[]{"note1"});
+			group3.setItems(new String[] { "note1" });
 			Group group4 = new Group("group4");
-			group4.setItems(new String[]{"note1"});
+			group4.setItems(new String[] { "note1" });
 			Note note1 = new Note("note1");
 			Note note2 = new Note("note2");
 			FactHandle handleQuestionnaire = knowledgeSession.insert(questionnaire);
@@ -227,23 +226,23 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "group3", "group4", "note1", "note2" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "group3",
+					"group4", "note1", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group3", "group4", "note1" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays
+					.asList(new String[] { "questionnaire", "group1", "group3", "group4", "note1" })), itemIds);
 
 			questionnaire.setActiveItem("group2");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note2" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("unknown");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -261,11 +260,11 @@ public class ActiveTest {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
-			questionnaire.setItems(new String[]{"group1","group2"});
+			questionnaire.setItems(new String[] { "group1", "group2" });
 			Group group1 = new Group("group1");
-			group1.setItems(new String[]{"note1"});
+			group1.setItems(new String[] { "note1" });
 			Group group2 = new Group("group2");
-			group2.setItems(new String[]{"note1","note2"});
+			group2.setItems(new String[] { "note1", "note2" });
 			Note note1 = new Note("note1");
 			Note note2 = new Note("note2");
 			FactHandle handleQuestionnaire = knowledgeSession.insert(questionnaire);
@@ -278,15 +277,15 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays
+					.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })), itemIds);
 
 			questionnaire.setActiveItem("group2");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -312,14 +311,14 @@ public class ActiveTest {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
-			questionnaire.setItems(new String[]{"group1","group2"});
+			questionnaire.setItems(new String[] { "group1", "group2" });
 			questionnaire.setActiveItem("group1");
 			Group group1 = new Group("group1");
-			group1.setItems(new String[]{"note1"});
+			group1.setItems(new String[] { "note1" });
 			Group group2 = new Group("group2");
-			group2.setItems(new String[]{"note1","note2"});
+			group2.setItems(new String[] { "note1", "note2" });
 			Group group3 = new Group("group3");
-			group3.setItems(new String[]{"note3"});
+			group3.setItems(new String[] { "note3" });
 			Note note1 = new Note("note1");
 			Note note2 = new Note("note2");
 			Note note3 = new Note("note3");
@@ -337,13 +336,12 @@ public class ActiveTest {
 			Set<String> itemIds = getItemIds(queryResults);
 			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })), itemIds);
 
-			questionnaire.navigationBranch(new String[]{"group3"}, "group3");
+			questionnaire.navigationBranch(new String[] { "group3" }, "group3");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group3", "note3" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group3", "note3" })), itemIds);
 
 			questionnaire.setActiveItem(Questionnaire.COMPLETION_ACTION_RETURN);
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -351,6 +349,68 @@ public class ActiveTest {
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
 			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1" })), itemIds);
+		} finally {
+			knowledgeSession.dispose();
+		}
+	}
+
+	@Test
+	public void testMissingPages() {
+		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
+		try {
+			Questionnaire questionnaire = new Questionnaire("questionnaire");
+			questionnaire.setItems(new String[] { "group1", "group2", "group3", "group4", "group5", "group6", "group7" });
+			Group group2 = new Group("group2");
+			Group group5 = new Group("group5");
+			Group group6 = new Group("group6");
+			FactHandle handleQuestionnaire = knowledgeSession.insert(questionnaire);
+			knowledgeSession.insert(group2);
+			knowledgeSession.insert(group5);
+			knowledgeSession.insert(group6);
+			questionnaire.setActiveItem("group1");
+
+			knowledgeSession.fireAllRules();
+			assertEquals("group1", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group2");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group2", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group3");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group5", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group6");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group6", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group7");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group7", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group6");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group6", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group5");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group5", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group4");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group2", questionnaire.getActiveItem());
+
+			questionnaire.setActiveItem("group1");
+			knowledgeSession.update(handleQuestionnaire, questionnaire);
+			knowledgeSession.fireAllRules();
+			assertEquals("group1", questionnaire.getActiveItem());
 		} finally {
 			knowledgeSession.dispose();
 		}
