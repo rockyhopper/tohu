@@ -82,8 +82,8 @@ public class QuestionnaireTest {
 		q.setActiveItem("a");
 		q.setCompletionAction("default");
 		try {
-			q.navigationBranch(null, "y", "action1");
-			fail("no items on new branch");
+		q.navigationBranch(null, "y", "action1");
+		fail("no items on new branch");
 		} catch (IllegalArgumentException e) {
 			// expected
 		}
@@ -118,93 +118,5 @@ public class QuestionnaireTest {
 			// expected
 		}
 	}
-	
-	@Test
-	public void testItemHandlingForQuestionnaire() {
-		Questionnaire q = new Questionnaire();
-		String[] itemList = new String[] { "a" };
-		q.setItems(itemList);
-		q.setActiveItem("a");
-		q.setCompletionAction("default");
-		
-		
-		// test insert/append without master list - just to check the group based tests are still
-		// ok for the questionnaire
-		q.appendItem("k", "a");
-		assertEquals("a,k", q.getInternalItemsAsString());
-		q.insertItem("e", "k");
-		assertEquals("a,e,k", q.getInternalItemsAsString());
-		
-		// assign decent itemList for use later on
-		itemList = q.getItems();
-		assertArrayEquals(new String[] { "a","e","k" }, itemList);
-		
-		
-		String[] masterItemList = new String[] { "a", "b", "c", "d", "e", "f", "j", "h", "i" };
-		q.setMasterListOfAllItems(masterItemList);
-		
-		// Test use of an item that appears in items but not master - should never be the case
-		// if do things properly. Remember that the Group test handles
-		q.insertItem("j", "k");
-		assertEquals("a,e,j,k", q.getInternalItemsAsString());
-		q.appendItem("l", "k");
-		assertEquals("a,e,j,k,l", q.getInternalItemsAsString());
-		
-		// test adding when referred to item does not exist
-		q.insertItem("m", "o");
-		assertEquals("a,e,j,k,l,m", q.getInternalItemsAsString());
-		q.appendItem("n", "o");
-		assertEquals("a,e,j,k,l,m,n", q.getInternalItemsAsString());
-		
-		// test removing, and impact on active item
-		q.removeItem("n");
-		assertEquals("a,e,j,k,l,m", q.getInternalItemsAsString());
-		assertEquals("a", q.getActiveItem());
-		q.removeItem("a");
-		assertEquals("e,j,k,l,m", q.getInternalItemsAsString());
-		assertEquals("e", q.getActiveItem());
-		q.setActiveItem("l");
-		q.removeItem("l");
-		assertEquals("e,j,k,m", q.getInternalItemsAsString());
-		assertEquals("k", q.getActiveItem());
-		q.setActiveItem("m");
-		q.removeItem("m");
-		assertEquals("e,j,k", q.getInternalItemsAsString());
-		assertEquals("k", q.getActiveItem());
-	}
-
-	@Test
-	public void testInsertingPagesBasedOnMasterItemList() {
-		Questionnaire q = new Questionnaire();
-		String[] itemList = new String[] { "a", "e", "k" };
-		q.setItems(itemList);
-		assertEquals("a,e,k", q.getInternalItemsAsString());
-				
-		String[] masterItemList = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k" };
-		q.setMasterListOfAllItems(masterItemList);
-		assertEquals("a,b,c,d,e,f,g,h,i,j,k", q.getInternalMasterListOfAllItemsAsString());
-		
-		// Append
-		q.appendItem("d", "c");
-		assertEquals("a,d,e,k", q.getInternalItemsAsString());
-		q.appendItem("c", "b");
-		assertEquals("a,c,d,e,k", q.getInternalItemsAsString());
-		q.appendItem("b", "a");
-		assertEquals("a,b,c,d,e,k", q.getInternalItemsAsString());
-		
-		// insert
-		q.insertItem("h", "j");
-		assertEquals("a,b,c,d,e,h,k", q.getInternalItemsAsString());
-		q.insertItem("i", "k");
-		assertEquals("a,b,c,d,e,h,i,k", q.getInternalItemsAsString());
-		q.insertItem("f", "g");
-		assertEquals("a,b,c,d,e,f,h,i,k", q.getInternalItemsAsString());
-		q.insertItem("j", "k");
-		assertEquals("a,b,c,d,e,f,h,i,j,k", q.getInternalItemsAsString());
-		q.insertItem("g", "h");
-		assertEquals("a,b,c,d,e,f,g,h,i,j,k", q.getInternalItemsAsString());
-	}
-
-
 
 }

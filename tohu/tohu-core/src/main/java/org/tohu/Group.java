@@ -47,7 +47,7 @@ public class Group extends Item {
 	/**
 	 * Items are represented internally as a comma-delimited string for efficient XML transport.
 	 */
-	protected String items;
+	private String items;
 
 	public Group() {
 	}
@@ -77,7 +77,7 @@ public class Group extends Item {
 	public String[] getItems() {
 		return items == null ? null : items.split(COMMA_SEPARATOR);
 	}
-	
+
 	/**
 	 * @param itemId
 	 * @return
@@ -92,27 +92,6 @@ public class Group extends Item {
 		}
 		return true;
 	}
-	
-	protected String transformItemsArrayToString(String[] items) {
-		if (items == null) {
-			return null;
-		}
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < items.length; i++) {
-			String temp = items[i];
-			if (validItemId(temp)) {
-				if (sb.length() > 0) {
-					sb.append(COMMA_SEPARATOR);
-				}
-				sb.append(items[i]);
-			}
-		}
-		if (sb.length() > 0) {
-			return sb.toString();
-		} else {
-			return null;
-		}
-	}
 
 	/**
 	 * Sets list of item ids. Values will NOT be trimmed.
@@ -120,14 +99,32 @@ public class Group extends Item {
 	 * @param items
 	 */
 	public void setItems(String[] items) {
-		this.items = transformItemsArrayToString(items);
+		if (items == null) {
+			this.items = null;
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < items.length; i++) {
+				String temp = items[i];
+				if (validItemId(temp)) {
+					if (sb.length() > 0) {
+						sb.append(COMMA_SEPARATOR);
+					}
+					sb.append(items[i]);
+				}
+			}
+			if (sb.length() > 0) {
+				this.items = sb.toString();
+			} else {
+				this.items = null;
+			}
+		}
 	}
 
 	/**
 	 * Adds itemId to the existing list. Value will NOT be trimmed. Duplicates allowed. Null will be ignored
 	 * 
-	 * @param itemId -
-	 *            cannot contain a comma
+	 * @param itemId
+	 *            - cannot contain a comma
 	 */
 	public void addItem(String itemId) {
 		if (validItemId(itemId)) {
@@ -137,10 +134,6 @@ public class Group extends Item {
 				this.items = this.items + COMMA_SEPARATOR + itemId;
 			}
 		}
-	}
-	
-	protected void addItemWhenPositionalItemNotFound(String itemId, String otherItemId, boolean after) {
-		addItem(itemId);
 	}
 
 	/**
@@ -159,7 +152,7 @@ public class Group extends Item {
 			List<String> items = new ArrayList<String>(Arrays.asList(getItems()));
 			int pos = items.indexOf(beforeItemId);
 			if (pos < 0) {
-				addItemWhenPositionalItemNotFound(itemId, beforeItemId, false);
+				addItem(itemId);
 			} else {
 				items.add(pos, itemId);
 				setItems(items.toArray());
@@ -182,10 +175,7 @@ public class Group extends Item {
 		} else if (validItemId(itemId)) {
 			List<String> items = new ArrayList<String>(Arrays.asList(getItems()));
 			int pos = items.indexOf(afterItemId);
-			if (pos < 0) {
-				addItemWhenPositionalItemNotFound(itemId, afterItemId, true);
-			}
-			else if	((pos + 1) == items.size()) {
+			if ((pos < 0) || ((pos + 1) == items.size())) {
 				addItem(itemId);
 			} else {
 				items.add(pos + 1, itemId);
@@ -199,8 +189,7 @@ public class Group extends Item {
 	 * 
 	 * @param itemId
 	 *            The value to remove. Ignore if null or doesn't exist
-	 * @return 
-	 * 			  The index of the removed item, or -1 if not found
+	 * @return The index of the removed item, or -1 if not found
 	 */
 	public int removeItem(String itemId) {
 		if (validItemId(itemId)) {

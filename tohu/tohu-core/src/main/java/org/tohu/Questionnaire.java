@@ -16,8 +16,6 @@
 package org.tohu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * <p>
@@ -40,13 +38,8 @@ public class Questionnaire extends Group {
 	public static final String COMPLETION_ACTION_RETURN = "#return";
 
 	private String activeItem;
-	
-	/**
-	 * Items are represented internally as a comma-delimited string for efficient XML transport.
-	 */
-	private String masterListOfAllItems;
 
-
+	private transient String lastActiveItem;
 
 	private transient ArrayList<NavigationStackEntry> navigationStack = new ArrayList<NavigationStackEntry>();
 
@@ -71,104 +64,6 @@ public class Questionnaire extends Group {
 	public String getActiveItem() {
 		return activeItem;
 	}
-	
-	/**
-	 * Gets list of master item ids, regardless of whether they are conditional or not
-	 * 
-	 * @return
-	 */
-	public String[] getMasterListOfAllItems() {
-		return masterListOfAllItems == null ? null : masterListOfAllItems.split(COMMA_SEPARATOR);
-	}
-	
-	
-	/**
-	 * Sets list of master item ids. Values will NOT be trimmed.
-	 * 
-	 * @param masterListOfAllItems
-	 */
-	public void setMasterListOfAllItems(String[] masterListOfAllItems) {
-		this.masterListOfAllItems = transformItemsArrayToString(masterListOfAllItems);
-	}
-
-	/**
-	 * Sets list of master item ids.
-	 * 
-	 * This method is provided to support the MVEL syntax in rules e.g.
-	 * <p>
-	 * <code>questionnaire.setMasterListOfAllItems({"a", "b"});</code>
-	 * </p>
-	 * 
-	 * @param items
-	 */
-	public void setMasterListOfAllItems(Object[] items) {
-		if (items == null) {
-			this.masterListOfAllItems = null;
-		} else {
-			setMasterListOfAllItems((String[]) Arrays.asList(items).toArray(new String[] {}));
-		}
-	}
-
-
-	/**
-	 * Gets list of master item ids as a comma delimited string. Implemented for testing purpose only - package visibility
-	 * 
-	 * @return
-	 */
-	String getInternalMasterListOfAllItemsAsString() {
-		return masterListOfAllItems;
-	}
-	
-	protected void addItemWhenPositionalItemNotFound(String itemId, String otherItemId, boolean after) {
-		if ((masterListOfAllItems == null) || (items == null)) {
-			super.addItemWhenPositionalItemNotFound(itemId, otherItemId, after);
-			return;
-		}
-
-		List<String> masterList = new ArrayList<String>(Arrays.asList(getMasterListOfAllItems()));
-		int pos = masterList.indexOf(otherItemId);
-		if (pos < 0) {
-			super.addItemWhenPositionalItemNotFound(itemId, otherItemId, after);
-			return;
-		}
-		
-		List<String> itemList = new ArrayList<String>(Arrays.asList(getItems()));
-		String theItemId = null;
-		if (after) {
-			for (int i = pos - 1; i >= 0; i--) {
-				String id = masterList.get(i);
-				int tempPos = itemList.indexOf(id);
-				if (tempPos >= 0) {
-					theItemId = id;
-					break;
-				}
-			}
-		}
-		else {
-			for (int i = pos; i < masterList.size(); i++) {
-				String id = masterList.get(i);
-				int tempPos = itemList.indexOf(id);
-				if (tempPos >= 0) {
-					theItemId = id;
-					break;
-				}
-			}
-		}
-
-		if (theItemId == null) {
-			super.addItemWhenPositionalItemNotFound(itemId, otherItemId, after);
-			return;
-		}
-
-		if (after) {
-			appendItem(itemId, theItemId);
-		}
-		else {
-			insertItem(itemId, theItemId);
-		}
-	}
-
-
 
 	/**
 	 * Sets the active child <code>Item</code> within the questionnaire.
@@ -181,7 +76,17 @@ public class Questionnaire extends Group {
 	 * @param activeItem
 	 */
 	public void setActiveItem(String activeItem) {
+		lastActiveItem = this.activeItem;
 		this.activeItem = activeItem;
+	}
+
+	/**
+	 * Returns the value of activeItem prior to the last call to setActiveItem (or null after a call to navigationBranch or navigationReturn). 
+	 *  
+	 * @return
+	 */
+	public String getLastActiveItem() {
+		return lastActiveItem;
 	}
 
 	/**
@@ -228,7 +133,7 @@ public class Questionnaire extends Group {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + " activeItem=" + getActiveItem() + " completionAction=" + getCompletionAction() + " masterListOfAllItems=" + masterListOfAllItems
+		return super.toString() + " activeItem=" + getActiveItem() + " completionAction=" + getCompletionAction()
 				+ " pushedActiveItems=" + navigationStack + " invalidAnswers=" + invalidAnswers;
 	}
 
@@ -261,6 +166,7 @@ public class Questionnaire extends Group {
 		navigationStack.add(0, entry);
 		this.setItems(newItems);
 		this.activeItem = newActiveItem;
+		this.lastActiveItem = null;
 		this.completionAction = newCompletionAction;
 	}
 
@@ -275,8 +181,8 @@ public class Questionnaire extends Group {
 		}
 		NavigationStackEntry entry = navigationStack.remove(0);
 		this.activeItem = entry.activeItem;
-		this.items = entry.items;
-		this.masterListOfAllItems = entry.masterListOfAllItems;
+		this.lastActiveItem = null;
+		this.setItems(entry.items);
 		this.setCompletionAction(entry.completionAction);
 	}
 
@@ -291,47 +197,15 @@ public class Questionnaire extends Group {
 
 	private class NavigationStackEntry {
 
-		private String items;
+		private String[] items;
 		private String activeItem;
 		private String completionAction;
-		private String masterListOfAllItems;
 
 		private NavigationStackEntry(Questionnaire questionnaire) {
-			this.items = questionnaire.getInternalItemsAsString();
+			this.items = questionnaire.getItems();
 			this.activeItem = questionnaire.getActiveItem();
 			this.completionAction = questionnaire.getCompletionAction();
-			this.masterListOfAllItems = questionnaire.masterListOfAllItems;
 		}
 
 	}
-	
-	/**
-	 * Removes itemId from the existing list, but only if it is NOT the last item (page)
-	 * 
-	 * @param itemId
-	 *            The value to remove. Ignore if null or doesn't exist
-	 * @return 
-	 * 			  The index of the removed item, or -1 if not found
-	 */
-	public int removeItem(String itemId) {
-		int pos = super.removeItem(itemId);
-		if ((pos > -1) && (itemId.equals(getActiveItem()))) {
-			if (items == null) {
-				System.out.println("Warning: removal of last page in a questionnaire is NOT being actioned");
-				addItem(itemId);
-			}
-			else {
-				List<String> items = new ArrayList<String>(Arrays.asList(getItems()));
-				if (pos == 0) {
-					setActiveItem(items.get(0));
-				}
-				else {
-					// The -1 handles when removed the last item
-					setActiveItem(items.get(pos - 1));
-				}
-			}
-		}
-		return pos;
-	}
-	
 }
