@@ -47,6 +47,8 @@ public class Questionnaire extends Group {
 
 	private boolean invalidAnswers;
 
+	private boolean enableActionValidation;
+	
 	public Questionnaire() {
 		super.setActive(true);
 	}
@@ -208,4 +210,14 @@ public class Questionnaire extends Group {
 		}
 
 	}
+
+	public boolean isEnableActionValidation() {
+		return enableActionValidation;
+	}
+
+	public void setEnableActionValidation(boolean enableActionValidation) {
+		this.enableActionValidation = enableActionValidation;
+	}
+
+		
 }
