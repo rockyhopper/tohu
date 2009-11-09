@@ -94,6 +94,7 @@ function QuestionnaireObject() {
 	this.items = new Array();
 	this.activeItem = null;
 	this.completionAction = null;
+	this.enableActionValidation = null;
 	this.hierarchy = new HierarchyObject(null, 0, 0, false);
 	// Handle for the Questionnaire fact.
 	this.factHandle = null;

@@ -452,6 +452,7 @@ function getQuestionnaireActions(questionnaire) {
 	var retVal = new Array();
 	var obj = null;
 	var activeIndex = null;
+
 	if (questionnaire.activeItem && (questionnaire.activeItem != "")) {
 		activeIndex = jQuery.inArray(questionnaire.activeItem, questionnaire.items);
 	}
@@ -509,14 +510,37 @@ function getQuestionnaireActions(questionnaire) {
 		obj.id = questionnaire.id + "_action_1";
 		obj.presentationStyles = "next";
 		obj.label = "Next";
-		obj.actionType = "setActive";
-		obj.action = questionnaire.items[activeIndex + 1];
+		
+		if (questionnaire.enableActionValidation && questionnaire.hasErrors) {
+			obj = processValidation(obj);
+		} else {
+			obj.actionType = "setActive";
+			obj.action = questionnaire.items[activeIndex + 1];			
+		}
 		obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
 		retVal.push(obj);
 	}
 	return retVal;
 }
 
+ /**
+  * This will determine what reaction the external app will have
+  * to validation errors. A hook has being added for the
+  * external app to customize what behavior it would like to perform
+  * otherwise the default behavior is performed.
+  */
+ function processValidation(obj) {
+	 if (window.onProcessValidation) {
+		 var updatedObj = onProcessValidation(obj);
+		 if (!isNull(updatedObj)) {
+			 return updatedObj;
+		 }
+	 }
+	 obj.actionType = "showError";
+	 obj.action = "Not all mandatory questions have being answered";	 
+	 return obj;
+ }
+ 
 /**
  * Create a custom object for the specified xml fact.
  * 
@@ -551,6 +575,7 @@ function createFactObject(xml, isDelete) {
 		}
 		obj.activeItem = getChildText(jq, "activeItem");
 		obj.completionAction = getChildText(jq, "completionAction");
+		obj.enableActionValidation = getChildBoolean(jq, "enableActionValidation");
 		obj.hasErrors = getChildBoolean(jq, "invalidAnswers");
 		obj.factHandle = $("fact-handle", xml).attr("externalForm");
 		break;
