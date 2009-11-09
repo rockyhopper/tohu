@@ -359,14 +359,19 @@ function handleActionEvent(actionID, actionType, action) {
 			getJQElement(htmlRootID).empty();
 			refreshScreen(setActiveItem(action), null, null);
 			break;
-		case "showError":
+		case "showError":			
+			if (window.onShowError) {
+				onShowError(actionID, action);
+				break;
+			}				
 			showError(action);
 		    break;
-		case "completion":
-			// This could be changed to be more dynamic if we added in another attribute 
-			// to the questionaire Object indicating whether a new tab is required when 
-			// completion.e,g, an enum set of different actions to take when completing the rules
-			document.myform.target = '_blank';			
+		case "completion":			
+			if (window.onCompleteQuestionaire) {
+				action = onCompleteQuestionaire(actionURL, action);
+				if (!isnull(document.myform.action))
+				break;
+			}			
 			document.myform.action = actionURL + action;			
 			document.myform.submit();
 			break;
