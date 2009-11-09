@@ -12,6 +12,7 @@
 					<label>Questionnaire 1</label>
 					<items>group1</items>
 					<completionAction>done</completionAction>
+					<enableActionValidation>false</enableActionValidation>					
 					<invalidAnswers>false</invalidAnswers>
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="questionnaire1Handle" />

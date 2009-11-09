@@ -53,6 +53,7 @@
 					<activeItem>group3</activeItem>
 					<completionAction>#return</completionAction>
 					<invalidAnswers>true</invalidAnswers>
+					<enableActionValidation>false</enableActionValidation>						
 				</org.tohu.Questionnaire>
 				<org.tohu.Question>
 					<id>item_2_3</id>
