@@ -63,6 +63,7 @@
 					<items>group1,group2,group3,group6</items>
 					<activeItem>group1</activeItem>
 					<completionAction>#return</completionAction>
+					<enableActionValidation>false</enableActionValidation>
 					<invalidAnswers>true</invalidAnswers>
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="questionnaire1Handle" />

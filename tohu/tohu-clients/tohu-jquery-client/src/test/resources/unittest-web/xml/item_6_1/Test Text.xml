@@ -19,6 +19,7 @@
 					<activeItem>group6</activeItem>
 					<completionAction>#return</completionAction>
 					<invalidAnswers>false</invalidAnswers>
+					<enableActionValidation>false</enableActionValidation>						
 				</org.tohu.Questionnaire>
 			</update>
 		</org.tohu.xml.ChangeCollector>

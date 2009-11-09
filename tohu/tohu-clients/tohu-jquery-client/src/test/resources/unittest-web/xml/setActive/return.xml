@@ -10,6 +10,7 @@
 					<active>true</active>
 					<label>All Done</label>
 					<invalidAnswers>false</invalidAnswers>
+					<enableActionValidation>false</enableActionValidation>	
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="questionnaire3Handle" />
 			</row>
