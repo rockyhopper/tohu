@@ -99,7 +99,7 @@
     calledPreActionEvent = true;
     switch (actionType) {
     case "setActive":
-      if (action == "group6") {
+      if ((action == "group6") || (action == "group1")) {
    	    setDroolsURL(baseDroolsURL + actionType + "/" + action + ".xml");
       }
       else if (action == "#return") {
