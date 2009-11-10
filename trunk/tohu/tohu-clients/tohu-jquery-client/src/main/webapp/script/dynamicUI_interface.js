@@ -454,7 +454,7 @@ function getQuestionnaireActions(questionnaire) {
 	var activeIndex = null;
 
 	if (questionnaire.activeItem && (questionnaire.activeItem != "")) {
-		activeIndex = jQuery.inArray(questionnaire.activeItem, questionnaire.items);
+		activeIndex = jQuery.inArray(questionnaire.activeItem, questionnaire.availableItems);
 	}
 	if (activeIndex >  0) {
 		// Not first item.
@@ -463,11 +463,11 @@ function getQuestionnaireActions(questionnaire) {
 		obj.presentationStyles = "previous";
 		obj.label = "Previous";
 		obj.actionType = "setActive";
-		obj.action = questionnaire.items[activeIndex - 1];
+		obj.action = questionnaire.availableItems[activeIndex - 1];
 		obj.hierarchy = new HierarchyObject(questionnaire.id, 0, 1, false);
 		retVal.push(obj);
 	}
-	if ((activeIndex == null) || (activeIndex == (questionnaire.items.length - 1))) {
+	if ((activeIndex == null) || (activeIndex == (questionnaire.availableItems.length - 1))) {
 		// Last item.
 		obj = new ActionObject();
 		obj.id = questionnaire.id + "_action_1";
@@ -515,7 +515,7 @@ function getQuestionnaireActions(questionnaire) {
 			obj = processValidation(obj);
 		} else {
 			obj.actionType = "setActive";
-			obj.action = questionnaire.items[activeIndex + 1];			
+			obj.action = questionnaire.availableItems[activeIndex + 1];			
 		}
 		obj.hierarchy = new HierarchyObject(questionnaire.id, 1, 1, false);
 		retVal.push(obj);
@@ -572,6 +572,10 @@ function createFactObject(xml, isDelete) {
 		items = getChildText(jq, "items");
 		if (items) {
 			obj.items = items.split(",");
+		}
+		var availableItems = getChildText(jq, "availableItems");
+		if (availableItems) {
+			obj.availableItems = availableItems.split(",");
 		}
 		obj.activeItem = getChildText(jq, "activeItem");
 		obj.completionAction = getChildText(jq, "completionAction");

@@ -58,6 +58,7 @@ public class ActiveTest {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Active.drl"), ResourceType.DRL);
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Queries.drl"), ResourceType.DRL);
+		System.out.println(knowledgeBuilder.getErrors());
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
 		knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
@@ -355,7 +356,7 @@ public class ActiveTest {
 	}
 
 	@Test
-	public void testMissingPages() {
+	public void testAvailableItems() {
 		StatefulKnowledgeSession knowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 		try {
 			Questionnaire questionnaire = new Questionnaire("questionnaire");
@@ -363,54 +364,12 @@ public class ActiveTest {
 			Group group2 = new Group("group2");
 			Group group5 = new Group("group5");
 			Group group6 = new Group("group6");
-			FactHandle handleQuestionnaire = knowledgeSession.insert(questionnaire);
+			knowledgeSession.insert(questionnaire);
 			knowledgeSession.insert(group2);
 			knowledgeSession.insert(group5);
 			knowledgeSession.insert(group6);
-			questionnaire.setActiveItem("group1");
-
 			knowledgeSession.fireAllRules();
-			assertEquals("group1", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group2");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group2", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group3");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group5", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group6");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group6", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group7");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group7", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group6");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group6", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group5");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group5", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group4");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group2", questionnaire.getActiveItem());
-
-			questionnaire.setActiveItem("group1");
-			knowledgeSession.update(handleQuestionnaire, questionnaire);
-			knowledgeSession.fireAllRules();
-			assertEquals("group1", questionnaire.getActiveItem());
+			assertArrayEquals(new String[] { "group2", "group5", "group6" }, questionnaire.getAvailableItems());
 		} finally {
 			knowledgeSession.dispose();
 		}

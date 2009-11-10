@@ -39,8 +39,6 @@ public class Questionnaire extends Group {
 
 	private String activeItem;
 
-	private transient String lastActiveItem;
-
 	private transient ArrayList<NavigationStackEntry> navigationStack = new ArrayList<NavigationStackEntry>();
 
 	private String completionAction;
@@ -48,7 +46,9 @@ public class Questionnaire extends Group {
 	private boolean invalidAnswers;
 
 	private boolean enableActionValidation;
-	
+
+	private String availableItems;
+
 	public Questionnaire() {
 		super.setActive(true);
 	}
@@ -78,17 +78,7 @@ public class Questionnaire extends Group {
 	 * @param activeItem
 	 */
 	public void setActiveItem(String activeItem) {
-		lastActiveItem = this.activeItem;
 		this.activeItem = activeItem;
-	}
-
-	/**
-	 * Returns the value of activeItem prior to the last call to setActiveItem (or null after a call to navigationBranch or navigationReturn). 
-	 *  
-	 * @return
-	 */
-	public String getLastActiveItem() {
-		return lastActiveItem;
 	}
 
 	/**
@@ -168,7 +158,6 @@ public class Questionnaire extends Group {
 		navigationStack.add(0, entry);
 		this.setItems(newItems);
 		this.activeItem = newActiveItem;
-		this.lastActiveItem = null;
 		this.completionAction = newCompletionAction;
 	}
 
@@ -183,7 +172,6 @@ public class Questionnaire extends Group {
 		}
 		NavigationStackEntry entry = navigationStack.remove(0);
 		this.activeItem = entry.activeItem;
-		this.lastActiveItem = null;
 		this.setItems(entry.items);
 		this.setCompletionAction(entry.completionAction);
 	}
@@ -219,5 +207,37 @@ public class Questionnaire extends Group {
 		this.enableActionValidation = enableActionValidation;
 	}
 
-		
+	/**
+	 * Gets list of available item ids.
+	 * 
+	 * @return
+	 */
+	public String[] getAvailableItems() {
+		return availableItems == null ? null : availableItems.split(COMMA_SEPARATOR);
+	}
+
+	/**
+	 * This is invoked by the Pixie Dust. Do not call it directly.
+	 * 
+	 * @param availableItems
+	 */
+	public void setAvailableItems(String[] availableItems) {
+		if (availableItems == null) {
+			this.availableItems = null;
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < availableItems.length; i++) {
+				if (sb.length() > 0) {
+					sb.append(COMMA_SEPARATOR);
+				}
+				sb.append(availableItems[i]);
+			}
+			if (sb.length() > 0) {
+				this.availableItems = sb.toString();
+			} else {
+				this.availableItems = null;
+			}
+		}
+	}
+
 }

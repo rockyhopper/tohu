@@ -92,6 +92,7 @@ function QuestionnaireObject() {
 	this.label = null;
 	// Array of child IDs.
 	this.items = new Array();
+	this.availableItems = new Array();
 	this.activeItem = null;
 	this.completionAction = null;
 	this.enableActionValidation = null;
@@ -222,7 +223,7 @@ function objectToString(obj) {
 	if (obj) {
 		switch (obj.objType) {
 		case QUESTIONNAIRE_OBJECT: 
-			retVal = "QUESTIONNAIRE: id=" + obj.id + " items=" + arrayToString(obj.items)
+			retVal = "QUESTIONNAIRE: id=" + obj.id + " items=" + arrayToString(obj.items) + " availableItems=" + arrayToString(obj.availableItems)
 				+ " activeItem=" + obj.activeItem + " hasErrors=" + obj.hasErrors
 				+ " factHandle=" + obj.factHandle;
 			break;

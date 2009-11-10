@@ -23,18 +23,26 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-rule "skip inactive top level items"
-salience 10 # before : anything else that uses activeItem 
+rule "build list of available items"
+no-loop
 when
-	questionnaire : Questionnaire(activeItem != null, lastActiveItem != null, activeItem != lastActiveItem);
-	not(exists(Item(id == questionnaire.activeItem)));
+	questionnaire : Questionnaire();
+	items : ArrayList() from collect (Item(id != questionnaire.id, questionnaire.items contains id));
 then
-	List items = new ArrayList<String>(Arrays.asList(questionnaire.getItems()));
-	int lastPos = items.indexOf(questionnaire.getLastActiveItem());
-	int currentPos = items.indexOf(questionnaire.getActiveItem());
-	int newPos = currentPos + (currentPos > lastPos ? 1 : -1);
-	if (newPos >= 0 && newPos < items.size()) {
-		questionnaire.setActiveItem((String)items.get(newPos)); 
+	List availableItemIds = new ArrayList();
+	for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+		availableItemIds.add(((Item)iterator.next()).getId());
+	}
+	List itemIds = new ArrayList(Arrays.asList(questionnaire.getItems()));
+	for (Iterator iterator = itemIds.iterator(); iterator.hasNext();) {
+		String id = (String)iterator.next();
+		if (!availableItemIds.contains(id)) {
+			iterator.remove();
+		}
+	}
+	String[] itemIdsArray = (String[])itemIds.toArray(new String[]{});
+	if (!Arrays.equals(itemIdsArray, questionnaire.getAvailableItems())) {
+		questionnaire.setAvailableItems(itemIdsArray);
 		update(questionnaire);
 	}
 end
