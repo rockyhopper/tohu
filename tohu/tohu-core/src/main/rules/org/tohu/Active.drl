@@ -40,9 +40,13 @@ then
 			iterator.remove();
 		}
 	}
-	String[] itemIdsArray = (String[])itemIds.toArray(new String[]{});
-	if (!Arrays.equals(itemIdsArray, questionnaire.getAvailableItems())) {
-		questionnaire.setAvailableItems(itemIdsArray);
+	String [] oldAvailableItems = questionnaire.getAvailableItems();
+	if (oldAvailableItems ==  null) {
+		oldAvailableItems = new String[]{};
+	}
+	String[] newAvailableItems = (String[])itemIds.toArray(new String[]{});
+	if (!Arrays.equals(newAvailableItems, oldAvailableItems)) {
+		questionnaire.setAvailableItems(newAvailableItems);
 		update(questionnaire);
 	}
 end
