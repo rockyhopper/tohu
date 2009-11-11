@@ -50,7 +50,7 @@
 					<presentationStyles>group4Style</presentationStyles>
 					<active>true</active>
 					<label>Group 4</label>
-					<items>item_4_1,item_4_2,item_4_3</items>
+					<items>item_4_1,item_4_2,item_4_3,item_4_4</items>
 				</org.tohu.Group>
 				<fact-handle externalForm="group4Handle" />
 			</row>
@@ -217,6 +217,20 @@
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
 				<fact-handle externalForm="item4_3Error1" />
+			</row>
+			<row>
+				<org.tohu.Question>
+					<id>item_4_4</id>
+					<presentationStyles>multitable,or,item_4_4Style</presentationStyles>
+					<active>true</active>
+					<preLabel>Item 4.4</preLabel>
+					<postLabel>Multiple answer select</postLabel>
+					<required>false</required>
+					<answerType>list</answerType>
+					<listAnswer>foo||qux</listAnswer>
+					<possibleAnswers>foo=foo,bar=bar,baz=baz,qux=qux,quux=quux</possibleAnswers>
+				</org.tohu.Question>
+				<fact-handle externalForm="item_4_4Handle" />
 			</row>
 		</query-results>
 	</result>

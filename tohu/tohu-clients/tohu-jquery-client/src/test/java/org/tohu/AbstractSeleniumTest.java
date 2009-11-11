@@ -48,7 +48,7 @@ public abstract class AbstractSeleniumTest {
 
 	/** Supported Answer types */
 	public static enum AnswerType {
-		TEXT, NUMBER, DECIMAL, DATE, BOOLEAN
+		TEXT, NUMBER, DECIMAL, DATE, BOOLEAN, LIST
 	};
 
 	/** Supported HTML widget types */
