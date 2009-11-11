@@ -24,6 +24,7 @@
 					<active>true</active>
 					<label>Questionnaire 2</label>
 					<items>group1,group6</items>
+          <availableItems>group1,group6</availableItems>
 					<activeItem>group6</activeItem>
 					<completionAction>#return</completionAction>
 					<invalidAnswers>true</invalidAnswers>

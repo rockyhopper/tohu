@@ -34,6 +34,7 @@
 					<active>true</active>
 					<label>Questionnaire 1</label>
 					<items>group1</items>
+          <availableItems>group1</availableItems>
 					<completionAction>#return</completionAction>
 					<enableActionValidation>false</enableActionValidation>						
 					<invalidAnswers>false</invalidAnswers>
