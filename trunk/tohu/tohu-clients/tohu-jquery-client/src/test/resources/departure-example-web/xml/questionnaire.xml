@@ -219,6 +219,7 @@
 					<active>true</active>
 					<label>EARTH PASSENGER DEPARTURE CARD</label>
 					<items>group1,group2,group3,group4</items>
+          <availableItems>group1,group2,group3,group4</availableItems>
 					<completionAction>extract.pdf</completionAction>
 				</org.tohu.Questionnaire>
 				<fact-handle externalForm="0:28:19194373:-146749578:42" />

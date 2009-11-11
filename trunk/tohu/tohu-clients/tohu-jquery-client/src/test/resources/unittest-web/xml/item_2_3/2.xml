@@ -50,6 +50,7 @@
 					<active>true</active>
 					<label>Questionnaire 1a</label>
 					<items>group1,group2,group3,group6</items>
+          <availableItems>group1,group2,group3,group6</availableItems>
 					<activeItem>group3</activeItem>
 					<completionAction>#return</completionAction>
 					<invalidAnswers>true</invalidAnswers>
