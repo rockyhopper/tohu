@@ -135,4 +135,12 @@ public class QuestionTest {
 		assertEquals(new BigDecimal("4.56"), q.getAnswer());
 	}
 
+	@Test
+	public void testNewListType() {
+		Question q = new Question();
+		q.setAnswerType(Question.TYPE_LIST);
+		String s = "something";
+		q.setListAnswer("one||two");
+		assertEquals("one||two", q.getListAnswer());
+	}
 }

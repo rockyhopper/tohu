@@ -18,6 +18,7 @@ package org.tohu;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 public class DummyData {
 
@@ -60,6 +61,8 @@ public class DummyData {
 	private Boolean objectBoolean;
 
 	private Date date;
+	
+	private List<String> list;
 
 	public char getPrimitiveChar() {
 		return primitiveChar;
@@ -220,5 +223,10 @@ public class DummyData {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	public List<String> getList() {
+		return this.list;
+	}
+	public void setList(List<String> list) {
+		this.list = list;
+	}
 }

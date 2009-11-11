@@ -632,6 +632,9 @@ function createFactObject(xml, isDelete) {
 			case "date":
 				obj.answer = getChildText(jq, "dateAnswer", "");
 				break;
+			case "list":
+				obj.answer = getChildText(jq, "listAnswer", "");
+				break;
 			default:
 				if (!handleError(ERROR_TYPES.RULES_DEFINITION, [ obj.id, "unknown answerType: " + obj.answerType ],
 						"dynamic_interface.createFactObject", objectToString(obj))) {

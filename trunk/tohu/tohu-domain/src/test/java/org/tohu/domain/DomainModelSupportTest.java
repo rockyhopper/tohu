@@ -97,6 +97,21 @@ public class DomainModelSupportTest {
 		setDateProperty("date", date);
 		assertEquals(date, getDateProperty("date"));
 	}
+	
+	@Test
+	public void testList() {
+		assertEquals(Question.TYPE_LIST, new ListDomainModelAdapter().getAnswerType());
+		setListProperty("list", null);
+		assertEquals("", getListProperty("list"));
+		setListProperty("list", "");
+		assertEquals("", getListProperty("list"));
+		setListProperty("list", "foo");
+		assertEquals("foo", getListProperty("list"));
+		setListProperty("list", "foo||bar");
+		assertEquals("foo||bar", getListProperty("list"));
+		setListProperty("list", "a||b||c||d");
+		assertEquals("a||b||c||d", getListProperty("list"));
+	}
 
 	private void setTextProperty(String property, String value) {
 		try {
@@ -202,6 +217,28 @@ public class DomainModelSupportTest {
 			System.out.println("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			Date value = (Date) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_DATE);
+			return value;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private void setListProperty(String property, String value) {
+		try {
+			System.out.println("Setting " + property);
+			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
+			Object v = DomainModelSupport.answerToObject(Question.TYPE_LIST, value, propertyClass);
+			PropertyUtils.setProperty(data, property, v);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private String getListProperty(String property) {
+		try {
+			System.out.println("Getting " + property);
+			Object propertyValue = PropertyUtils.getProperty(data, property);
+			String value = (String) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_LIST);
 			return value;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
