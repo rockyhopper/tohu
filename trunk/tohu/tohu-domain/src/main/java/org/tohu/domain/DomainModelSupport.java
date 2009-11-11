@@ -44,13 +44,13 @@ public class DomainModelSupport {
 	private static Map<String, DomainModelAdapter> adapters = new HashMap<String, DomainModelAdapter>();
 
 	static {
-		registerAdapter(Question.TYPE_TEXT, new StraightThroughDomainModelAdapter(Question.TYPE_TEXT, String.class));
-		registerAdapter(Question.TYPE_TEXT, new CharDomainModelAdapter()); // TYPE_TEXT
-		registerAdapter(Question.TYPE_NUMBER, new NumberDomainModelAdapter()); // TYPE_NUMBER
-		registerAdapter(Question.TYPE_DECIMAL, new DecimalDomainModelAdapter()); // TYPE_DECIMAL
-		registerAdapter(Question.TYPE_BOOLEAN, new BooleanDomainModelAdapter()); // TYPE_BOOLEAN
-		registerAdapter(Question.TYPE_DATE, new StraightThroughDomainModelAdapter(Question.TYPE_DATE, Date.class));
-		registerAdapter(Question.TYPE_LIST, new ListDomainModelAdapter());
+		registerAdapter(new StraightThroughDomainModelAdapter(Question.TYPE_TEXT, String.class));
+		registerAdapter(new CharDomainModelAdapter()); // TYPE_TEXT
+		registerAdapter(new NumberDomainModelAdapter()); // TYPE_NUMBER
+		registerAdapter(new DecimalDomainModelAdapter()); // TYPE_DECIMAL
+		registerAdapter(new BooleanDomainModelAdapter()); // TYPE_BOOLEAN
+		registerAdapter(new StraightThroughDomainModelAdapter(Question.TYPE_DATE, Date.class));
+		registerAdapter(new ListDomainModelAdapter());
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class DomainModelSupport {
 	 * 
 	 * @param adapter
 	 */
-	public static void registerAdapter(String type, DomainModelAdapter adapter) {
+	public static void registerAdapter(DomainModelAdapter adapter) {
 		for (Class<?> clazz : adapter.getSupportedClasses()) {
 			adapters.put(createAdapterKey(clazz), adapter);
 		}
