@@ -21,7 +21,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import org.tohu.util.Utils;
 
 /**
  * <p>
@@ -65,6 +70,8 @@ public class Question extends Item {
 	public static String TYPE_BOOLEAN = "boolean";
 
 	public static String TYPE_DATE = "date";
+	
+	public static final String TYPE_LIST = "list";
 
 	private String preLabel;
 
@@ -88,6 +95,12 @@ public class Question extends Item {
 
 	@AnswerField
 	private Date dateAnswer;
+	
+	/**
+	 * List is stored as a delimited string
+	 */
+	@AnswerField
+	private String listAnswer;
 
 	public Question() {
 	}
@@ -140,7 +153,7 @@ public class Question extends Item {
 		if (basicAnswerType == null
 				|| (!basicAnswerType.equals(TYPE_TEXT) && !basicAnswerType.equals(TYPE_NUMBER)
 						&& !basicAnswerType.equals(TYPE_DECIMAL) && !basicAnswerType.equals(TYPE_BOOLEAN) && !basicAnswerType
-						.equals(TYPE_DATE))) {
+						.equals(TYPE_DATE) && !basicAnswerType.equals(TYPE_LIST))) {
 			throw new IllegalArgumentException("answerType " + answerType + " is invalid");
 		}
 		this.answerType = answerType;
@@ -218,6 +231,24 @@ public class Question extends Item {
 		checkType(TYPE_DATE);
 		this.dateAnswer = dateAnswer;
 	}
+	
+	public String getListAnswer() {
+		checkType(TYPE_LIST);
+		return listAnswer;
+	}
+	
+	public void setListAnswer(String listAnswer) {
+		checkType(TYPE_LIST);
+		this.listAnswer = listAnswer;
+	}
+	
+	public List<String> getAnswerAsList() {
+		checkType(TYPE_LIST);
+		if (this.listAnswer == null) {
+			return new ArrayList<String>();
+		}
+		return Arrays.asList(Utils.splitMultipleAnswer(this.listAnswer));
+	}
 
 	public void setAnswer(Object answer) {
 		if (answerType == null) {
@@ -238,6 +269,9 @@ public class Question extends Item {
 		}
 		if (basicAnswerType.equals(TYPE_DATE)) {
 			setDateAnswer((Date) answer);
+		}
+		if (basicAnswerType.equals(TYPE_LIST)) {
+			setListAnswer((String) answer);
 		}
 	}
 
@@ -260,6 +294,9 @@ public class Question extends Item {
 		}
 		if (basicAnswerType.equals(TYPE_DATE)) {
 			return dateAnswer;
+		}
+		if (basicAnswerType.equals(TYPE_LIST)) {
+			return listAnswer;
 		}
 		throw new IllegalStateException();
 	}
@@ -293,6 +330,7 @@ public class Question extends Item {
 		decimalAnswer = null;
 		booleanAnswer = null;
 		dateAnswer = null;
+		listAnswer = null;
 	}
 
 	/**

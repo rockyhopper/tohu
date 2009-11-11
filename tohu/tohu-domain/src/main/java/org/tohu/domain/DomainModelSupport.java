@@ -41,15 +41,24 @@ import org.tohu.Question;
  */
 public class DomainModelSupport {
 
-	private static Map<Class<?>, DomainModelAdapter> adapters = new HashMap<Class<?>, DomainModelAdapter>();
+	private static Map<String, DomainModelAdapter> adapters = new HashMap<String, DomainModelAdapter>();
 
 	static {
-		registerAdapter(new StraightThroughDomainModelAdapter(Question.TYPE_TEXT, String.class));
-		registerAdapter(new CharDomainModelAdapter()); // TYPE_TEXT
-		registerAdapter(new NumberDomainModelAdapter()); // TYPE_NUMBER
-		registerAdapter(new DecimalDomainModelAdapter()); // TYPE_DECIMAL
-		registerAdapter(new BooleanDomainModelAdapter()); // TYPE_BOOLEAN
-		registerAdapter(new StraightThroughDomainModelAdapter(Question.TYPE_DATE, Date.class));
+		registerAdapter(Question.TYPE_TEXT, new StraightThroughDomainModelAdapter(Question.TYPE_TEXT, String.class));
+		registerAdapter(Question.TYPE_TEXT, new CharDomainModelAdapter()); // TYPE_TEXT
+		registerAdapter(Question.TYPE_NUMBER, new NumberDomainModelAdapter()); // TYPE_NUMBER
+		registerAdapter(Question.TYPE_DECIMAL, new DecimalDomainModelAdapter()); // TYPE_DECIMAL
+		registerAdapter(Question.TYPE_BOOLEAN, new BooleanDomainModelAdapter()); // TYPE_BOOLEAN
+		registerAdapter(Question.TYPE_DATE, new StraightThroughDomainModelAdapter(Question.TYPE_DATE, Date.class));
+		registerAdapter(Question.TYPE_LIST, new ListDomainModelAdapter());
+	}
+	
+	/**
+	 * If necessary transform specific list implementations to the list interface name
+	 */
+	private static String createAdapterKey(Class<?> clazz) {
+		String className = java.util.List.class.isAssignableFrom(clazz) ? "java.util.List" : clazz.getName();
+		return className;
 	}
 
 	/**
@@ -59,9 +68,9 @@ public class DomainModelSupport {
 	 * 
 	 * @param adapter
 	 */
-	public static void registerAdapter(DomainModelAdapter adapter) {
+	public static void registerAdapter(String type, DomainModelAdapter adapter) {
 		for (Class<?> clazz : adapter.getSupportedClasses()) {
-			adapters.put(clazz, adapter);
+			adapters.put(createAdapterKey(clazz), adapter);
 		}
 	}
 
@@ -80,7 +89,7 @@ public class DomainModelSupport {
 	 * @return
 	 */
 	public static Object answerToObject(String answerType, Object answer, Class<?> clazz) {
-		DomainModelAdapter adapter = adapters.get(clazz);
+		DomainModelAdapter adapter = adapters.get(createAdapterKey(clazz));
 		if (adapter == null) {
 			throw new UnsupportedOperationException("Unable to convert from answer type " + answerType + " to Java class "
 					+ clazz.getName());
@@ -106,7 +115,7 @@ public class DomainModelSupport {
 			return null;
 		}
 		Class<? extends Object> clazz = object.getClass();
-		DomainModelAdapter adapter = adapters.get(clazz);
+		DomainModelAdapter adapter = adapters.get(createAdapterKey(clazz));
 		if (adapter == null) {
 			throw new UnsupportedOperationException("Unable to convert from Java class " + clazz.getName() + " to answer type "
 					+ answerType);
@@ -128,8 +137,9 @@ public class DomainModelSupport {
 	 * @return
 	 */
 	public static String classToAnswerType(Class<?> clazz) {
-		DomainModelAdapter adapter = adapters.get(clazz);
+		DomainModelAdapter adapter = adapters.get(createAdapterKey(clazz));
 		if (adapter == null) {
+
 			throw new UnsupportedOperationException("Unable to support Java class " + clazz);
 		}
 		return adapter.getAnswerType();

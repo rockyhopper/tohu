@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.tohu.util.Utils;
+
 rule "retract all prior validation errors when a new answer is given"
 salience 4 # before: "copy new answers into the corresponding questions"
 when
@@ -59,6 +61,8 @@ then
 			// TODO provide a way for the developer to specify the supported date formats (trying them all until one succeeds)
 			// or do we just say that only one format is supported here and it is up to the client to transform what the user enters into this one? 
 			question.setDateAnswer(new SimpleDateFormat("dd/MM/yyyy").parse(answerValue));
+		} else if (basicAnswerType.equals(Question.TYPE_LIST)) {
+			question.setListAnswer(answerValue);
 		}
 		update(question);
 	} catch (NumberFormatException e) {
@@ -84,14 +88,21 @@ when
 	question : MultipleChoiceQuestion(answered == true, answer : answer, possibleAnswers : possibleAnswers);
 then
 	if (possibleAnswers != null) {
-		for (int i = 0; i < possibleAnswers.length; i++) {
-			if (possibleAnswers[i].getValue() == null) {
-				if (answer == null) {
-					return;
-				}
-			} else {
-				if (answer != null && answer.toString().equals(possibleAnswers[i].getValue())) {
-					return;
+		String[] allAnswers = Utils.splitMultipleAnswer(String.valueOf(answer));
+		if (allAnswers.length == 0) {
+			return;
+		}
+		for (int ans_idx = 0; ans_idx < allAnswers.length; ans_idx++) {
+			String oneAnswer = allAnswers[ans_idx];
+			for (int i = 0; i < possibleAnswers.length; i++) {
+				if (possibleAnswers[i].getValue() == null) {
+					if (oneAnswer == null) {
+						return;
+					}
+				} else {
+					if (oneAnswer != null && oneAnswer.toString().equals(possibleAnswers[i].getValue())) {
+						return;
+					}
 				}
 			}
 		} 

@@ -32,6 +32,8 @@ var READONLY_STYLE = 4;
 var IMAGE_STYLE = 5;
 var BUTTON_STYLE = 6;
 
+var MULTI_DELIMITER = "||";
+
 /**
  * Create a new Questionnaire and display it.
  * 
@@ -99,6 +101,7 @@ function buildQuestionInput(obj) {
 	var multipleChoice = (obj.possibleAnswers != null);
 	
 	switch (obj.answerType) {
+	case "list":
 	case "text":
 	case "number":
 	case "decimal":
@@ -124,7 +127,10 @@ function buildQuestionInput(obj) {
 			}
 			else {
 				// Build up a drop-down list for the question.
-				html += "<select id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" size=\"1\" class=\"answer\">";
+				var isMultiSelect = obj.answerType == "list";
+				var multiAnswers = isMultiSelect ? obj.answer.split(MULTI_DELIMITER) : [];
+				var multiple = isMultiSelect ? "multiple='true' size='9' " : "size='1' ";
+				html += "<select id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" " + multiple + "class=\"answer\">";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
 					keyValue = obj.possibleAnswers[i][0];
 					debug("buildQuestionInput() select possibleAnswer=" + keyValue);
@@ -132,7 +138,13 @@ function buildQuestionInput(obj) {
 						keyValue = "";
 					}
 					html += "<option ";
-					if (obj.answer == keyValue) {
+					var isAnswer = (obj.answer == keyValue);
+					for (var j = 0; j < multiAnswers.length; j++) {
+						if (keyValue == multiAnswers[j]) {
+							isAnswer = true;
+						}
+					}
+					if (isAnswer) {
 						html += "selected=\"true\"";
 					}
 					html += "value=\"" + keyValue + "\">" + obj.possibleAnswers[i][1] + "</option>";
@@ -295,7 +307,14 @@ function attachChangeHandler(obj) {
 		}
 		else {
 			input.change(function() {
-				handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);
+				if ($(this).attr("multiple")) {
+					var allSelectedValues = "";
+					var delimiter = "";
+					$.each($(this).parent().find("option:selected"), function (i, v) {allSelectedValues += delimiter + v.value; delimiter = MULTI_DELIMITER;})
+					handleChangeEvent(obj.id, allSelectedValues, questionTabForward);
+				} else {
+					handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);
+				}
 			});
 		}
 		input.keydown(function(event) {
