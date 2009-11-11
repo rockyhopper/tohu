@@ -369,7 +369,6 @@ function handleActionEvent(actionID, actionType, action) {
 		case "completion":			
 			if (window.onCompleteQuestionaire) {
 				action = onCompleteQuestionaire(actionURL, action);
-				if (!isnull(document.myform.action))
 				break;
 			}			
 			document.myform.action = actionURL + action;			
