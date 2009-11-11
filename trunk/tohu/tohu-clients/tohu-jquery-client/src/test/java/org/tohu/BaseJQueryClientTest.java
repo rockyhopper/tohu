@@ -77,7 +77,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 				"group4",
 				new String[] { "group4Style" },
 				"Group 4",
-				new String[] { "item_4_1", "item_4_3" });
+				new String[] { "item_4_1", "item_4_3", "item_4_4" });
 			checkNote(
 				"/form/div[@id='questionnaire1']/div/div[@id='group1']/div",
 				WidgetType.IMAGE,
@@ -220,6 +220,24 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 				new String[][] {
 						new String[] { "ErrorType1", "Item 4.3 Error 1" },
 						new String[] { "ErrorType2", "Item 4.3 Error 2" } });
+			checkQuestion(
+					"/form/div[@id='questionnaire1']/div/div[@id='group1']/div/div[@id='group4']/div",
+					WidgetType.SELECT,
+					"item_4_4",
+					new String[] { "item_4_4Style" },
+					"Item 4.4",
+					"Multiple answer select",
+					false,
+					false,
+					AnswerType.LIST,
+					null,
+					new String[][] {
+							new String[] { "foo", "foo" },
+							new String[] { "bar", "bar" },
+							new String[] { "baz", "baz" },
+							new String[] { "qux", "qux" },
+							new String[] { "quux", "quux" }},
+					new String[][] {});
 			checkControl(
 				"/form/div[@id='questionnaire1_controls']",
 				WidgetType.LINK,
