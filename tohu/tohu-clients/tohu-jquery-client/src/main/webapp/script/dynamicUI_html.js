@@ -32,8 +32,6 @@ var READONLY_STYLE = 4;
 var IMAGE_STYLE = 5;
 var BUTTON_STYLE = 6;
 
-var MULTI_DELIMITER = "||";
-
 /**
  * Create a new Questionnaire and display it.
  * 
@@ -128,7 +126,7 @@ function buildQuestionInput(obj) {
 			else {
 				// Build up a drop-down list for the question.
 				var isMultiSelect = obj.answerType == "list";
-				var multiAnswers = isMultiSelect ? obj.answer.split(MULTI_DELIMITER) : [];
+				var multiAnswers = isMultiSelect ? splitWithEscapes(obj.answer, ',') : [];
 				var multiple = isMultiSelect ? "multiple='true' size='9' " : "size='1' ";
 				html += "<select id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" " + multiple + "class=\"answer\">";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
@@ -310,7 +308,7 @@ function attachChangeHandler(obj) {
 				if ($(this).attr("multiple")) {
 					var allSelectedValues = "";
 					var delimiter = "";
-					$.each($(this).parent().find("option:selected"), function (i, v) {allSelectedValues += delimiter + v.value; delimiter = MULTI_DELIMITER;})
+					$.each($(this).parent().find("option:selected"), function (i, v) {allSelectedValues += delimiter + v.value; delimiter = ',';})
 					handleChangeEvent(obj.id, allSelectedValues, questionTabForward);
 				} else {
 					handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);

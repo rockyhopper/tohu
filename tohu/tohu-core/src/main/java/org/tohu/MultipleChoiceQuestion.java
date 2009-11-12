@@ -271,36 +271,6 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	/**
-	 * Splits some text into words delimited by the specified delimiter.
-	 * 
-	 * Occurances of the delimiter d within the text are expected to be escaped as \d
-	 * 
-	 * @param string
-	 * @param delimiter
-	 * @return
-	 */
-	private String[] split(String text, String delimiter) {
-		List<String> result = new ArrayList<String>();
-		String[] split = text.split(delimiter, -1);
-		for (int i = 0; i < split.length; i++) {
-		}
-		int i = 0;
-		String s = "";
-		while (i < split.length) {
-			boolean continues = split[i].endsWith("\\");
-			if (continues) {
-				s += split[i].substring(0, split[i].length() - 1) + delimiter;
-			} else {
-				s += split[i];
-				result.add(s);
-				s = "";
-			}
-			i++;
-		}
-		return result.toArray(new String[] {});
-	}
-
-	/**
 	 * For debugging purposes.
 	 */
 	@Override
