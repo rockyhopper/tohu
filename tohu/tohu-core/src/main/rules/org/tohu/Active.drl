@@ -125,6 +125,16 @@ then
 	update(invalidAnswer);
 end
 
+rule "retract invalid answers for inactive questions"
+salience -1000 # ensure this is the last rule in the Agenda Group to fire
+when
+	questionnaire : Questionnaire(enableActionValidation == true);
+    invalidAnswer : InvalidAnswer();
+    question : Question(id == invalidAnswer.questionId, active == false);
+then
+    retract(invalidAnswer);
+end
+
 rule "deactivate orphan InvalidAnswers"
 salience 2 # before: "propagate readonly from group to questions or subgroups"
 when
