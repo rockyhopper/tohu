@@ -107,10 +107,10 @@ public class DomainModelSupportTest {
 		assertEquals("", getListProperty("list"));
 		setListProperty("list", "foo");
 		assertEquals("foo", getListProperty("list"));
-		setListProperty("list", "foo||bar");
-		assertEquals("foo||bar", getListProperty("list"));
-		setListProperty("list", "a||b||c||d");
-		assertEquals("a||b||c||d", getListProperty("list"));
+		setListProperty("list", "foo,bar");
+		assertEquals("foo,bar", getListProperty("list"));
+		setListProperty("list", "a,b,c,d");
+		assertEquals("a,b,c,d", getListProperty("list"));
 	}
 
 	private void setTextProperty(String property, String value) {

@@ -26,8 +26,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.tohu.util.Utils;
-
 /**
  * <p>
  * Represents a question to be answered by a user.
@@ -247,7 +245,7 @@ public class Question extends Item {
 		if (this.listAnswer == null) {
 			return new ArrayList<String>();
 		}
-		return Arrays.asList(Utils.splitMultipleAnswer(this.listAnswer));
+		return Arrays.asList(split(this.listAnswer, ","));
 	}
 
 	public void setAnswer(Object answer) {
@@ -331,6 +329,37 @@ public class Question extends Item {
 		booleanAnswer = null;
 		dateAnswer = null;
 		listAnswer = null;
+	}
+
+	/**
+	 * Splits some text into words delimited by the specified delimiter. Make public for
+	 * use within rule logic.
+	 * 
+	 * Occurrences of the delimiter d within the text are expected to be escaped as \d
+	 * 
+	 * @param string
+	 * @param delimiter
+	 * @return
+	 */
+	public String[] split(String text, String delimiter) {
+		List<String> result = new ArrayList<String>();
+		String[] split = text.split(delimiter, -1);
+		for (int i = 0; i < split.length; i++) {
+		}
+		int i = 0;
+		String s = "";
+		while (i < split.length) {
+			boolean continues = split[i].endsWith("\\");
+			if (continues) {
+				s += split[i].substring(0, split[i].length() - 1) + delimiter;
+			} else {
+				s += split[i];
+				result.add(s);
+				s = "";
+			}
+			i++;
+		}
+		return result.toArray(new String[] {});
 	}
 
 	/**

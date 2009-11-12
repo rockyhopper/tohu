@@ -21,8 +21,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.tohu.util.Utils;
-
 rule "retract all prior validation errors when a new answer is given"
 salience 4 # before: "copy new answers into the corresponding questions"
 when
@@ -88,7 +86,7 @@ when
 	question : MultipleChoiceQuestion(answered == true, answer : answer, possibleAnswers : possibleAnswers);
 then
 	if (possibleAnswers != null) {
-		String[] allAnswers = Utils.splitMultipleAnswer(String.valueOf(answer));
+		String[] allAnswers = question.split(String.valueOf(answer), ",");
 		if (allAnswers.length == 0) {
 			return;
 		}

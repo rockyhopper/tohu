@@ -52,7 +52,7 @@ public class ListDomainModelAdapter implements DomainModelAdapter {
 	 * @see org.tohu.domain.DomainModelAdapter#answerToObject(java.lang.Object, java.lang.Class)
 	 */
 	public Object answerToObject(Object answer, Class<?> clazz) {
-		return answer == null ? new ArrayList<String>() : (List<String>) Arrays.asList(String.valueOf(answer).split("\\|\\|"));
+		return answer == null ? new ArrayList<String>() : (List<String>) Arrays.asList(String.valueOf(answer).split(","));
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class ListDomainModelAdapter implements DomainModelAdapter {
 		for (String s : l) {
 			b.append(delimiter);
 			b.append(s);
-			delimiter = "||";
+			delimiter = ",";
 		}
 		return b.toString();
 	}
