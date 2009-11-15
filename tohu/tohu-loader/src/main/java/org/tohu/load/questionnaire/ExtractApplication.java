@@ -27,14 +27,18 @@ import org.tohu.load.spreadsheet.SpreadsheetRow;
 import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
 
 
-// TODO all the validations - removing spaces, checking types etc
-
 /**
+ * Processes the application specific sections of the Spreadsheet, creating
+ * the {@link Application} object and setting it's core values. Also processes
+ * lookup table lists sections that are in the spreadsheet.
  * 
- * @author Derek Rendall
+ * Relates to Questionnaire type Spreadsheets.
  *
+ * @author Derek Rendall
  */
 public class ExtractApplication implements SpreadsheetSectionConstants {
+	// TODO all the validations - removing spaces, checking types etc
+
 	
 	private Application application = new Application();
 	private SpreadsheetSection applicationSection;
@@ -42,6 +46,11 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 	private List<SpreadsheetSection> tableSections = new ArrayList<SpreadsheetSection>();
 	private LookupTable currentLookupTable = null; 
 	
+	/**
+	 * Take the Application and List sections, setting them aside for processing by this object.
+	 * 
+	 * @param sections
+	 */
 	public ExtractApplication(List<SpreadsheetSection> sections) {
 		super();
 		for (Iterator<SpreadsheetSection> iterator = sections.iterator(); iterator.hasNext();) {
@@ -58,6 +67,12 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 		}
 	}
 
+	/**
+	 * Will process spreadsheet rows from application and table sections.
+	 * 
+	 * @return
+	 * 			The {@link Application} object created from processing the application section.
+	 */
 	public Application processApp() {
 		List<SpreadsheetRow> rows = applicationSection.getSectionRows();
 		if (rows.isEmpty()) {
@@ -85,6 +100,14 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 		return application;
 	}
 	
+	/**
+	 * Process a spreadsheet line, using the appropriate header line. The header line contains references to the
+	 * column title, so each cell can check what value it is for, without relying on
+	 * specific column order (other than the first column, which is used to identify the section).
+	 * 
+	 * @param headings
+	 * @param row
+	 */
 	protected void processApplicationHeadingLine(SpreadsheetRow headings, SpreadsheetRow row) {
 		// TODO handle repeated elements?
 		for (Iterator<SpreadsheetItem> iterator = row.getRowItems().iterator(); iterator.hasNext();) {
@@ -119,6 +142,9 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 			else if (key.startsWith("INCLUDE")) {
 				application.addImport(value);
 			}
+			else if (key.startsWith("ACTION")) {
+				application.setActionValidation(value);
+			}
 			else {
 				System.out.println("Unknown Application key: " + key);
 			}
@@ -126,6 +152,17 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 	}
 	
 	
+	/**
+	 * Process a spreadsheet line, using the appropriate header line. The header line contains references to the
+	 * column title, so each cell can check what value it is for, without relying on
+	 * specific column order (other than the first column, which is used to identify the section).
+	 * 
+	 * Each line may have a condition associated with it, which means that the entry will be added/removed
+	 * based on the associated logic.
+	 * 
+	 * @param headings
+	 * @param row
+	 */
 	protected void processListLine(SpreadsheetRow headings, SpreadsheetRow row) {
 		// TODO handle repeated elements?
 		String itemValue = null, displayedValue = null;
@@ -191,9 +228,6 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 			currentLookupTable.addEntry(itemValue, displayedValue, cc);
 		}
 	}
-
-	
-	
 
 
 }

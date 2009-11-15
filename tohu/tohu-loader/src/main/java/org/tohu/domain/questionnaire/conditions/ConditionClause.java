@@ -16,9 +16,9 @@
 package org.tohu.domain.questionnaire.conditions;
 
 /**
- * 
- * @author Derek Rendall
+ * Represents one line of the condition clauses in the spreadsheet.
  *
+ * @author Derek Rendall
  */
 public class ConditionClause {
 	
@@ -26,7 +26,6 @@ public class ConditionClause {
 	protected String itemAttribute;
 	protected String operation;
 	protected String value;
-	protected String ruleId;
 	protected String explanation;
 	private boolean processed = false;
 	
@@ -76,14 +75,6 @@ public class ConditionClause {
 
 	public void setValue(String value) {
 		this.value = (value == null) ? null : value.trim();
-	}
-
-	public String getRuleId() {
-		return ruleId;
-	}
-
-	public void setRuleId(String ruleId) {
-		this.ruleId = (ruleId == null) ? null : ruleId.trim();;
 	}
 
 	public String getExplanation() {

@@ -24,23 +24,24 @@ import org.tohu.load.spreadsheet.SpreadsheetRow;
 import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
 
 
-// TODO all the validations - removing spaces, checking types etc
-
 /**
+ * Processes the Page related sections on a Spreadsheet page (sheet), currently
+ * limited to the Item section. Note that there can be multiple sections
+ * on a single Spreadsheet Page (Sheet). 
+ * 
+ * Relates to Questionnaire type Spreadsheets.
  * 
  * @author Derek Rendall
- *
  */
 public class ExtractPages implements SpreadsheetSectionConstants {
 	
+	// TODO all the validations - removing spaces, checking types etc
 
 	private Application application = null;
 	private List<SpreadsheetSection> data;
 	protected Page currentPage = null;
 	protected String currentSheetName;
 	
-//	private Map<String, Page> pages = new HashMap<String, Page>();
-
 	
 	public ExtractPages(List<SpreadsheetSection> theData, Application theApplication) {
 		super();
@@ -49,6 +50,11 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 	}
 	
 
+	/**
+	 * Identify the Page related sections (Item) that we want to process, and initiate that.
+	 * @return
+	 * 			true if all sections processed OK
+	 */
 	public boolean processPages() {
 		for (Iterator<SpreadsheetSection> iterator = data.iterator(); iterator.hasNext();) {
 			SpreadsheetSection section = (SpreadsheetSection) iterator.next();
@@ -56,7 +62,6 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 				continue;
 			}
 			
-//			currentPage = null;
 			if (!processSectionData(section)) {
 				System.out.println("Failed to process section " + section.getSectionHeadingString() + " for sheet " + section.getSheetName());
 				return false;
@@ -66,6 +71,14 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 		return true;
 	}
 
+	/**
+	 * Process a (Item) section.
+	 * 
+	 * Each section has a heading row that is used to identify what field each cell relates to in the domain object.
+	 * 
+	 * @param section
+	 * @return
+	 */
 	protected boolean processSectionData(SpreadsheetSection section) {
 		List<SpreadsheetRow> rows = section.getSectionRows();
 		currentSheetName = section.getSheetName();

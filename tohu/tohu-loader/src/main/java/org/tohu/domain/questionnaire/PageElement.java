@@ -18,39 +18,85 @@ package org.tohu.domain.questionnaire;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.tohu.Group;
+import org.tohu.MultipleChoiceQuestion;
+import org.tohu.Note;
+import org.tohu.Question;
 import org.tohu.domain.questionnaire.conditions.ConditionClause;
 import org.tohu.domain.questionnaire.conditions.PageElementCondition;
 import org.tohu.domain.questionnaire.framework.PageElementConstants;
+import org.tohu.support.TohuDataItemObject;
 
 /**
+ * The key domain object holding the details for Tohu related objects such as 
+ * <ul>
+ * <li>{@link Group}</li>
+ * <li>{@link Question}</li>
+ * <li>{@link MultipleChoiceQuestion}</li>
+ * <li>{@link Note}</li>
+ * <li>{@link TohuDataItemObject}</li>
+ * </ul>
+ * 
+ * The Spreadsheet Types are 
+ * <ul>
+ * <li>Group</li>
+ * <li>Question</li>
+ * <li>MultipleChoiceQuestion</li>
+ * <li>Note</li>
+ * <li>Page (maps to {@link Group})</li>
+ * <li>Branch (maps to {@link Group})</li>
+ * <li>Impact (maps to {@link TohuDataItemObject})</li>
+ * <li>FunctionalImpact (maps to combination of accumulate function and {@link TohuDataItemObject})</li>
+ * <li>AlternateImpact (maps to {@link TohuDataItemObject})</li>
+ * <li>Validation (generates {@link InvalidAnswer})</li>
+ * <li>Reuse (does a lookup on the original element by id - will be repeated in the UI)</li>
+ * </ul>
+ * 
+ * Each element can have a {@link PageElementCondition} which holds one or more 
+ * {@link ConditionClause} entries that describe logic elements that control show/hide or validation logic.
+ * 
+ * The elements are linked in a tree structure (parent->child), which is used to control
+ * groupings for layout etc. Also, each child knows what it's older sibling is and/or its parent.
+ * This can then be used by Validation entries to know what to Question to associate the InvalidAnswer with.
+ * 
+ * Although the one object holds the data for all the Tohu objects, the writing of the DRL file will need to translate
+ * method names (for example, using "name" instead of "preLabel" when relating to a TohuDataItemObject instead of an Item).
  * 
  * @author Derek Rendall
- *
  */
 public class PageElement implements PageElementConstants {
 
-		
 	private String id;
 	private List<String> groupIds = null;
+	/** What Object type to create as a Tohu rule object - will be mapped in the setter */
 	private String type;
 	private String lookupTableId;
 	private boolean required = false;
 	private String fieldType;
+	/** For TohuDataItemObject this will be the name, for Validation this will be the Message */
 	private String preLabel;
+	/** For pages, this will be the insertAfter page value, for TohuDataItemObject this will be the reason */
 	private String postLabel;
 	private String defaultValueStr;
 	private List<String> styles = new ArrayList<String>();
 	private LookupTable lookupTable = null;
 	private boolean aPageElement;
 	private String pageType = null;
+	/** Spreadsheet Type holds what the original type was. The Type will be mapped to the Tohu object when the setter is called */
 	private String spreadsheetType = null;
 	private PageElementCondition displayCondition = null;
-	//private List<PageElementCondition> validationConditions = new ArrayList<PageElementCondition>();
 	private PageElementCondition currentValidationCondition = null;
+	/** category applies for TohuDataItemObject and Item, and can be used to select a group of objects, especially useful for calculations */
 	private String category = null;
+	/** Depth is used to control nesting of elements */
 	private int depth;
+	/** Row number provides a useful rule identification variation to avoid duplicate names in DRL file */
 	private int rowNumber;
 	
+	/** 
+	 * Working value - especially for lines where only has the logic element, in which case the 
+	 * logic will be inserted into the previous element, and this element will be "thrown away".
+	 */
 	private ConditionClause logicElement = null;
 	
 	protected List<PageElement> children = new ArrayList<PageElement>();
@@ -62,6 +108,12 @@ public class PageElement implements PageElementConstants {
 		super();
 	}
 
+	/**
+	 * @param id
+	 * 			Cannot have a space in the value
+	 * @param depth
+	 * @param rowNumber
+	 */
 	public void setId(String id, int depth, int rowNumber) {
 		id = id.trim();
 		if (id.indexOf(" ") >= 0) {
@@ -80,11 +132,11 @@ public class PageElement implements PageElementConstants {
 		this.previousSibling = previousSibling;
 	}
 
-	public boolean isAFunctionConsequenceItem() {
+	public boolean isAFunctionImpactItem() {
 		return (spreadsheetType != null) && (spreadsheetType.equalsIgnoreCase(ITEM_TYPE_FUNCTION_IMPACT));
 	}
 
-	public boolean isAnAlternateConsequenceItem() {
+	public boolean isAnAlternateImpactItem() {
 		return (spreadsheetType != null) && (spreadsheetType.equalsIgnoreCase(ITEM_TYPE_ALTERNATE_IMPACT));
 	}
 
@@ -107,6 +159,11 @@ public class PageElement implements PageElementConstants {
 		return groupIds;
 	}
 
+	/**
+	 * @param type
+	 * 			Will be stored in spreadsheetType, and then cast to the right Tohu object type
+	 * 			For example, a Page will be turned into a Group.
+	 */
 	public void setType(String type) {
 		String tempType = type.toUpperCase();
 		spreadsheetType = type;
@@ -150,7 +207,7 @@ public class PageElement implements PageElementConstants {
 		return false;
 	}
 	
-	public boolean isAConsequenceType() {
+	public boolean isAnImpactType() {
 		if (getType().equals(ITEM_TYPE_DATA_ITEM)) {
 			return true;
 		}
@@ -173,6 +230,12 @@ public class PageElement implements PageElementConstants {
 		return pageType;
 	}
 	
+	/**
+	 * Will traverse previousSiblings (the norm) and then parent looking for a Question (or subclass).
+	 * Used by the validation elements to associate an InvalidAnswer with.
+	 * 
+	 * @return
+	 */
 	public PageElement findPreviousQuestion() {
 		if (getPreviousSibling() != null) {
 			if (getPreviousSibling().isAQuestionType()) {
@@ -210,6 +273,11 @@ public class PageElement implements PageElementConstants {
 		this.lookupTableId = lookupTableId;
 	}
 
+	/**
+	 * Will add the child, set the child's previous sibling (if any) and the child's parent.
+	 * 
+	 * @param child
+	 */
 	public void addChild(PageElement child) {
 		//System.out.println("Adding child " + child.getId() + child.getDepth() + " to " + getId() + getDepth());
 		if (children.size() > 0) {
@@ -246,15 +314,6 @@ public class PageElement implements PageElementConstants {
 	public List<String> getStyles() {
 		return styles;
 	}
-
-//	public List<PageElementCondition> getValidationConditions() {
-//		return validationConditions;
-//	}
-//
-//	public void addValidationCondition(PageElementCondition newCondition) {
-//		validationConditions.add(newCondition);
-//		currentValidationCondition = newCondition;
-//	}
 
 	public PageElementCondition getCurrentValidationCondition() {
 		return currentValidationCondition;

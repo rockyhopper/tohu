@@ -24,9 +24,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
+ * Contains the data for a sheet in the workbook, split into the constituent items. 
+ * 
+ * Null/empty entries are ignored.
  * 
  * @author Derek Rendall
- *
  */
 public class SpreadsheetData {
 	
@@ -39,6 +41,11 @@ public class SpreadsheetData {
 	private int keyColumn = 0;
 	private String sheetName;
 	
+	/**
+	 * Will split the sheet from the workbook up into {@link SpreadsheetRow} and {@link SpreadsheetItem}
+	 * 
+	 * @param sheet
+	 */
 	public SpreadsheetData(HSSFSheet sheet) {
 		super();
 		sheetName = sheet.getSheetName();

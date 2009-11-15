@@ -28,12 +28,20 @@ import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
 import org.tohu.domain.questionnaire.conditions.PageElementCondition;
 import org.tohu.domain.questionnaire.framework.ListEntryTuple;
-
+import org.tohu.support.TohuDataItemObject;
+import org.tohu.write.questionnaire.helpers.CopyrightWriter;
 
 /**
+ * Write out an {@link Application} object to a drl file.
+ * 
+ *   Will also include Global Impact (see {@link TohuDataItemObject}) definitions, 
+ *   the logic associated with conditional table entry items and 
+ *   files that were to be included, based on the Spreadsheet's list of files to include.
+ *   
+ *   A file in the import directory called <code>Copyright.drl</code> will be included at the top
+ *   of the drl file.
  * 
  * @author Derek Rendall
- *
  */
 public class ApplicationTemplate {
 	
@@ -44,6 +52,15 @@ public class ApplicationTemplate {
 		app = application;
 	}
 	
+	/**
+	 * Make sure that the directories and files exist, setting up for actually writing the drl file.
+	 * Will include copyright and import files (simple read line and then write line).
+	 * 
+	 * @param directory
+	 * @param importDirectory
+	 * @param seperatePageDirectories
+	 * @return
+	 */
 	public boolean generateDRLFile(String directory, String importDirectory, boolean seperatePageDirectories) {
 	    String fileName = directory + "/" + app.getId().replace(' ', '_') + ".drl";
 	    try {
@@ -62,6 +79,7 @@ public class ApplicationTemplate {
 	        }
 	        Formatter fmtFile;
 	        fmtFile = new Formatter(new FileOutputStream(fileName));
+	        CopyrightWriter.writeCopyright(fmtFile, importDirectory);
 	        writeDRLFileContents(fmtFile);
 	        
 		    if (importDirectory != null) {
@@ -101,7 +119,7 @@ public class ApplicationTemplate {
 	    int count = 1;
 		for (Iterator<Page> iterator = app.getPageList().iterator(); iterator.hasNext();) {
 			Page pg = iterator.next();
-			boolean processed = new PageTemplate(pg).generateDRLFile(app, directory, count, seperatePageDirectories);
+			boolean processed = new PageTemplate(pg).generateDRLFile(app, directory, importDirectory, count, seperatePageDirectories);
 			if (!processed) {
 				return false;
 			}
@@ -111,6 +129,12 @@ public class ApplicationTemplate {
 	    return true;
 	}
 	
+	/**
+	 * Includes writing the import (class) statements, and the Questionnaire definition.
+	 * 
+	 * @param fmt
+	 * @throws IOException
+	 */
 	public void writeDRLFileContents(Formatter fmt) throws IOException {
 	    fmt.format("package %s;\n\n", app.getApplicationClass());
 	    fmt.format("import org.tohu.Group;\n");
@@ -128,6 +152,9 @@ public class ApplicationTemplate {
 	    fmt.format("import java.util.Date;\n");
 	    fmt.format("import java.util.Arrays;\n\n");
 	    
+	    // TODO add in ability to add additional import statements?
+	    // Maybe have an import filename as well as include filenames
+	    
 	    fmt.format("rule \"%s\"\ndialect \"mvel\"\n", app.getId());
 	    fmt.format("then\n");
 	    fmt.format("\tQuestionnaire questionnaire = new Questionnaire(\"%s\");\n", app.getId());
@@ -137,11 +164,10 @@ public class ApplicationTemplate {
 	    if (app.getActivePage() != null) {
 	    	fmt.format("\tquestionnaire.setActiveItem(\"%s\");\n", app.getActivePage());
 	    }
-
+	    fmt.format("\tquestionnaire.setEnableActionValidation(%s);\n", app.getActionValidation());
 	    fmt.format("\tinsertLogical(questionnaire);\n");
 	    
 	    fmt.format("end\n\n");
-	    
 	    
 	    
 	    for (Iterator<PageElement> i = app.getGlobalElements().iterator(); i.hasNext();) {
@@ -149,11 +175,12 @@ public class ApplicationTemplate {
 			new PageElementTemplate(element).writeDRLFileContents(app, fmt);
 		}
 	    
+	    // Used as a class to control insert/remove PossibleAnswer entry logic
 	    fmt.format("declare ListEntryFact\n");
 	    fmt.format("\tid : String @key\n");
 	    fmt.format("end\n\n");
 
-	    
+	    // Now create any PossibleAnswer insert/remove logic, if there are any tuples with some logic
 		for (Iterator<Page> iterator = app.getPageList().iterator(); iterator.hasNext();) {
 			Page pg = iterator.next();
 			processConditionalTableElement(fmt, pg.getParentPageElement());
@@ -162,6 +189,13 @@ public class ApplicationTemplate {
 	}
 	
 	
+	/**
+	 * Recursively find all list tuples with conditional logic, and then call {@link #writeConditionalTableElement(Formatter, PageElement, ListEntryTuple, int)}
+	 * 
+	 * @param fmt
+	 * @param element
+	 * @throws IOException
+	 */
 	protected void processConditionalTableElement(Formatter fmt, PageElement element) throws IOException {
 		if (element == null) {
 			return;
@@ -185,6 +219,32 @@ public class ApplicationTemplate {
 	
 
 	
+	/**
+	 * Writes the drl logic for one tuple:
+	 * <p>
+	 * The controlling fact is written:<br>
+	 * The conditional logic is used to create a named instance of the (dynamically defined) ListEntryFact object.
+	 * </p>
+	 * 
+	 * <p>
+	 * The insert rule is written:<br>
+	 * If the controlling fact exists but the entry is not in the list of objects, <br>
+	 * then insert a new PossibleAnswer into the list, at rowNumber
+	 * </p>
+	 * 
+	 * <p>
+	 * The remove rule is written:<br>
+	 * If the controlling fact no longer exists but the entry is still in the list of objects, <br>
+	 * then remove the associated PossibleAnswer from the list
+	 * </p>
+	 * 
+	 * @param fmt
+	 * @param element
+	 * @param tuple
+	 * @param rowNumber
+	 * 			Important for distinguishing id and rule names if there is more than one conditional tuple for a list
+	 * @throws IOException
+	 */
 	protected void writeConditionalTableElement(Formatter fmt, PageElement element, ListEntryTuple tuple, int rowNumber) throws IOException {
 		String displayFactId = element.getId() + "row" + String.valueOf(rowNumber);
 		
@@ -228,9 +288,6 @@ public class ApplicationTemplate {
 	    fmt.format("\tmcq.removePossibleAnswer(\"%s\");\n", tuple.getId());
 	    fmt.format("\tupdate(mcq);\n");
 	    fmt.format("end\n\n");
-	    		
 	}
 	
-
-
 }

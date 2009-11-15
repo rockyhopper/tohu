@@ -24,11 +24,16 @@ import java.util.Iterator;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
+import org.tohu.write.questionnaire.helpers.CopyrightWriter;
 
 /**
+ * Create the {@link Page} drl file, including import statements. Most of the actual writing is done by
+ * using {@link PageElementTemplate} for each {@link PageElement}.
+ * 
+ *   A file in the import directory called <code>Copyright.drl</code> will be included at the top
+ *   of the drl file.
  * 
  * @author Derek Rendall
- *
  */
 public class PageTemplate {
 	
@@ -45,12 +50,12 @@ public class PageTemplate {
 	 * 
 	 * @param application
 	 * @param directory
+	 * @param importDirectory
+	 * @param count
+	 * @param seperatePageDirectories
 	 * @return
 	 */
-	public boolean generateDRLFile(Application application, String directory, int count, boolean seperatePageDirectories) {
-		// TODO create sub directory
-		// TODO strip spaces from filenames
-//		String subDirectory = directory + "/" + getSheetName().toLowerCase().replace(' ', '_');
+	public boolean generateDRLFile(Application application, String directory, String importDirectory, int count, boolean seperatePageDirectories) {
 		String pageNumber = String.valueOf(count);
 		if (pageNumber.length() == 1) {
 			pageNumber = "page0" + pageNumber;
@@ -80,6 +85,7 @@ public class PageTemplate {
 	        }
 	        Formatter fmtFile;
 	        fmtFile = new Formatter(new FileOutputStream(fileName));
+	        CopyrightWriter.writeCopyright(fmtFile, importDirectory);
 	        writeDRLFileContents(application, fmtFile);
 	        fmtFile.close();
 		} catch (IOException e) {

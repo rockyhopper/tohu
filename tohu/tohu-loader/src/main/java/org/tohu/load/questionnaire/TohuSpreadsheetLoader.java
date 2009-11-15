@@ -24,12 +24,13 @@ import org.tohu.load.spreadsheet.WorkbookData;
 import org.tohu.write.questionnaire.ApplicationTemplate;
 
 /**
+ * The main entry point for processing a Questionnaire based spreadsheet. 
  * 
  * @author Derek Rendall
- *
  */
 public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 	
+	/** useful section heading to avoid processing rest of spreadsheet - can store temp working stuff after this line */
 	public static final String SHEET_END ="END";
 		
 	private WorkbookData wbData;
@@ -44,10 +45,32 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		super();
 	}
 
+	/**
+	 * Will call {@link #processFile(String, String, String, boolean)} passing in true to create 
+	 * separate page directories.
+	 * 
+	 * @param filename
+	 * @param outputDirectory
+	 * @param importDirectory
+	 * @return
+	 */
 	public boolean processFile(String filename, String outputDirectory, String importDirectory) {
 		return processFile(filename, outputDirectory, importDirectory, true);
 	}
 	
+	/**
+	 * Start the process of loading the Questionnaire data 
+	 * 
+	 * @param filename
+	 * 			The path and file name of the spreadsheet file 
+	 * @param outputDirectory
+	 * 			Where to place the resulting DRL files.
+	 * @param importDirectory
+	 * 			Where to locate files that are referred to as imports in the spreadsheet.
+	 * @param seperatePageDirectories
+	 * 			Is each page created in a sub-directory of the output directory.
+	 * @return
+	 */
 	public boolean processFile(String filename, String outputDirectory, String importDirectory, boolean seperatePageDirectories) {
 		wbData = new WorkbookData();
 		this.outputDirectory = outputDirectory;
@@ -62,6 +85,17 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		return processData(PAGE_SECTION_HEADINGS);
 	}
 	
+	/**
+	 * Load up the data from the spreadsheet and split into sections based on the section headings.
+	 * 
+	 * Then extract the application and page information.
+	 * 
+	 * Then create the rule files.
+	 * 
+	 * @param sectionHeadingNames
+	 * @return
+	 * 			true if everything went OK
+	 */
 	protected boolean processData(String[] sectionHeadingNames) {
 		List<SpreadsheetSection> sections = new SpreadsheetSectionSplitter(sectionHeadingNames).splitIntoSections(wbData);
 		
@@ -81,6 +115,11 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		return createRuleFiles();
 	}
 	
+	/**
+	 * Write the data to drl files in the output directory.
+	 * 
+	 * @return
+	 */
 	protected boolean createRuleFiles() {
 		boolean processed = new ApplicationTemplate(application).generateDRLFile(outputDirectory, importDirectory, seperatePageDirectories);
 		if (!processed) {

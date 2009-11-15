@@ -21,17 +21,40 @@ import java.util.Formatter;
 import java.util.Iterator;
 import java.util.List;
 
+import org.tohu.Answer;
 import org.tohu.domain.questionnaire.Application;
+import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
 import org.tohu.domain.questionnaire.framework.ConditionConstants;
 import org.tohu.domain.questionnaire.framework.ListEntryTuple;
 import org.tohu.domain.questionnaire.framework.PageElementConstants;
+import org.tohu.support.TohuDataItemObject;
 import org.tohu.write.questionnaire.helpers.FieldTypeHelper;
 
 /**
+ * Write out an {@link PageElement} object to the {@link Page} drl file.
+ * 
+ * See {@link PageElement} for details on the types written.
+ * 
+ * Conditional display is propagated by each item having (at least) a condition that
+ * their parent group is displayed.
+ * 
+ * If a Group has items that do not exist they are ignored. This removed the need for explicit
+ * insert/remove code for page elements and other group items. One exception is for Branch pages
+ * where there needs to be additional logic to control the jump off to a new set of pages. Note: the page's group
+ * is enabled via the same logic as the rule that creates a new navigationBranch. This means that the group, and the
+ * associated data, can exist after the branch is returned from. The navigationBranch does not
+ * require any special "return" logic as that is handled automatically by Tohu framework.
+ * 
+ * Additional logic is also written for Functional and Alternate Impact (see {@link TohuDataItemObject}) elements.
+ * A functional impact is actually like a global fact that uses an accumulate function (sum, average, etc) to
+ * provide the value.
+ * 
+ * An alternate function can have multiple elements, each one setting a mutually exclusive value. This means that the
+ * actual object needs to be created (once) and each element simply updates the value. Note: the first
+ * element for the Alternate Impact is used to specify the default value. 
  * 
  * @author Derek Rendall
- *
  */
 public class PageElementTemplate implements PageElementConstants, ConditionConstants {
 	
@@ -43,6 +66,12 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	}
 		
 	
+	/**
+	 * Impact objects are actually {@link TohuDataItemObject} objects.
+	 * 
+	 * @param itemId
+	 * @return
+	 */
 	protected String checkType(String itemId) {
 		if (itemId.equals(ITEM_TYPE_NORMAL_IMPACT)) {
 			return ITEM_TYPE_DATA_ITEM;
@@ -52,20 +81,29 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	
 		
 	/**
+	 * Accumulate functions handled:
+	 * <ul>
+	 * <li><code>max</code></li>
+	 * <li><code>min</code></li>
+	 * <li><code>sum</code></li>
+	 * <li><code>average</code></li>
+	 * <li><code>count</code></li>
+	 * </ul>
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @throws IOException
 	 */
-	protected void writeFunctionalConsequence(Application application, Formatter fmt) throws IOException {
+	protected void writeFunctionalImpact(Application application, Formatter fmt) throws IOException {
 		// TODO replace Logic Element with PageElementCondition
 		if ((element.getLogicElement() == null)) {
-			throw new IllegalArgumentException("You cannot have an empty logical element for a functional consequence!");
+			throw new IllegalArgumentException("You cannot have an empty logical element for a functional impact!");
 		}
 		
 		String functionName = null;
 		String opName = element.getLogicElement().getOperation();
 		if (opName == null) {
-			throw new IllegalArgumentException("You cannot have an empty logical operation for a functional consequence!");
+			throw new IllegalArgumentException("You cannot have an empty logical operation for a functional impact!");
 		}
 		
 		if (opName.equalsIgnoreCase(FUNCTION_MAX)) {
@@ -84,10 +122,10 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 			functionName = FUNCTION_COUNT;
 		}
 		if (functionName == null) {
-			throw new IllegalArgumentException("Invalid operation " + opName + " for a functional consequence!");
+			throw new IllegalArgumentException("Invalid operation " + opName + " for a functional impact!");
 		}
 		
-		writeCreationOfAGlobalConsequence(application, fmt);
+		writeCreationOfAGlobalImpact(application, fmt);
 		
 		String tempFactName = "Temp" + element.getId();
 	    fmt.format("declare %s\n", tempFactName);
@@ -123,6 +161,8 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	}
 	
 	/**
+	 * Write the common attribute setting code for a Tohu related fact
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @param showReason
@@ -132,7 +172,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	protected String writeCommonFactCreationCode(Application application, Formatter fmt, boolean showReason) throws IOException {
 	    String variableName = "a" + element.getType();
 	    fmt.format("\t%s %s = new %s(\"%s\");\n", element.getType(), variableName, element.getType(), element.getId());
-	    if (element.isAQuestionType() || element.isAConsequenceType()) {
+	    if (element.isAQuestionType() || element.isAnImpactType()) {
 		    String type = FieldTypeHelper.mapFieldTypeToQuestionType(element.getFieldType());
 		    fmt.format("\t%s.setAnswerType(%s);\n", variableName, type);
 		    if (element.getDefaultValueStr() != null) {
@@ -145,24 +185,26 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 		    if (element.getCategory() != null) {
 			    fmt.format("\t%s.setCategory(\"%s\");\n", variableName, element.getCategory());
 		    }
-		    if (element.isAConsequenceType() && showReason && (element.getPostLabel() != null)) {
+		    if (element.isAnImpactType() && showReason && (element.getPostLabel() != null)) {
 			    fmt.format("\t%s.setReason(\"%s\");\n", variableName, element.getPostLabel());
 			}
 	    }
 	    
 	    if (element.getPreLabel() != null) {
-	    	String methodText = (element.isAQuestionType()) ? "PreLabel" : (element.isAConsequenceType()) ? "Name" : "Label"; 
+	    	String methodText = (element.isAQuestionType()) ? "PreLabel" : (element.isAnImpactType()) ? "Name" : "Label"; 
 		    fmt.format("\t%s.set%s(\"%s\");\n", variableName, methodText, element.getPreLabel());
 	    }
 	    return variableName;
 	}
 
 	/**
+	 * Insert an Impact (a {@link TohuDataItemObject})
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @throws IOException
 	 */
-	protected void writeCreationOfAGlobalConsequence(Application application, Formatter fmt) throws IOException {
+	protected void writeCreationOfAGlobalImpact(Application application, Formatter fmt) throws IOException {
 	    fmt.format("rule \"Create %s\"\ndialect \"mvel\"\nno-loop\nsalience 100\n", element.getId());
 	    fmt.format("then\n");
 	    String variableName = writeCommonFactCreationCode(application, fmt, false);
@@ -171,6 +213,8 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	}
 	
 	/**
+	 * Conditional rule to logically insert an InvalidAnswer object attached to the previous question.
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @throws IOException
@@ -199,6 +243,13 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    
 	
 	/**
+	 * For a group or a multiple choice question, write out the items.
+	 * 
+	 * If it is a multiple choice question, then list entries that have conditional logic are NOT written here.
+	 * 
+	 * Note: it is valid to have no list specified for a Multiple List Question, if the list is being set 
+	 * by other means (such as via logic in one of the include files loaded into the Questionnaire drl).
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @param possibleAnswers
@@ -297,6 +348,11 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	}
 
 	/**
+	 * In order to action a branch, the logic looks for an actual {@link Answer} object associated with the 
+	 * Question. This only exists straight after the question value has changed, thus can be used to initiate the
+	 * branch. For the Branch page's group, use the question's answer attribute as this will remain accessible
+	 * after the Answer object has gone away.
+	 * 
 	 * @param application
 	 * @param fmt
 	 * @throws IOException
@@ -334,22 +390,6 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
     	fmt.format("\tupdate(q);\n");
 
 	    fmt.format("end\n\n");
-	    
-	    
-//	    // Now deal with removing page entries, if this is a page display logic element
-//	    // BRANCH ITEM IS REMOVED AUTOMATICALLY, but still need to remove fact
-//	    fmt.format("rule \"%s Exited Branch %s\"\n", idPrefix, id);
-//	    fmt.format("salience 15\n");
-//	    fmt.format("no-loop\n");
-//	    fmt.format("when\n");
-//		// TODO support more than one level of branching
-//	    // Ideally should be matching on the keyPageElementId of the DisplayFact
-//	    // would need to return the first pe1 element from writeLogicSectionDRLFileContents
-//    	fmt.format("\td : DisplayFact(id == \"%s\", $ruleName : ruleName);\n", id);
-//    	fmt.format("\tq : Questionnaire(branched == false);\n");
-//	    fmt.format("then\n");
-//	    fmt.format("\tretract(d);\n");
-//	    fmt.format("end\n\n");
 	}
 	
 	/**
@@ -368,18 +408,18 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    }
     	//System.out.println("Processing item: " + this.getId());
 	    
-	    if (element.isAFunctionConsequenceItem()) {
-	    	//System.out.println("Functional Consequence");
-	    	writeFunctionalConsequence(application, fmt);
+	    if (element.isAFunctionImpactItem()) {
+	    	//System.out.println("Functional Impact");
+	    	writeFunctionalImpact(application, fmt);
 	    	return;
 	    }
 	    
-	    if (element.isAnAlternateConsequenceItem()) {
-	    	//System.out.println("Alternate Consequence");
-	    	if (application.addNewAlternateConsequence(element.getId())) writeCreationOfAGlobalConsequence(application, fmt);
+	    if (element.isAnAlternateImpactItem()) {
+	    	//System.out.println("Alternate Impact");
+	    	if (application.addNewAlternateImpact(element.getId())) writeCreationOfAGlobalImpact(application, fmt);
 	    }
-	    else if (element.isAConsequenceType() && (element.getLogicElement() == null)) {
-	    	writeCreationOfAGlobalConsequence(application, fmt);
+	    else if (element.isAnImpactType() && (element.getLogicElement() == null)) {
+	    	writeCreationOfAGlobalImpact(application, fmt);
 	    	return;
 	    }
 	    else if (element.isAValidationElement()) {
@@ -392,10 +432,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    }
 	    
 	    String ruleName = element.getId();
-//	    if (element.isAnAlternateConsequenceItem() && (consequenceFacts.size() > 0)) {
-//	    	ruleName = ruleName + String.valueOf(consequenceFacts.get(0).getRowNumber());
-//	    }
-	    if (element.isAnAlternateConsequenceItem()) {
+	    if (element.isAnAlternateImpactItem()) {
 	    	ruleName = ruleName + String.valueOf(element.getRowNumber());
 	    }
 	    
@@ -422,7 +459,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    }
 	    
 
-	    if (element.isAnAlternateConsequenceItem()) {
+	    if (element.isAnAlternateImpactItem()) {
 		    fmt.format("\taDataItem : %s (id == \"%s\")\n", ITEM_TYPE_DATA_ITEM, element.getId());
 		    fmt.format("then\n");
 	    	String tempStr = FieldTypeHelper.formatValueStringAccordingToType(element.getDefaultValueStr(), element.getFieldType());
@@ -434,7 +471,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    
 		    String variableName = writeCommonFactCreationCode(application, fmt, true);
 		    
-		    if (!element.isAConsequenceType()) {
+		    if (!element.isAnImpactType()) {
 			    if (element.getPostLabel() != null) {
 				    fmt.format("\t%s.setPostLabel(\"%s\");\n", variableName, element.getPostLabel());
 			    }
@@ -470,18 +507,6 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    }
 	    
 	    fmt.format("end\n\n");
-	    
-	    
-//	    for (Iterator<DisplayFact> i = displayFacts.iterator(); i.hasNext();) {
-//	    	DisplayFact fact = (DisplayFact) i.next();
-//			fact.writeDRLFileContents(application, fmt);
-//		}
-//	    
-//	    for (Iterator<ConsequenceFact> i = consequenceFacts.iterator(); i.hasNext();) {
-//	    	ConsequenceFact fact = (ConsequenceFact) i.next();
-//			fact.writeDRLFileContents(application, fmt);
-//		}
-	    
 	}
 
 

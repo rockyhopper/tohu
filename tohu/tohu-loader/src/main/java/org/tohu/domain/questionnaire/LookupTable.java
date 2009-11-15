@@ -22,9 +22,12 @@ import org.tohu.domain.questionnaire.conditions.ConditionClause;
 import org.tohu.domain.questionnaire.framework.ListEntryTuple;
 
 /**
+ * An object that holds the (Value and Representation) pairs for a lookup table loaded from the spreadsheet.
+ * 
+ * The pairs are held in a {@link ListEntryTuple} object that allows for a single logic line to be
+ * associated with an entry.
  * 
  * @author Derek Rendall
- *
  */
 public class LookupTable {
 

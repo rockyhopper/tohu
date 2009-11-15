@@ -27,9 +27,9 @@ import org.tohu.load.spreadsheet.SpreadsheetRow;
 import org.tohu.load.spreadsheet.WorkbookData;
 
 /**
+ * Contains the sections of data within the spreadsheet (see {@link SpreadsheetSection}.  
  * 
  * @author Derek Rendall
- *
  */
 public class SpreadsheetSectionSplitter implements Serializable {
 
@@ -45,6 +45,12 @@ public class SpreadsheetSectionSplitter implements Serializable {
 	private SpreadsheetSection currentSection = new SpreadsheetSection("Initialize", TohuSpreadsheetLoader.SHEET_END, new SpreadsheetRow(0));
 	
 	
+	/**
+	 * Expect to be passed a list of the section headings, which are the items expected to be the first 
+	 * valid entries in a column that indicate that we have started a new section.
+	 * 
+	 * @param headings
+	 */
 	public SpreadsheetSectionSplitter(String[] headings) {
 		super();
 		for (int i = 0; i < headings.length; i++) {
@@ -53,7 +59,19 @@ public class SpreadsheetSectionSplitter implements Serializable {
 		}
 	}
 	
+	/**
+	 * Thank you very much Microsoft for transforming lots of characters to obscure UTF values.
+	 * 
+	 * This method cleans a bit of that up. Currently handles:
+	 * 
+	 * <ul>
+	 * <li>ellipses is converted to <code>&#8230;</code></li>
+	 * </ul>
+	 * 
+	 * @param row
+	 */
 	public void cleanUpRowItemStrings(SpreadsheetRow row) {
+		// TODO probably should make these values static etc at some point
 		char c2 = 8230;
 		String tempCharStr = new String(new char[] {c2});
 		
@@ -70,13 +88,20 @@ public class SpreadsheetSectionSplitter implements Serializable {
 
 	}
 	
+	/**
+	 * Identify and create section list. New sections can be returned from processing a row, so
+	 * capture that and add new section to array of them.
+	 * 
+	 * @param wbData
+	 * @return
+	 */
 	public List<SpreadsheetSection> splitIntoSections(WorkbookData wbData) {
 		for (Iterator<String> iterator = wbData.getSheetList().iterator(); iterator.hasNext();) {
 			String sheetName = (String) iterator.next();
 			SpreadsheetData sheetData = wbData.getSheet(sheetName);
 			if (sheetData.isProcessed() || (sheetData.getFirstItemOnSheet() == null) || 
 					(sheetData.getFirstItemOnSheet().toString().toUpperCase().startsWith(TohuSpreadsheetLoader.SHEET_END)) ) {
-//				System.out.println("Invalid sheet for: " + sheetName + ", processed: " + String.valueOf(sheetData.isProcessed()) + ", item: [" + String.valueOf(sheetData.getFirstItemOnSheet() + "]"));
+				//System.out.println("Invalid sheet for: " + sheetName + ", processed: " + String.valueOf(sheetData.isProcessed()) + ", item: [" + String.valueOf(sheetData.getFirstItemOnSheet() + "]"));
 				continue;
 			}
 			

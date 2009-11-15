@@ -42,6 +42,11 @@ import java.util.Date;
  * </p>
  * 
  * <p>
+ * This is similar but separate from Question as, unlike Question, this has no hooks for field
+ * processing in the UI (is not meant for UI handling as such).
+ * </p>
+ * 
+ * <p>
  * The answer to a <code>DataItem</code> is maintained internally by the object. use <code>DomainModelAssociation</code> to
  * map the answers to a real domain model.
  * </p>

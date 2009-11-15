@@ -21,9 +21,14 @@ import java.util.List;
 import org.tohu.domain.questionnaire.framework.ConditionConstants;
 
 /**
+ * Holds the condition clauses for a Validation item or for hide/display Group/Question/Note.
+ *
+ * Multiple lines exist to provide "and" behavior. In order to get or type behavior, the recommendation is to
+ * use the existence of an Impact (TohuDataItemObject) as the controller, and then have multiple cases where that 
+ * object can be created. If the Impact uses a Category then multiple different objects with the same Category can be used.
+ * Alternatively, a set of AlternativeImpact elements (with the same id) could be used. Preferrably the former.
  * 
  * @author Derek Rendall
- *
  */
 public class PageElementCondition implements ConditionConstants, Cloneable {
 
@@ -41,10 +46,27 @@ public class PageElementCondition implements ConditionConstants, Cloneable {
 	private String displayAfter = null;
 
 	
+	/**
+	 * Use for non-page stuff.
+	 * 
+	 * @param type
+	 * @param id
+	 * @param rowNumber
+	 */
 	public PageElementCondition(String type, String id, int rowNumber) {
 		this(type, id, rowNumber, null, false, null);
 	}
 	
+	/**
+	 * Use for Page and Branch conditions.
+	 * 
+	 * @param sheetName
+	 * @param id
+	 * @param rowNumber
+	 * @param pageName
+	 * @param branchedPage
+	 * @param displayAfter
+	 */
 	public PageElementCondition(String sheetName, String id, int rowNumber, String pageName, boolean branchedPage, String displayAfter) {
 		super();
 		id = id.trim();

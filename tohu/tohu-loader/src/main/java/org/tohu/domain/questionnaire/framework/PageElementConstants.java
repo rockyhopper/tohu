@@ -16,9 +16,9 @@
 package org.tohu.domain.questionnaire.framework;
 
 /**
- * 
- * @author Derek Rendall
+ * Holds the Statics for the PageElement information.
  *
+ * @author Derek Rendall
  */
 public interface PageElementConstants {
 
@@ -38,12 +38,14 @@ public interface PageElementConstants {
 	public static String FIELD_TYPE_NUMBER = "Number";
 	public static String FIELD_TYPE_DECIMAL = "Decimal";
 	public static String FIELD_TYPE_DATE = "Date";
+	public static String FIELD_TYPE_LIST = "List";
 	
 	public static String TYPE_BOOLEAN = "Question.TYPE_BOOLEAN";
 	public static String TYPE_TEXT = "Question.TYPE_TEXT";
 	public static String TYPE_NUMBER = "Question.TYPE_NUMBER";
 	public static String TYPE_DECIMAL = "Question.TYPE_DECIMAL";
 	public static String TYPE_DATE = "Question.TYPE_DATE";
+	public static String TYPE_LIST = "Question.TYPE_LIST";
 	
 	public static String FUNCTION_MAX = "max";
 	public static String FUNCTION_MIN = "min";
