@@ -98,6 +98,7 @@
     <module>tohu-domain</module>
     <module>tohu-xml</module>
     <module>tohu-clients</module>
+    <module>tohu-loader</module>
   </modules>
 
   <build>

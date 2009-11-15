@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.tohu</groupId>
+  <artifactId>tohu-loader</artifactId>
+  <packaging>jar</packaging>
+  <name>Tohu :: Loader</name>
+  <version>1.0.1-SNAPSHOT</version>
+   <dependencies>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.5-FINAL</version>
+      <scope>compile</scope>
+    </dependency>
+       
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.7.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.3.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>3.1.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.tohu</groupId>
+      <artifactId>tohu-core</artifactId>
+      <version>1.0.1-SNAPSHOT</version>
+    </dependency>
+    
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+          <mainClass>org.tohu.load.PeriodicRuleLoader</mainClass>
+          <arguments>
+          	<argument>../life-example/life-example-rules/src/test/resources/LifeInsuranceRules.xls</argument>
+          	<argument>../life-example/life-example-rules/target/temp-rules</argument>
+          	<argument>../life-example/life-example-rules/src/test/resources</argument>
+          	<argument>../life-example/life-example-rules/src/main/rules/nz/co/pinnaclelife/life</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <site-deploy>${basedir}/../</site-deploy>
+  </properties>
+  
+</project>
