@@ -15,12 +15,19 @@
  */
 package org.tohu.domain.questionnaire.framework;
 
+import org.tohu.MultipleChoiceQuestion;
 import org.tohu.domain.questionnaire.conditions.ConditionClause;
 
 /**
+ * Holds the actual value and displayed value (representation) for a list item
+ * (used in {@link MultipleChoiceQuestion}. Note: representation is optional.
  * 
- * @author Derek Rendall
+ * There is an optional {@link ConditionClause} that allows one line of condition
+ * so that this list entry is only conditionally displayed. Note: use an Impact 
+ * (TohuDataItemObject) to control cases when more than one clause required - the multiple
+ * clauses are then on the creation of the Impact.
  *
+ * @author Derek Rendall
  */
 public class ListEntryTuple {
 	private String id = null;
@@ -47,9 +54,11 @@ public class ListEntryTuple {
 	public String getId() {
 		return id;
 	}
+	
 	public String getRepresentation() {
 		return representation;
 	}
+	
 	public ConditionClause getConditionClause() {
 		return clause;
 	}

@@ -20,15 +20,12 @@ import java.io.Serializable;
 import org.apache.poi.hssf.util.CellReference;
 
 /**
+ * Utility class to enable a standard way of referring to a cell. 
  * 
  * @author Derek Rendall
- *
  */
 public class CellIdentifier implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	

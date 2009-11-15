@@ -21,16 +21,30 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+import org.tohu.Group;
 
 /**
+ * An object that holds the Page level data extracted from the spreadsheet.
+ * 
+ * The core contents is a list of {@link PageElement} objects representing items on the page.
+ * 
+ * The initial element is a Group representing the page.
+ * 
+ * The Spreadsheet types of Page and Branch map to {@link Group}
+ * 
+ * There are three ways of navigating the pages elements:
+ * <ul>
+ * <li>An array of the elements</li>
+ * <li>a parent -> child relationship stored in the elements</li>
+ * <li>a map of element names and their associated position in the element array</li>
+ * </ul>
  * 
  * @author Derek Rendall
- *
  */
 public class Page {
-	
+	/** Normal pages may or may not have conditions that dictate when they are visible */
 	public static String PAGE_TYPE_NORMAL = "Normal";
+	/** Branch pages are ones that are displayed when an Answer record is created */
 	public static String PAGE_TYPE_BRANCH = "Branch";
 	
 	private String id;
@@ -47,6 +61,17 @@ public class Page {
 	private Map<String, Integer> elementLookup = new HashMap<String, Integer>();
 	
 
+	/**
+	 * Sets up the base entry in the element list. If the element passed in has a logic
+	 * condition then this is a Conditional page. All branched pages should have logic. 
+	 * 
+	 * @param sheetName
+	 * 			For possible reference in messages and/or rule names
+	 * @param element
+	 * 			The Group that represents the page.
+	 * @param currentPage
+	 * 			To default the display order (the new page cpomes after this page).
+	 */
 	public Page(String sheetName, PageElement element, Page currentPage) {
 		super();
 		this.sheetName = sheetName;
@@ -118,6 +143,17 @@ public class Page {
 		this.label = label;
 	}
 
+	/**
+	 * Adds to list of page elements, and to element lookup list.
+	 * Will also take note of any need to assign a lookup table to this element
+	 * at some point later.
+	 * 
+	 * @param element
+	 * 			If this is a repeating element then it is not added to the list. Such elements 
+	 * 			should not be looked up, as only the original master element is actually "real".
+	 * 			However, they will be added to the list of the parent elements children, so that 
+	 * 			they get added to a list of items (and thus displayed).
+	 */
 	public void addElement(PageElement element) {
 		if (element.isARepeatingElement()) {
 			System.out.println("Info: ignoring request to add repeating element " + getId() + " to page");
@@ -132,6 +168,12 @@ public class Page {
 		elements.add(element);
 	}
 
+	/**
+	 * Used when needing to lookup elements for logic element references and other element lookups.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public PageElement findElementOnThisPage(String id) {
 		Integer key = elementLookup.get(id);
 		if (key == null) {
@@ -141,6 +183,13 @@ public class Page {
 		return elements.get(key.intValue());
 	}
 	
+	/**
+	 * At the end of loading the spreadsheet, this should be called to set up
+	 * all the table entries prior to writing the DRL files.
+	 * 
+	 * @param tables
+	 * 			Stored in the application, passed to each page in turn to set the association.
+	 */
 	public void assignTables(Map<String, LookupTable> tables) {
 		for (Iterator<PageElement> i = elements.iterator(); i.hasNext();) {
 			PageElement pageElement = (PageElement) i.next();

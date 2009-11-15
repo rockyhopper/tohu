@@ -26,16 +26,19 @@ import org.tohu.load.spreadsheet.SpreadsheetItem;
 import org.tohu.load.spreadsheet.SpreadsheetRow;
 
 /**
+ * Contains the rows associated with a section of data within the spreadsheet. Will
+ * also contain the header row for that section, enabling the user to decypher the data elements. 
+ * 
+ * Contains a column depth map, which maps repeated occurrences of a column name (based
+ * on column number as the key) and to what depth (starting with 1) that instance of the column is at.
  * 
  * @author Derek Rendall
- *
  */
 public class SpreadsheetSection implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String sectionHeadingString = null;
-	//private boolean headingStyleExpected = true;	// could be used to check to make sure black background?
 	private List<SpreadsheetRow> sectionRows = new ArrayList<SpreadsheetRow>();
 	private SpreadsheetRow headerRow = null;
 	private Map<Integer, String> columnHeadingMap = new HashMap<Integer, String>();
@@ -43,6 +46,14 @@ public class SpreadsheetSection implements Serializable {
 	private boolean processed = false;
 	private String sheetName = null;
 	
+	/**
+	 * New section, as identified by a new header row. Process the header row into columns,
+	 * setting up all the necessary mappings.
+	 * 
+	 * @param sheetName
+	 * @param sectionHeadingString
+	 * @param headerRow
+	 */
 	public SpreadsheetSection(String sheetName, String sectionHeadingString, SpreadsheetRow headerRow) {
 		super();
 		if (headerRow == null) {
@@ -68,14 +79,6 @@ public class SpreadsheetSection implements Serializable {
 			columnDepthMap.put(new Integer(item.getColumn()), new Integer(count));
 		}
 	}
-
-//	public boolean isHeadingStyleExpected() {
-//		return headingStyleExpected;
-//	}
-//
-//	public void setHeadingStyleExpected(boolean headingStyleExpected) {
-//		this.headingStyleExpected = headingStyleExpected;
-//	}
 
 	public String getSectionHeadingString() {
 		return sectionHeadingString;
@@ -103,6 +106,10 @@ public class SpreadsheetSection implements Serializable {
 	}
 	
 	/**
+	 * As processing row, may find that its a new section, in which case create and return that new section.
+	 * 
+	 *  Used by {@link SpreadsheetSectionSplitter}
+	 * 
 	 * @param row
 	 * @param sectionHeadingStrings
 	 * @return

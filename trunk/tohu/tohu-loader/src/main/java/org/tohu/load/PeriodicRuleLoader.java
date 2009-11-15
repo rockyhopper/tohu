@@ -24,8 +24,8 @@ import org.tohu.load.questionnaire.TohuSpreadsheetLoader;
 /**
  * Monitors a file every few seconds and if it is modified then the Tohu rules
  * are regenerated.
+ * 
  * @author David Plumpton
- *
  */
 public class PeriodicRuleLoader {
 

@@ -16,9 +16,9 @@
 package org.tohu.domain.questionnaire.framework;
 
 /**
- * 
- * @author Derek Rendall
+ * Holds the Statics for the Condition information.
  *
+ * @author Derek Rendall
  */
 public interface ConditionConstants {
 

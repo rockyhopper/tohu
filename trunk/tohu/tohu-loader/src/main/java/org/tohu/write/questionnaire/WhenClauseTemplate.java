@@ -28,11 +28,22 @@ import org.tohu.domain.questionnaire.conditions.PageElementCondition;
 import org.tohu.domain.questionnaire.framework.ConditionConstants;
 import org.tohu.write.questionnaire.helpers.FieldTypeHelper;
 
-
 /**
+ * Writes out the condition clauses for an element.
+ * 
+ * While all values are "allowed", there are some key mappings:
+ * <ul>
+ * <li>Operation <code>is</code> maps to <code>==</code></li>
+ * <li>Operation <code>is not</code> maps to <code>!=</code></li>
+ * <li>Item Attribute <code>answer</code> will add in a condition for <code>Answer</code> object existence for Branch objects</li>
+ * <li>Operation <code>eval</code>will treat the Item Id as an eval command (adding outside <code>eval()</code> if required</li>
+ * <li>Value <code>empty</code> is mapped to null</li>
+ * <li>Quoted strings are not usually mapped</li>
+ * <li>Quotes are usually added to values</li>
+ * </ul>
+ * 
  * 
  * @author Derek Rendall
- *
  */
 public class WhenClauseTemplate implements ConditionConstants {
 	
@@ -132,9 +143,9 @@ public class WhenClauseTemplate implements ConditionConstants {
 				alreadySplitAnswerOut = true;
 			}
 
-			op = FieldTypeHelper.formatOperationString(application, op);
+			op = FieldTypeHelper.formatOperationString(op);
 			
-			valueString = FieldTypeHelper.formatValueStringInLogic(application, itemVariables, valueString);
+			valueString = FieldTypeHelper.formatValueStringInLogic(itemVariables, valueString);
 
 			fmt.format("%s%s %s %s", seperator, attributeName, op, valueString);
 			if (lastItem == null) {

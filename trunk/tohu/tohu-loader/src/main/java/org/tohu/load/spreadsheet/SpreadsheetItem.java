@@ -18,9 +18,9 @@ package org.tohu.load.spreadsheet;
 import org.apache.poi.ss.usermodel.Cell;
 
 /**
+ * Contains the data for a spreadsheet cell. 
  * 
  * @author Derek Rendall
- *
  */
 public class SpreadsheetItem {
 		
@@ -30,6 +30,12 @@ public class SpreadsheetItem {
 	private int column;
 	private int row;	// often used for id purposes
 	
+	/**
+	 * Extract a couple of data elements for easy reference, such as row and column
+	 * 
+	 * @param sheetName
+	 * @param cell
+	 */
 	public SpreadsheetItem(String sheetName, Cell cell) {
 		super();
 		this.sheetName = sheetName;

@@ -28,9 +28,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 /**
+ * Contains the data for the workbook, split into the constituent sheets. 
  * 
  * @author Derek Rendall
- *
  */
 public class WorkbookData {
 	
@@ -38,6 +38,12 @@ public class WorkbookData {
 	private List<String> sheetList = new ArrayList<String>(20);
 	
 	
+	/**
+	 * Open and load the workbook sheets. Note: any sheet with an "!" in the name will be ignored.
+	 * 
+	 * @param filename
+	 * @return
+	 */
 	public boolean loadWorkbook(String filename) {
 		try {
 			System.out.println("\n\n\nPROCESSING FILE: " + filename);
@@ -66,6 +72,15 @@ public class WorkbookData {
 		return true;
 	}
 	
+	/**
+	 * Cater for finding a current element, by spreadsheet reference.
+	 * 
+	 * Handles references to alternative sheets in the workbook.
+	 * 
+	 * @param currentSheet
+	 * @param cellReference
+	 * @return
+	 */
 	public SpreadsheetItem getItem(String currentSheet, String cellReference) {
 		int pos = cellReference.indexOf('!');
 		String tempSheet = currentSheet;
@@ -86,8 +101,17 @@ public class WorkbookData {
 		return sheetList;
 	}
 	
+	/**
+	 * Will be needed for formula processing
+	 * 
+	 * <b> not currently implemented </b>
+	 * 
+	 * @param currentSheet
+	 * @param cellReference
+	 * @return
+	 */
 	public static List<String> convertCellRangeReferencesToExplicitCellReferences(String currentSheet, String cellReference) {
-		throw new UnsupportedOperationException("convertCellRangeReferencesToExplicitCellReferences not supported");
+		throw new UnsupportedOperationException("convertCellRangeReferencesToExplicitCellReferences not yet supported");
 	}
 
 	public SpreadsheetData getSheet(String sheetName) {

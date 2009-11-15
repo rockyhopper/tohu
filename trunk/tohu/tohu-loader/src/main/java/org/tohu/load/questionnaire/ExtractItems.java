@@ -29,22 +29,57 @@ import org.tohu.load.spreadsheet.SpreadsheetRow;
 import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
 
 /**
+ * Processes the Page element items for an Item Section on a Spreadsheet page (sheet), creating
+ * the {@link PageElement} objects. Note that there can be multiple Tohu Pages (Group)
+ * on a single Spreadsheet Page (Sheet). Pages can also be spread over multiple sheets (but
+ * this will require specifying the appendAfter Page Id via the postLabel column).
  * 
- * @author Derek Rendall
+ * A Spreadsheet Page can contain multiple item sections (which will be attached to the same page
+ * if no new page is specified). Note: until the first page is defined, only Global Impact type
+ * elements can be defined (as they do not require any attachment to a Group as they are never 
+ * displayed in the UI).
+ * 
+ * By using multiple ItemId columns, the nested depth of an element can be obtained,
+ * and this is used to provide the nesting structure for groups and other objects.
+ * 
+ * For very simple spreadsheets (single page), a page (Group) will be created
+ * automatically, if one is not defined.
+ * 
+ * Groups will be created automatically where required to handle nested questions. You
+ * may want to list the group explicitly if you want to specify a label or style for it.
+ * 
+ * Items will be created such that their inclusion depends on the parent group being
+ * visible, which means that the Display Conditions are effectively propagated to all
+ * child elements.
+ * 
+ * Relates to Questionnaire type Spreadsheets.
  *
+ * @author Derek Rendall
  */
 public class ExtractItems implements SpreadsheetSectionConstants {
 	
+	/** provides ability to lookup an element defined previously, if needed */
 	private Application application = null;
 	protected Page currentPage = null;
 	protected int currentDepth = 1;
+	/** Used to grab the parent group (up a depth level) to attach items to etc */
 	private List<PageElement> currentElementsAtDepth = new ArrayList<PageElement>();
+	/** When backtracking up a depth need to know what the outer page was, in case just finished dealing with a Branch page */
 	private List<Page> currentPageAtDepth = new ArrayList<Page>();
+	
+	/** Useful for name identification */
 	private String currentSheetName;
 	
 	public static final String ELEMENT_PAGE_UPPER = "PAGE";
 	public static final String ELEMENT_BRANCH_UPPER = "BRANCH";
 	
+	/**
+	 * 
+	 * @param application
+	 * @param currentPage
+	 * 			Useful in cases where there are multiple Item sections, as they will be
+	 * 			added to the "current" page. Will be null first time.
+	 */
 	public ExtractItems(Application application, Page currentPage) {
 		super();
 		this.application = application;
@@ -52,6 +87,9 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	}
 		
 	/**
+	 * When we drop down a depth, we may need to create a group to contain the
+	 * elements at the new depth.
+	 * 
 	 * @param element
 	 */
 	protected void createNormalIntermediateGroup(PageElement element) {
@@ -76,6 +114,10 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	}
 	
 	/**
+	 * Store the element at the depth, so we can access it for assigning parent and
+	 * previous sibling information. Note: we can go down a couple of levels and then return to 
+	 * adding more elements to a group.
+	 * 
 	 * @param element
 	 */
 	protected void setElementAtDepth(PageElement element) {
@@ -86,7 +128,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 			throw new IllegalArgumentException("Cannot set an element depth of " + String.valueOf(depth) + " when depth tree size is " + String.valueOf(currentElementsAtDepth.size()));
 		}
 		
-		if (element.isAConsequenceType()) {
+		if (element.isAnImpactType()) {
 			if (currentPage == null) {
 				application.addGlobalElement(element);
 				return;
@@ -153,6 +195,8 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	
 
 	/**
+	 * Depth starts at 1, so will access list at index of depth - 1
+	 * 
 	 * @param depth
 	 * @return
 	 */
@@ -166,8 +210,14 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	
 	
 	/**
+	 * Will process a line of the spreadsheet. It will either be a new element, or a continuation of a 
+	 * condition on the display/value of the previous element. In the latter case the {@link ConditionClause}
+	 * will be extracted from the current element (line) and added to the previous (real) element.
+	 * 
 	 * @param section
 	 * @return
+	 * 			The current page, which may be a newer one than the one passed in. Callers
+	 * 			can then pass into the next Item Section to be processed.
 	 */
 	public Page processSectionData(SpreadsheetSection section) {
 		List<SpreadsheetRow> rows = section.getSectionRows();
@@ -187,28 +237,28 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 			//System.out.println("Processing line " + spreadsheetRow.getRowNumber() + " item id " + element.getId() + " depth " + String.valueOf(element.getDepth()));
 			
 			if (element.getId() != null){
-				// ie not a display fact or consequence extension
+				// ie not a display fact or impact extension
 				setElementAtDepth(element);
 				lastRealElement = element;
 			}
 			
-			// Now deal with display facts
+			// Now deal with condition facts
 			if ((element.getLogicElement() != null) && (!element.getLogicElement().isProcessed())) {
-				if (lastRealElement.isAConsequenceType()) {
+				if (lastRealElement.isAnImpactType()) {
 					if (element.getId() != null) {
 						if (element.getLogicElement() == null) {
-							throw new IllegalArgumentException("You must specify a logic clause on a Consequence " + element.getId());
+							throw new IllegalArgumentException("You must specify a logic clause on an Impact " + element.getId());
 						}
 						// Will turn this into a global by not requiring the parent to be visible
 						element.setRequired("Yes");
 					}					
-					processDisplayFactLine(lastRealElement, element, spreadsheetRow.getRowNumber());
+					processConditionClauseLine(lastRealElement, element, spreadsheetRow.getRowNumber());
 				}
 				else if (lastRealElement.isAValidationElement()) {
-					processValidationLine(lastRealElement, element, spreadsheetRow.getRowNumber());
+					processValidationClauseLine(lastRealElement, element, spreadsheetRow.getRowNumber());
 				}
 				else {
-					processDisplayFactLine(lastRealElement, element, spreadsheetRow.getRowNumber());
+					processConditionClauseLine(lastRealElement, element, spreadsheetRow.getRowNumber());
 				}
 			}
 		}
@@ -217,6 +267,18 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	}
 	
 	
+	/**
+	 * Maps the row cells to values in the {@link PageElement} object. Uses the section heading row to identify
+	 * what each column (attribute) each cell represents. Order of columns is arbitrary, other than having 
+	 * an Item Id as the first column.
+	 * 
+	 * If an Impact type has no logic associated, the code will look for a parent with logic, to control
+	 * the creation/assigning of the logic for the impact. This results in writing the logic once.
+	 * 
+	 * @param section
+	 * @param row
+	 * @return
+	 */
 	protected PageElement extractPageElement(SpreadsheetSection section, SpreadsheetRow row) {
 		SpreadsheetRow headings = section.getHeaderRow();
 		PageElement element = new PageElement();
@@ -290,7 +352,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		if ((element.getId() != null) && (element.getType() == null)) {
 			throw new IllegalArgumentException("Row " + String.valueOf(row.getRowNumber() + 1) + " has no type!");
 		}
-		if ((element.getType() != null) && (element.isAConsequenceType()) && (element.getLogicElement() == null) && (currentPage != null)) {
+		if ((element.getType() != null) && (element.isAnImpactType()) && (element.getLogicElement() == null) && (currentPage != null)) {
 			int depth = currentDepth;
 			try {
 				while (depth > 0) {
@@ -308,7 +370,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 						element.setLogicElement(currentPage.getParentPageElement().getLogicElement());
 					}
 					else {
-						throw new IllegalArgumentException("Row " + String.valueOf(row.getRowNumber() + 1) + " has a consequence with no condition or parent with a condition!");
+						throw new IllegalArgumentException("Row " + String.valueOf(row.getRowNumber() + 1) + " has a impact with no condition or parent with a condition!");
 					}
 				}
 			} catch (CloneNotSupportedException e) {
@@ -321,7 +383,18 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 	}
 	
 	
-	protected void processValidationLine(PageElement masterElement, PageElement element, int row) {
+	/**
+	 * Manage the logic associated with a Validation line.
+	 * 
+	 * @param masterElement
+	 * 			If the current Element has an Item Id, then this will be the current element. Otherwise will be the
+	 * 			previous real element - the one we want to attach the {@link ConditionClause} to.
+	 * @param element
+	 * 			Contains the {@link ConditionClause} that we need to create or add to the {@link PageElementCondition}.
+	 * @param row
+	 * 			Will be used to create rules that are uniquely named.
+	 */
+	protected void processValidationClauseLine(PageElement masterElement, PageElement element, int row) {
 		// TODO handle repeated elements?
 		ConditionClause le = element.getLogicElement();
 		if (element.getId() != null) {
@@ -333,7 +406,20 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		le.setProcessed(true);
 	}
 
-	protected void processDisplayFactLine(PageElement masterElement, PageElement element, int row) {
+	/**
+	 * Manage the logic associated with a Non-validation related conditional line. If the
+	 * logic relates to a Page or a Branch then a special version of {@link PageElementCondition} is
+	 * created, containing relevant page information for creating the relevant rules.
+	 * 
+	 * @param masterElement
+	 * 			If the current Element has an Item Id, then this will be the current element. Otherwise will be the
+	 * 			previous real element - the one we want to attach the {@link ConditionClause} to.
+	 * @param element
+	 * 			Contains the {@link ConditionClause} that we need to create or add to the {@link PageElementCondition}.
+	 * @param row
+	 * 			Will be used to create rules that are uniquely named - especially for AlternateImpact.
+	 */
+	protected void processConditionClauseLine(PageElement masterElement, PageElement element, int row) {
 		// TODO handle repeated elements?
 		ConditionClause le = element.getLogicElement();
 		if (element.getId() != null) {
@@ -343,7 +429,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 				//System.out.println("Processing page displayFact: " + value);
 				masterElement.setDisplayCondition(new PageElementCondition(type, masterElement.getId(), row, currentPage.getId(), currentPage.isBranchedPage(), currentPage.getDisplayAfter()));
 			}
-			else if (masterElement.isAnAlternateConsequenceItem()) {
+			else if (masterElement.isAnAlternateImpactItem()) {
 				le.setExplanation(element.getPostLabel());
 				masterElement.setDisplayCondition(new PageElementCondition(type, masterElement.getId() + String.valueOf(row), row));
 			}

@@ -17,9 +17,11 @@ package org.tohu.load.questionnaire;
 
 
 /**
+ * Constants for the section headings in the spreadsheet. 
+ * 
+ * Relates to Questionnaire type Spreadsheets.
  * 
  * @author Derek Rendall
- *
  */
 public interface SpreadsheetSectionConstants {
 	

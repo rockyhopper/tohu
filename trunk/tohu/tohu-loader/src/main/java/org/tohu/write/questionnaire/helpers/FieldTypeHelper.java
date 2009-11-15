@@ -17,13 +17,27 @@ package org.tohu.write.questionnaire.helpers;
 
 import java.util.Map;
 
-import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.framework.ConditionConstants;
 import org.tohu.domain.questionnaire.framework.PageElementConstants;
 
+/**
+ * Bunch of utility methods to map Spreadsheet types and values to Tohu/Java types
+ * and values.
+ * 
+ * @author Derek Rendall
+ */
 public class FieldTypeHelper implements PageElementConstants, ConditionConstants {
 
-	public static String formatOperationString(Application application, String op) {
+	/**
+	 * If operation has quotes, remove quotes and then do no further mapping.
+	 * If is "is", map to "=="
+	 * If is "is not" map to "!="
+	 * 
+	 * @param op
+	 * @return
+	 * 			mapped/formatted operation string.
+	 */
+	public static String formatOperationString(String op) {
 		if (op.startsWith("\"") && op.endsWith("\"") && (op.length() > 2)) {
 			op = op.substring(1, op.length() - 2);
 		}
@@ -42,7 +56,16 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 	}
 
 	
-	public static String formatValueStringInLogic(Application application, Map<String, String> itemVariables, String valueString) {
+	/**
+	 * Null or "empty" values get transformed to "null" string
+	 * If there is a dot in the string, simply return it (is likely to be a method accessor)
+	 * If the string refers to a previously used item variable, then replace with the "[item id].answer" string.
+	 * 
+	 * @param itemVariables
+	 * @param valueString
+	 * @return
+	 */
+	public static String formatValueStringInLogic(Map<String, String> itemVariables, String valueString) {
 		if ((valueString == null) || valueString.toUpperCase().equals(VALUE_EMPTY_UPPER)) {
 			return "null";
 		}
@@ -59,11 +82,23 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 		return valueString;
 	}
     
+	/**
+	 * Add string, long and double decorations to the value.
+	 * 
+	 * For example, 0.0 when it is a double will return 0.0D
+	 * 
+	 * Note: for multiple default values for a field type of list, the value will need to be a
+	 * single string with "||" separators between the values.
+	 * 
+	 * @param tempStr
+	 * @param type
+	 * @return
+	 */
 	public static String formatValueStringAccordingToType(String tempStr, String type) {
 		if (tempStr == null) {
 			return null;
 		}
-    	if (type.equals(FIELD_TYPE_TEXT) || type.equals(FIELD_TYPE_DATE)) {
+    	if (type.equals(FIELD_TYPE_TEXT) || type.equals(FIELD_TYPE_DATE) || type.equals(FIELD_TYPE_LIST)) {
     		if (!tempStr.startsWith("\"")) {
     			tempStr = "\"" + tempStr + "\"";
 	    	}
@@ -81,6 +116,12 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
     	return tempStr;
 	}
 
+	/**
+	 * Input the Questionnaire type (e.g. Text) and get back the Tohu type (e.g. Question.TYPE_TEXT).
+	 * 
+	 * @param theFieldType
+	 * @return
+	 */
 	public static String mapFieldTypeToQuestionType(String theFieldType) {
 		if ((theFieldType == null) || (theFieldType.equals(FIELD_TYPE_TEXT))) {
 			return TYPE_TEXT;
@@ -102,10 +143,20 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 			return TYPE_DATE;
 		}
 		
+		if (theFieldType.equals(FIELD_TYPE_LIST)) {
+			return TYPE_LIST;
+		}
+		
 		System.out.println("Converting type: " + theFieldType + " to Text");
 		return TYPE_TEXT;
 	}
 	
+	/**
+	 * If expecting a Number, then use the numberAnswer accessor to the Question or TohuDataItemObject
+	 * 
+	 * @param theFieldType
+	 * @return
+	 */
 	public static String mapFieldTypeToBaseVariableName(String theFieldType) {
 		if ((theFieldType == null) || (theFieldType.equals(FIELD_TYPE_TEXT))) {
 			return "textAnswer";
@@ -128,6 +179,13 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 		return "textAnswer";
 	}
 	
+	/**
+	 * Used in accumulator functions when need to create a temporary object of the right data type
+	 * to assign to the global TohuDataItemObject
+	 * 
+	 * @param theFieldType
+	 * @return
+	 */
 	public static String mapFieldTypeToJavaClassName(String theFieldType) {
 		if ((theFieldType == null) || (theFieldType.equals(FIELD_TYPE_TEXT))) {
 			return "String";
@@ -150,6 +208,12 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 		return "String";
 	}
 	
+	/**
+	 * For example, if type is Number then return longValue()
+	 * 
+	 * @param theFieldType
+	 * @return
+	 */
 	public static String mapFieldTypeToJavaNumberClassMethodName(String theFieldType) {
 		if ((theFieldType == null) || (theFieldType.equals(FIELD_TYPE_TEXT))) {
 			return "toString()";

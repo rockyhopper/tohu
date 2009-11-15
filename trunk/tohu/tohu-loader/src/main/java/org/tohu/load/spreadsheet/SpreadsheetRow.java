@@ -24,9 +24,13 @@ import java.util.Map;
 
 
 /**
+ *  Contains the data for a spreadsheet row.
+ * 
+ *  Will differentiate between a header row and a normal row.
+ *  
+ *  Provides utility methods to help map cell values from normal rows given a header row to work with.
  * 
  * @author Derek Rendall
- *
  */
 public class SpreadsheetRow implements Serializable {
 
@@ -43,6 +47,11 @@ public class SpreadsheetRow implements Serializable {
 		this.rowNumber = row;
 	}
 	
+	/**
+	 * If headerRow has already been set, then will also add mapping value for item (column number to heading string).
+	 * 
+	 * @param item
+	 */
 	public void addRowItem(SpreadsheetItem item) {
 		if (headerRow) {
 			headerRowColumns.put(new Integer(item.getColumn()), new Integer(rowItems.size()));
@@ -62,6 +71,10 @@ public class SpreadsheetRow implements Serializable {
 		return headerRow;
 	}
 
+	/**
+	 * If called (with true) after all cells set, will create the lookup map for the header row 
+	 * @param headerRow
+	 */
 	public void setHeaderRow(boolean headerRow) {
 		if (this.headerRow && headerRow) {
 			return;
@@ -81,6 +94,14 @@ public class SpreadsheetRow implements Serializable {
 		}
 	}
 	
+	/**
+	 * Utility method used by classes processing non header rows to identify what attribute this item is.
+	 * Performs a lookup on column position, thus the ordering of columns can vary between spreadsheets,
+	 * although the first column must always be the one that identifies a section.
+	 * 
+	 * @param column
+	 * @return
+	 */
 	public SpreadsheetItem getHeaderEntryForColumn(int column) {
 		if (!headerRow) {
 			throw new UnsupportedOperationException("Cannot access a header column when the record is not a header column");
@@ -92,11 +113,22 @@ public class SpreadsheetRow implements Serializable {
 		return rowItems.get(i.intValue());
 	}
 	
+	/**
+	 * Used for comparisons, to identify the type of the column. 
+	 * 
+	 * @param column
+	 * @return
+	 */
 	public String getHeaderTextForColumnInUpperCase(int column) {
 		SpreadsheetItem item = getHeaderEntryForColumn(column);
 		return item.getSpreadsheetCell().toString().toUpperCase();
 	}
 	
+	/**
+	 * Used to see if there is actually any data in the row, or is it just comments etc.
+	 * 
+	 * @return
+	 */
 	public int firstColumnWithAnEntry() {
 		if (rowItems.size() == 0) {
 			return -1;
@@ -104,6 +136,12 @@ public class SpreadsheetRow implements Serializable {
 		return rowItems.get(0).getColumn();
 	}
 	
+	/**
+	 * Ignore leading comments (i.e. that have no column heading).
+	 * 
+	 * @param headerRow
+	 * @return
+	 */
 	public SpreadsheetItem itemForFirstHeaderColumn(SpreadsheetRow headerRow) {
 		int firstColumn = headerRow.firstColumnWithAnEntry();
 		for (Iterator<SpreadsheetItem> iterator = rowItems.iterator(); iterator.hasNext();) {
