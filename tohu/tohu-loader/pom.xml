@@ -56,20 +56,29 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.1.1</version>
+
+		<!-- This configuration causes scanning of an Excel file every 5 seconds and if -->
+		<!-- changed the new rule files are created and copied to the drools destination directory. -->
         <configuration>
           <mainClass>org.tohu.load.PeriodicRuleLoader</mainClass>
           <arguments>
-          	<argument>../life-example/life-example-rules/src/test/resources/LifeInsuranceRules.xls</argument>
-          	<argument>../life-example/life-example-rules/target/temp-rules</argument>
-          	<argument>../life-example/life-example-rules/src/test/resources</argument>
-          	<argument>../life-example/life-example-rules/src/main/rules/nz/co/pinnaclelife/life</argument>
+          	<argument>${rules-spreadsheet-file}</argument>
+          	<argument>${rules-destination-dir}</argument>
+          	<argument>${rules-import-dir}</argument>
+          	<argument>${drools-destination-dir}</argument>
           </arguments>
         </configuration>
+
       </plugin>
     </plugins>
   </build>
   <properties>
     <site-deploy>${basedir}/../</site-deploy>
+    <project-to-load>../../TestProject</project-to-load>
+    <rules-spreadsheet-file>${project-to-load}/src/main/resources/rules/SampleDecisionTreeComplex.xls</rules-spreadsheet-file>
+    <rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
+    <rules-import-dir>${project-to-load}/src/main/resources/rules</rules-import-dir>
+    <drools-destination-dir>${project-to-load}/src/main/resources/rules</drools-destination-dir>
   </properties>
   
 </project>
