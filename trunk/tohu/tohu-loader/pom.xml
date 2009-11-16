@@ -1,10 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.tohu</groupId>
+
+  <parent>
+    <artifactId>tohu</artifactId>
+    <groupId>org.tohu</groupId>
+    <version>${tohu-version}</version>
+  </parent>
+
   <artifactId>tohu-loader</artifactId>
   <packaging>jar</packaging>
   <name>Tohu :: Loader</name>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>${tohu-version}</version>
    <dependencies>
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -37,7 +43,7 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tohu-version}</version>
     </dependency>
     
   </dependencies>
