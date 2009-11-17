@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.tohu.util.QueryHelper;
 import org.drools.executionserver.ExecutionServerHelper;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.tohu.util.QueryHelper;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -46,10 +46,12 @@ import com.lowagie.text.pdf.PdfWriter;
 public class PdfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).getKnowledgeSession();
 		Map<String, Object> answers = new QueryHelper(knowledgeSession).getAnswers();
+		Map<String, Object> dataItems = new org.tohu.support.util.QueryHelper(knowledgeSession).getTohuDataItems();
 		try {
 			Document document = new Document();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -58,7 +60,6 @@ public class PdfServlet extends HttpServlet {
 			Paragraph title = new Paragraph("SOLNET LOYALTY CARD");
 			title.setAlignment("center");
 			document.add(title);
-			
 			// Questions
 			document.add(new Paragraph("Questions:"));
 			document.add(new Paragraph(" "));
@@ -68,6 +69,17 @@ public class PdfServlet extends HttpServlet {
 				table.addCell(entry.getValue().toString());
 			}
 			document.add(table);
+
+			// Consequences
+			document.add(new Paragraph(" "));
+			document.add(new Paragraph("Impacts:"));
+			document.add(new Paragraph(" "));
+			PdfPTable table2 = new PdfPTable(2);
+			for (Map.Entry<String, Object> entry : dataItems.entrySet()) {
+				table2.addCell(entry.getKey());
+				table2.addCell(entry.getValue().toString());
+			}
+			document.add(table2);
 
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
