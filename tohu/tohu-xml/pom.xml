@@ -25,7 +25,7 @@
   <parent>
     <artifactId>tohu</artifactId>
     <groupId>org.tohu</groupId>
-    <version>${tohu-version}</version>
+    <version>1.1.0</version>
   </parent>
 
   <artifactId>tohu-xml</artifactId>
@@ -80,7 +80,7 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>${tohu-version}</version>
+      <version>${project.version}</version>
     </dependency>
 
   </dependencies>
