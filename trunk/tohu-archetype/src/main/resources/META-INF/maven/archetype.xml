@@ -2,7 +2,9 @@
   <id>tohu-archetype</id>
   <resources>
 	<resource>src/main/resources/org/tohu/utility/agent/tohu.xml</resource>
-	<resource>src/main/resources/rules/Questionnaire.drl</resource>
+	<resource>src/main/resources/rules/ContactDetailsPage.drl</resource>
+	<resource>src/main/resources/rules/LoyaltyCard.drl</resource>
+	<resource filtered="false">src/main/resources/rules/SampleDecisionTreeOnePage.xls</resource>
     <resource>src/main/webapp/index.jsp</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
     <resource>src/main/webapp/css/style.css</resource>

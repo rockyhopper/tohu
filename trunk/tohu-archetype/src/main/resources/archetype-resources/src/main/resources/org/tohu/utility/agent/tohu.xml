@@ -7,6 +7,8 @@
     <resource type="DRL" source="classpath:org/tohu/Queries.drl" />
     <resource type="DRL" source="classpath:org/tohu/Question.drl" />
     <resource type="DRL" source="classpath:org/tohu/ReadOnly.drl" />
-    <resource type="DRL" source="classpath:rules/Questionnaire.drl" />
+    <resource type="DRL" source="classpath:org/tohu/support/SupportQueries.drl" />
+	<resource type="DRL" source="file:src/main/resources/rules/LoyaltyCard.drl" />
+    <resource type="DRL" source="file:src/main/resources/rules/ContactDetailsPage.drl" />
   </add>
 </change-set>
