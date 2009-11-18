@@ -35,10 +35,10 @@ public class SpreadsheetData {
 	private HashMap<String, SpreadsheetItem>data = new HashMap<String, SpreadsheetItem>();
 	private List<String> cellList = new ArrayList<String>(1000);
 	private List<SpreadsheetRow> rows = new ArrayList<SpreadsheetRow>(12);
-	private boolean processed = false;
+	private boolean processed;
 	private SpreadsheetData parentSheet;
-	private SpreadsheetItem firstItemOnSheet = null;
-	private int keyColumn = 0;
+	private SpreadsheetItem firstItemOnSheet;
+	private int keyColumn;
 	private String sheetName;
 	
 	/**
@@ -118,6 +118,4 @@ public class SpreadsheetData {
 	public int getKeyColumn() {
 		return keyColumn;
 	}
-	
-
 }

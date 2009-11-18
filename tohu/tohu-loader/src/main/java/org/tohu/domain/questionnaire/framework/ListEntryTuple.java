@@ -30,7 +30,7 @@ import org.tohu.domain.questionnaire.conditions.ConditionClause;
  * @author Derek Rendall
  */
 public class ListEntryTuple {
-	private String id = null;
+	private String id;
 	private String representation;
 	private ConditionClause clause;
 	

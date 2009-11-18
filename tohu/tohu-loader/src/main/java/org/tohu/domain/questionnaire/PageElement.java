@@ -67,11 +67,11 @@ import org.tohu.support.TohuDataItemObject;
 public class PageElement implements PageElementConstants {
 
 	private String id;
-	private List<String> groupIds = null;
+	private List<String> groupIds;
 	/** What Object type to create as a Tohu rule object - will be mapped in the setter */
 	private String type;
 	private String lookupTableId;
-	private boolean required = false;
+	private boolean required;
 	private String fieldType;
 	/** For TohuDataItemObject this will be the name, for Validation this will be the Message */
 	private String preLabel;
@@ -79,15 +79,15 @@ public class PageElement implements PageElementConstants {
 	private String postLabel;
 	private String defaultValueStr;
 	private List<String> styles = new ArrayList<String>();
-	private LookupTable lookupTable = null;
+	private LookupTable lookupTable;
 	private boolean aPageElement;
-	private String pageType = null;
+	private String pageType;
 	/** Spreadsheet Type holds what the original type was. The Type will be mapped to the Tohu object when the setter is called */
-	private String spreadsheetType = null;
-	private PageElementCondition displayCondition = null;
-	private PageElementCondition currentValidationCondition = null;
+	private String spreadsheetType;
+	private PageElementCondition displayCondition;
+	private PageElementCondition currentValidationCondition;
 	/** category applies for TohuDataItemObject and Item, and can be used to select a group of objects, especially useful for calculations */
-	private String category = null;
+	private String category;
 	/** Depth is used to control nesting of elements */
 	private int depth;
 	/** Row number provides a useful rule identification variation to avoid duplicate names in DRL file */
@@ -97,11 +97,11 @@ public class PageElement implements PageElementConstants {
 	 * Working value - especially for lines where only has the logic element, in which case the 
 	 * logic will be inserted into the previous element, and this element will be "thrown away".
 	 */
-	private ConditionClause logicElement = null;
+	private ConditionClause logicElement;
 	
 	protected List<PageElement> children = new ArrayList<PageElement>();
-	protected PageElement parent = null;
-	protected PageElement previousSibling = null;
+	protected PageElement parent;
+	protected PageElement previousSibling;
 	
 	
 	public PageElement() {
@@ -430,7 +430,4 @@ public class PageElement implements PageElementConstants {
 	public void addStyle(String style) {
 		styles.add(style);
 	}
-	
-	
-	
 }

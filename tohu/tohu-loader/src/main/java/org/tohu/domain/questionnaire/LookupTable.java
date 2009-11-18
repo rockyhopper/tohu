@@ -80,7 +80,4 @@ public class LookupTable {
 	public void setEntries(List<ListEntryTuple> entries) {
 		this.entries = entries;
 	}
-
-
-
 }

@@ -68,6 +68,4 @@ public class SpreadsheetItem {
 	public int getRow() {
 		return row;
 	}
-	
-
 }

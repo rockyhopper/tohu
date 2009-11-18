@@ -59,8 +59,8 @@ import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
 public class ExtractItems implements SpreadsheetSectionConstants {
 	
 	/** provides ability to lookup an element defined previously, if needed */
-	private Application application = null;
-	protected Page currentPage = null;
+	private Application application;
+	protected Page currentPage;
 	protected int currentDepth = 1;
 	/** Used to grab the parent group (up a depth level) to attach items to etc */
 	private List<PageElement> currentElementsAtDepth = new ArrayList<PageElement>();
@@ -440,6 +440,4 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		masterElement.getDisplayCondition().addElement(le);
 		le.setProcessed(true);
 	}
-
-
 }

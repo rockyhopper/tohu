@@ -37,8 +37,8 @@ public class SpreadsheetRow implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int rowNumber;
-	private boolean headerRow = false;
-	private Map<Integer, Integer> headerRowColumns = null;
+	private boolean headerRow;
+	private Map<Integer, Integer> headerRowColumns;
 	
 	private List<SpreadsheetItem> rowItems = new ArrayList<SpreadsheetItem>();
 	
@@ -152,7 +152,4 @@ public class SpreadsheetRow implements Serializable {
 		}
 		return null;
 	}
-	
-	
-
 }

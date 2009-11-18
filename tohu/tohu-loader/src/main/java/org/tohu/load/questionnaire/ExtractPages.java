@@ -37,9 +37,9 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 	
 	// TODO all the validations - removing spaces, checking types etc
 
-	private Application application = null;
+	private Application application;
 	private List<SpreadsheetSection> data;
-	protected Page currentPage = null;
+	protected Page currentPage;
 	protected String currentSheetName;
 	
 	
@@ -107,7 +107,4 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 		
 		return true;
 	}
-		
-
-
 }

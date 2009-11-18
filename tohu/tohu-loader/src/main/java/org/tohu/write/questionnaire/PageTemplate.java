@@ -37,7 +37,7 @@ import org.tohu.write.questionnaire.helpers.CopyrightWriter;
  */
 public class PageTemplate {
 	
-	protected Page pg = null;
+	protected Page pg;
 	
 	public PageTemplate(Page page) {
 		super();
@@ -134,6 +134,4 @@ public class PageTemplate {
 		}
 	    
 	}
-
-
 }
