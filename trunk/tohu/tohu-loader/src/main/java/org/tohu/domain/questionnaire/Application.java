@@ -36,7 +36,7 @@ public class Application {
 	private String applicationClass;
 	private String applicationName;
 	private String completionAction;
-	private String activePage = null;
+	private String activePage;
 	private String note;
 	/** If true, required fields etc will stop the user on the page until problem is fixed up */
 	private String actionValidation = "false";
@@ -257,7 +257,4 @@ public class Application {
 		//System.out.println("Not used AlternateImpact Id: " + id);
 		return true;
 	}
-		
-
-
 }

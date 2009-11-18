@@ -58,15 +58,15 @@ public class TohuDataItemObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static String TYPE_TEXT = "text";
+	public static final String TYPE_TEXT = "text";
 
-	public static String TYPE_NUMBER = "number";
+	public static final String TYPE_NUMBER = "number";
 
-	public static String TYPE_DECIMAL = "decimal";
+	public static final String TYPE_DECIMAL = "decimal";
 
-	public static String TYPE_BOOLEAN = "boolean";
+	public static final String TYPE_BOOLEAN = "boolean";
 
-	public static String TYPE_DATE = "date";
+	public static final String TYPE_DATE = "date";
 
 	
 	private String id;
@@ -368,6 +368,4 @@ public class TohuDataItemObject implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 }

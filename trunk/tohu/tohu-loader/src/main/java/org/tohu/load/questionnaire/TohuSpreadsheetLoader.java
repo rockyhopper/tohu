@@ -34,10 +34,10 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 	public static final String SHEET_END ="END";
 		
 	private WorkbookData wbData;
-	private Application application = null;
+	private Application application;
 	
-	private String outputDirectory = null;
-	private String importDirectory = null;
+	private String outputDirectory;
+	private String importDirectory;
 
 	private boolean seperatePageDirectories = true;
 	
@@ -127,6 +127,4 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		}
 		return processed;
 	}
-	
-
 }

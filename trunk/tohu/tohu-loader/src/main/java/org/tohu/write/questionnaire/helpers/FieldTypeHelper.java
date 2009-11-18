@@ -229,6 +229,4 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 		System.out.println("Converting number method type: " + theFieldType + " to Text");
 		return "toString()";
 	}
-	
-
 }

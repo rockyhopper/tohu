@@ -27,7 +27,7 @@ public class ConditionClause {
 	protected String operation;
 	protected String value;
 	protected String explanation;
-	private boolean processed = false;
+	private boolean processed;
 	
 	public ConditionClause() {
 		super();

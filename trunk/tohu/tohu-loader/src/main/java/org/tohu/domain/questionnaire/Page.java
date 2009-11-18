@@ -43,9 +43,9 @@ import org.tohu.Group;
  */
 public class Page {
 	/** Normal pages may or may not have conditions that dictate when they are visible */
-	public static String PAGE_TYPE_NORMAL = "Normal";
+	public static final String PAGE_TYPE_NORMAL = "Normal";
 	/** Branch pages are ones that are displayed when an Answer record is created */
-	public static String PAGE_TYPE_BRANCH = "Branch";
+	public static final String PAGE_TYPE_BRANCH = "Branch";
 	
 	private String id;
 	private String initialState;
@@ -55,7 +55,7 @@ public class Page {
 	private String displayAfter;
 	
 	// processing variables
-	private PageElement parentPageElement = null;
+	private PageElement parentPageElement;
 	
 	private List<PageElement> elements = new ArrayList<PageElement>();
 	private Map<String, Integer> elementLookup = new HashMap<String, Integer>();
@@ -204,7 +204,4 @@ public class Page {
 			}
 		}
 	}
-	
-
-
 }

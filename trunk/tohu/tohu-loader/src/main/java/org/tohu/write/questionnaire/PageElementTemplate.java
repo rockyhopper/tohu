@@ -58,7 +58,7 @@ import org.tohu.write.questionnaire.helpers.FieldTypeHelper;
  */
 public class PageElementTemplate implements PageElementConstants, ConditionConstants {
 	
-	protected PageElement element = null;
+	protected PageElement element;
 	
 	public PageElementTemplate(PageElement element) {
 		super();
@@ -508,6 +508,4 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    
 	    fmt.format("end\n\n");
 	}
-
-
 }

@@ -38,13 +38,13 @@ public class SpreadsheetSection implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String sectionHeadingString = null;
+	private String sectionHeadingString;
 	private List<SpreadsheetRow> sectionRows = new ArrayList<SpreadsheetRow>();
-	private SpreadsheetRow headerRow = null;
+	private SpreadsheetRow headerRow;
 	private Map<Integer, String> columnHeadingMap = new HashMap<Integer, String>();
 	private Map<Integer, Integer> columnDepthMap = new HashMap<Integer, Integer>();
-	private boolean processed = false;
-	private String sheetName = null;
+	private boolean processed;
+	private String sheetName;
 	
 	/**
 	 * New section, as identified by a new header row. Process the header row into columns,
@@ -151,7 +151,4 @@ public class SpreadsheetSection implements Serializable {
 	public String toString() {
 		return String.format("headingString: %s, sheetName: %s, row: %d", sectionHeadingString, sheetName, (headerRow == null) ? 0 : headerRow.getRowNumber() + 1);
 	}
-	
-	
-
 }

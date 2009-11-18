@@ -28,7 +28,6 @@ public class CellIdentifier implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	
 	private int rowIdentifier;
 	private int columnIdentifier;
 	private CellReference cellRef;
@@ -56,5 +55,4 @@ public class CellIdentifier implements Serializable {
 	public String toString() {
 		return cellRef.toString();
 	}
-		
 }

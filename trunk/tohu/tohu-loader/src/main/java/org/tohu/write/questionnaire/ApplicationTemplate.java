@@ -45,7 +45,7 @@ import org.tohu.write.questionnaire.helpers.CopyrightWriter;
  */
 public class ApplicationTemplate {
 	
-	private Application app = null;
+	private Application app;
 	
 	public ApplicationTemplate(Application application) {
 		super();

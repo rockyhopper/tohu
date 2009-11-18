@@ -41,9 +41,9 @@ public class PageElementCondition implements ConditionConstants, Cloneable {
 	protected List<ConditionClause> elements = new ArrayList<ConditionClause>();
 	protected int rowNumber;
 	protected String type;
-	private String pageName = null;
-	private boolean branchedPage = false;
-	private String displayAfter = null;
+	private String pageName;
+	private boolean branchedPage;
+	private String displayAfter;
 
 	
 	/**

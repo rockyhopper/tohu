@@ -47,8 +47,8 @@ import org.tohu.write.questionnaire.helpers.FieldTypeHelper;
  */
 public class WhenClauseTemplate implements ConditionConstants {
 	
-	private PageElementCondition condition = null;
-	private PageElement element = null;
+	private PageElementCondition condition;
+	private PageElement element;
 
 	public WhenClauseTemplate(PageElement element) {
 		super();
@@ -160,6 +160,4 @@ public class WhenClauseTemplate implements ConditionConstants {
 		}
 		
 	}
-    
-	
 }

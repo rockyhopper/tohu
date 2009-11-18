@@ -31,6 +31,4 @@ public interface SpreadsheetSectionConstants {
 	public static final String PAGE_END_UPPER = "END";
 	
 	public static final String[] PAGE_SECTION_HEADINGS = {APPLICATION_UPPER, PAGE_ITEMS_UPPER, PAGE_LISTS_UPPER, PAGE_END_UPPER};
-
-
 }

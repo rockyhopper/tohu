@@ -38,13 +38,12 @@ import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
  */
 public class ExtractApplication implements SpreadsheetSectionConstants {
 	// TODO all the validations - removing spaces, checking types etc
-
 	
 	private Application application = new Application();
 	private SpreadsheetSection applicationSection;
 	
 	private List<SpreadsheetSection> tableSections = new ArrayList<SpreadsheetSection>();
-	private LookupTable currentLookupTable = null; 
+	private LookupTable currentLookupTable; 
 	
 	/**
 	 * Take the Application and List sections, setting them aside for processing by this object.
@@ -228,6 +227,4 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 			currentLookupTable.addEntry(itemValue, displayedValue, cc);
 		}
 	}
-
-
 }
