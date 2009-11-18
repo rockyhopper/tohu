@@ -65,7 +65,7 @@
                 <artifactItem>
                   <groupId>org.tohu</groupId>
                   <artifactId>tohu-jquery-client</artifactId>
-                  <version>1.0.0</version>
+                  <version>1.2.0-SNAPSHOT</version>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -131,25 +131,25 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-xml</artifactId>
-      <version>1.0.0</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-transformer-xstream</artifactId>
-      <version>5.1.0.SNAPSHOT.tohu1</version>
+      <version>5.1.0.M1</version>
     </dependency>
 		
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-execution-server</artifactId>
-      <version>0.0.3</version>
+      <version>0.0.4-SNAPSHOT</version>
     </dependency>
 
   </dependencies>
