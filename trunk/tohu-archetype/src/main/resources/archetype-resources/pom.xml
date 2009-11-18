@@ -215,19 +215,20 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-transformer-xstream</artifactId>
-      <version>5.1.0.SNAPSHOT.tohu1</version>
+      <version>${drools-version}</version>
     </dependency>
 		
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-execution-server</artifactId>
-      <version>0.0.3</version>
+      <version>0.0.4-SNAPSHOT</version>
     </dependency>
 
   </dependencies>
   
   <properties>
   	<tohu-version>1.1.0</tohu-version>
+  	<drools-version>5.1.0.M1</drools-version>
     <project-to-load>.</project-to-load>
     <rules-spreadsheet-file>${project-to-load}/src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls</rules-spreadsheet-file>
     <rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
