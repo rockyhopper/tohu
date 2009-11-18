@@ -76,6 +76,34 @@ public class PeriodicRuleLoader {
 	 * Loop forever looking periodically for updates
 	 */
 	public void start() {
+		boolean abort = false;
+		File file = new File(ruleFile);
+		if (!file.exists()) {
+			abort = true;
+			System.out.println("ERROR: Rule File does not exist: " + file.getAbsolutePath());
+		}
+		file = new File(outputDir);
+		if (!file.exists()) {
+			System.out.println("Warning: Output Directory does not exist: " + file.getAbsolutePath());
+		}
+
+		file = new File(importDir);
+		if (!file.exists()) {
+			abort = true;
+			System.out.println("ERROR: Import Directory does not exist: " + file.getAbsolutePath());
+		}
+		
+		file = new File(droolsDir);
+		if (!file.exists()) {
+			System.out.println("Warning: Drools Directory does not exist: " + file.getAbsolutePath());
+		}
+		
+		if (abort) {
+			throw new IllegalArgumentException("Required file or directory does not exist: " + ruleFile + " or " + importDir);
+		}
+		
+		System.out.println("\n\nScanning every " + seconds + " seconds ...\n");
+		
 		for (;;) {
 			try {
 				Thread.sleep(seconds * 1000L);
