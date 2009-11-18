@@ -33,17 +33,17 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-api</artifactId>
-      <version>5.1.0.SNAPSHOT.tohu1</version>
+      <version>${drools-version}</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
-      <version>5.1.0.SNAPSHOT.tohu1</version>
+      <version>${drools-version}</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
-      <version>5.1.0.SNAPSHOT.tohu1</version>
+      <version>${drools-version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
@@ -175,6 +175,7 @@
     </repository>
   </distributionManagement>
   <properties>
+	  <drools-version>5.1.0.M1</drools-version>
      <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
      <cobertura.total-branch-rate>80</cobertura.total-branch-rate>
      <cobertura.total-line-rate>80</cobertura.total-line-rate>
