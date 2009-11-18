@@ -4,7 +4,8 @@
 	<resource>src/main/resources/org/tohu/utility/agent/tohu.xml</resource>
 	<resource>src/main/resources/rules/ContactDetailsPage.drl</resource>
 	<resource>src/main/resources/rules/LoyaltyCard.drl</resource>
-	<resource filtered="false">src/main/resources/rules/SampleDecisionTreeOnePage.xls</resource>
+    <resource filtered="false">src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls</resource>
+    <resource>src/main/resources/scanner.properties</resource>
     <resource>src/main/webapp/index.jsp</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
     <resource>src/main/webapp/css/style.css</resource>
