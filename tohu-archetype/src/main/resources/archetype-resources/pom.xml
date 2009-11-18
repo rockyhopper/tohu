@@ -45,6 +45,33 @@
                   <version>${tohu-version}</version>
                   <type>jar</type>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>org.tohu</groupId>
+                  <artifactId>tohu-core</artifactId>
+                  <version>${tohu-version}</version>
+                  <type>jar</type>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
+                  <includes>**/*.drl</includes>
+                  <excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.tohu</groupId>
+                  <artifactId>tohu-loader</artifactId>
+                  <version>${tohu-version}</version>
+                  <type>jar</type>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
+                  <includes>**/*.drl</includes>
+                  <excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.tohu</groupId>
+                  <artifactId>tohu-xml</artifactId>
+                  <version>${tohu-version}</version>
+                  <type>jar</type>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
+                  <includes>**/*.drl</includes>
+                  <excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
+                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
@@ -202,7 +229,7 @@
   <properties>
   	<tohu-version>1.1.0</tohu-version>
     <project-to-load>.</project-to-load>
-    <rules-spreadsheet-file>${project-to-load}/src/main/resources/rules/SampleDecisionTreeOnePage.xls</rules-spreadsheet-file>
+    <rules-spreadsheet-file>${project-to-load}/src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls</rules-spreadsheet-file>
     <rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
     <rules-import-dir>${project-to-load}/src/main/resources/rules</rules-import-dir>
     <drools-destination-dir>${project-to-load}/src/main/resources/rules</drools-destination-dir>

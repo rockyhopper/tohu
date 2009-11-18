@@ -35,7 +35,6 @@ then
 	Group aGroup = new Group("PersonalDetails");
 	aGroup.setLabel("1");
 	aGroup.setItems({
-		"applicationType",
 		"givenNames",
 		"surname",
 		"dob",
@@ -43,22 +42,6 @@ then
 		"phone"});
 	aGroup.setPresentationStyles({"section"});
 	insertLogical(aGroup);
-end
-
-rule "applicationType"
-dialect "mvel"
-no-loop
-when
-	$group : Group (id == "PersonalDetails");
-then
-	MultipleChoiceQuestion aMultipleChoiceQuestion = new MultipleChoiceQuestion("applicationType");
-	aMultipleChoiceQuestion.setAnswerType(Question.TYPE_TEXT);
-	aMultipleChoiceQuestion.setAnswer("1");
-	aMultipleChoiceQuestion.setPreLabel("Application type");
-	aMultipleChoiceQuestion.setPossibleAnswers({
-		new PossibleAnswer("1", "Single"),
-		new PossibleAnswer("2", "Joint")});
-	insertLogical(aMultipleChoiceQuestion);
 end
 
 rule "givenNames"
@@ -112,7 +95,7 @@ then
 	insertLogical(aQuestion);
 end
 
-rule "Validate emailValidation 15"
+rule "Validate emailValidation 14"
 when
 	pe1 : Question(id == "email" , answered == "true", answer : textAnswer);
 	eval(!answer.toUpperCase().matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[_A-Za-z-]+)")) ;
