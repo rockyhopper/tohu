@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Question;
 
 /**
@@ -41,6 +43,7 @@ import org.tohu.Question;
  */
 public class NumberDomainModelAdapter implements DomainModelAdapter {
 
+	private static final Logger logger = LoggerFactory.getLogger(NumberDomainModelAdapter.class);
 	/**
 	 * @see org.tohu.domain.DomainModelAdapter#getSupportedClasses()
 	 */
@@ -60,6 +63,9 @@ public class NumberDomainModelAdapter implements DomainModelAdapter {
 	 * @see org.tohu.domain.DomainModelAdapter#answerToObject(java.lang.Object, java.lang.Class)
 	 */
 	public Object answerToObject(Object answer, Class<?> clazz) {
+		
+		logger.debug("Answer to Object is: " + answer.toString());
+		
 		if (answer == null) {
 			if (clazz.isPrimitive()) {
 				answer = 0;
