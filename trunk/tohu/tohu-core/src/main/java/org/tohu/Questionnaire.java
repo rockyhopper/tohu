@@ -16,6 +16,10 @@
 package org.tohu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -33,6 +37,8 @@ import java.util.ArrayList;
  */
 public class Questionnaire extends Group {
 
+	private static final Logger logger = LoggerFactory.getLogger(Questionnaire.class);
+	
 	private static final long serialVersionUID = 1L;
 
 	public static final String COMPLETION_ACTION_RETURN = "#return";
@@ -222,6 +228,9 @@ public class Questionnaire extends Group {
 	 * @param availableItems
 	 */
 	public void setAvailableItems(String[] availableItems) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Available Items are: " + Arrays.toString(availableItems));	
+		}		
 		if (availableItems == null) {
 			this.availableItems = null;
 		} else {
