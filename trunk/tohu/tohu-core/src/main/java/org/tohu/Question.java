@@ -41,6 +41,7 @@ import java.util.List;
  * <li><code>decimal</code></li>
  * <li><code>boolean</code></li>
  * <li><code>date</code></li>
+ * <li><code>list</code></li>
  * </ul>
  * 
  * <p>
