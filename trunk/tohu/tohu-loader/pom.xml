@@ -47,6 +47,18 @@
     
   </dependencies>
   <build>
+  	<filters>
+  		<filter>src/main/filters/${user.name}.properties</filter>
+  	</filters>
+  	<testResources>
+  		<testResource>
+  			<directory>src/test/resources</directory>
+  			<includes>
+  				<include>log4j.properties</include>
+  			</includes>
+  			<filtering>true</filtering>
+  		</testResource>
+  	</testResources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
