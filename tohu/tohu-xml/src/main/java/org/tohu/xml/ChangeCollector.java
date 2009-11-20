@@ -28,11 +28,13 @@ import org.drools.event.rule.ObjectRetractedEvent;
 import org.drools.event.rule.ObjectUpdatedEvent;
 import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.runtime.rule.FactHandle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Answer;
-import org.tohu.TohuObject;
 import org.tohu.InvalidAnswer;
 import org.tohu.Item;
 import org.tohu.Question;
+import org.tohu.TohuObject;
 
 /**
  * <p>
@@ -58,8 +60,11 @@ import org.tohu.Question;
  * 
  * @author Damon Horrell
  */
-public class ChangeCollector implements WorkingMemoryEventListener {
+public class ChangeCollector implements WorkingMemoryEventListener
+{
 
+	private final static Logger logger = LoggerFactory.getLogger(ChangeCollector.class);
+	
 	/**
 	 * The original values of the objects we have seen. This map will contain nulls to indicate that the "original" of an object
 	 * was that it didn't exist. i.e. prior to a create.
@@ -78,7 +83,7 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 	
 	// delete list contains ItemId and InvalidAnswer
 	private List<Object> delete;
-
+	
 	Map<Object, FactHandle> getCreate() {
 		return create;
 	}
@@ -127,13 +132,16 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 	 * @see org.drools.event.rule.WorkingMemoryEventListener#objectInserted(org.drools.event.rule.ObjectInsertedEvent)
 	 */
 	public void objectInserted(ObjectInsertedEvent event) {
+        logger.debug("==> [ObjectInserted: handle=" + event.getFactHandle() + "; object=" + event.getObject() + "]");
 		if (event.getObject() instanceof TohuObject) {
 			TohuObject newObject = (TohuObject) event.getObject();
 			String id = newObject.getId();
 			TohuObject originalObject = getOriginalObject(id);
+			logger.debug("==>ObjectInserted: Inserting Tohu Fact with ID [" + id + "] into working memry");			
 			processChange(id, originalObject, newObject, newObject, event.getFactHandle());
 		} else if (event.getObject() instanceof Answer) {
 			Answer answer = (Answer) event.getObject();
+			logger.debug("==>ObjectInserted: Inserting Answer Fact with value [" + answer.getValue() + "] into working memry");
 			storeClientAnswer(answer);
 		}
 	}
@@ -142,9 +150,11 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 	 * @see org.drools.event.rule.WorkingMemoryEventListener#objectUpdated(org.drools.event.rule.ObjectUpdatedEvent)
 	 */
 	public void objectUpdated(ObjectUpdatedEvent event) {
+        logger.debug("==> [ObjectUpdated handle=" + event.getFactHandle() + "; object=" + event.getOldObject() + "]");		
 		if (event.getObject() instanceof TohuObject) {
 			TohuObject newObject = (TohuObject) event.getObject();
 			String id = newObject.getId();
+			logger.debug("==> ObjectUpdated: Updating Fact with ID [" + id + "] that exists in Working Memry");			
 			TohuObject originalObject = getOriginalObject(id);
 			processChange(id, originalObject, newObject, newObject, event.getFactHandle());
 		}
@@ -154,9 +164,11 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 	 * @see org.drools.event.rule.WorkingMemoryEventListener#objectRetracted(org.drools.event.rule.ObjectRetractedEvent)
 	 */
 	public void objectRetracted(ObjectRetractedEvent event) {
+        logger.debug("==> [ObjectRetracted: handle=" + event.getFactHandle() + "; object=" + event.getOldObject() + "]");		
 		if (event.getOldObject() instanceof TohuObject) {
 			TohuObject oldObject = (TohuObject) event.getOldObject();
 			String id = oldObject.getId();
+			logger.debug("==> ObjectRemoved: Removing Fact with ID [" + id + "] from Working Memry");			
 			TohuObject originalObject = getOriginalObject(id);
 			processChange(id, originalObject, null, oldObject, event.getFactHandle());
 		}
@@ -335,5 +347,5 @@ public class ChangeCollector implements WorkingMemoryEventListener {
 		}
 		clientAnswers.put(answer.getQuestionId(), answerValue);
 	}
-
+   
 }
