@@ -57,6 +57,14 @@ import java.util.List;
  * the answers to a real domain model.
  * </p>
  * 
+ * TODO the get/setListAnswer methods should be using String[] not String for consistency with all the other methods that deal
+ * with lists of values (e.g. Group.get/setItems). The list is represented INTERNALLY as a string but that detail should not be
+ * exposed outside of this class. Note that the setter method will need to be overloaded though with a String version for use by
+ * the pixie-dust rules because the internal representation is what is sent to the client via XML and so Question.drl needs to
+ * handle it when it comes back. The String version of this setter should be marked as "internal use only". See get/setDateAnswer
+ * as a comparison as dates are stored internally as strings but the methods expose them as Date. ListAnswer should follow this
+ * same pattern.
+ * 
  * @author Damon Horrell
  */
 public class Question extends Item {
