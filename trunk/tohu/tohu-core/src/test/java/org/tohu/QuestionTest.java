@@ -139,7 +139,6 @@ public class QuestionTest {
 	public void testNewListType() {
 		Question q = new Question();
 		q.setAnswerType(Question.TYPE_LIST);
-		String s = "something";
 		q.setListAnswer("one||two");
 		assertEquals("one||two", q.getListAnswer());
 	}
