@@ -115,7 +115,7 @@ public class QuestionRulesTest {
 			Answer answer2 = new Answer("question2", "123");
 			Answer answer3 = new Answer("question3", "4.56");
 			Answer answer4 = new Answer("question4", "true");
-			Answer answer5 = new Answer("question5", "30/05/1971");
+			Answer answer5 = new Answer("question5", "1971-05-30");
 			Answer answer6 = new Answer("question6", "123x");
 			Answer answer7 = new Answer("question7", "hello");
 			Answer answer8 = new Answer("question8", null);

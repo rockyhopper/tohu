@@ -293,7 +293,7 @@ function attachChangeHandler(obj) {
 				try {
 					if (!isBlank(value)) {
 						// Note: this is necessary to so that typing a 2-digit year works correctly
-						value = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate("dd/mm/yy", value));
+						value = $.datepicker.formatDate("yy-mm-dd", $.datepicker.parseDate("dd/mm/yy", value));
 					}
 					handleChangeEvent(obj.id, value, questionTabForward);
 				}

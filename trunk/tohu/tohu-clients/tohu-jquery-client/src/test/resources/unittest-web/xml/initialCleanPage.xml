@@ -56,7 +56,7 @@
 					<postLabel>Date Field with Picker</postLabel>
 					<required>true</required>
 					<answerType>date</answerType>
-					<dateAnswer>2009-06-16 13:14:43.390 NZST</dateAnswer>
+					<dateAnswer>2009-06-16</dateAnswer>
 				</org.tohu.Question>
 				<fact-handle externalForm="item_1_3Handle" />
 			</row>

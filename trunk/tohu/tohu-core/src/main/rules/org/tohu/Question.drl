@@ -56,9 +56,7 @@ then
 		} else if (basicAnswerType.equals(Question.TYPE_BOOLEAN)) {
 			question.setBooleanAnswer(new Boolean(answerValue));
 		} else if (basicAnswerType.equals(Question.TYPE_DATE)) {
-			// TODO provide a way for the developer to specify the supported date formats (trying them all until one succeeds)
-			// or do we just say that only one format is supported here and it is up to the client to transform what the user enters into this one? 
-			question.setDateAnswer(new SimpleDateFormat("dd/MM/yyyy").parse(answerValue));
+			question.setDateAnswer(answerValue);
 		} else if (basicAnswerType.equals(Question.TYPE_LIST)) {
 			question.setListAnswer(answerValue);
 		}
