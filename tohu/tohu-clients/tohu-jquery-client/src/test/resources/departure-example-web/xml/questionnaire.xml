@@ -12,7 +12,7 @@
 					<preLabel>Date of departure</preLabel>
 					<required>true</required>
 					<answerType>date</answerType>
-					<dateAnswer>2009-06-16 13:14:43.390 NZST</dateAnswer>
+					<dateAnswer>2009-06-16</dateAnswer>
 				</org.tohu.Question>
 				<fact-handle externalForm="0:14:14329510:-166079775:102" />
 			</row>

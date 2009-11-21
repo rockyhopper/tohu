@@ -21,6 +21,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -45,13 +48,13 @@ import java.util.List;
  * </ul>
  * 
  * <p>
- * or an extension of one of these using the notation <code>&lt;type&gt;.&lt;extension type&gt; </code> e.g.
- * <code>text.url</code> or <code>decimal.currency</code>.
+ * or an extension of one of these using the notation <code>&lt;type&gt;.&lt;extension type&gt; </code> e.g. <code>text.url</code>
+ * or <code>decimal.currency</code>.
  * </p>
  * 
  * <p>
- * The answer to a <code>Question</code> is maintained internally by the object. use <code>DomainModelAssociation</code> to
- * map the answers to a real domain model.
+ * The answer to a <code>Question</code> is maintained internally by the object. use <code>DomainModelAssociation</code> to map
+ * the answers to a real domain model.
  * </p>
  * 
  * @author Damon Horrell
@@ -60,16 +63,18 @@ public class Question extends Item {
 
 	private static final long serialVersionUID = 1L;
 
-	public static String TYPE_TEXT = "text";
+	private static final DateFormat DATE_TRANSPORT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static String TYPE_NUMBER = "number";
+	public static final String TYPE_TEXT = "text";
 
-	public static String TYPE_DECIMAL = "decimal";
+	public static final String TYPE_NUMBER = "number";
 
-	public static String TYPE_BOOLEAN = "boolean";
+	public static final String TYPE_DECIMAL = "decimal";
 
-	public static String TYPE_DATE = "date";
-	
+	public static final String TYPE_BOOLEAN = "boolean";
+
+	public static final String TYPE_DATE = "date";
+
 	public static final String TYPE_LIST = "list";
 
 	private String preLabel;
@@ -92,9 +97,16 @@ public class Question extends Item {
 	@AnswerField
 	private Boolean booleanAnswer;
 
+	/**
+	 * Dates are stored internally as strings so that they are transported to the client as just yyyy-mm-dd and not with the
+	 * redundant time and timezone data on the end.
+	 * 
+	 * (The Java Date class is really DateTime and is mis-named. If there is ever a need to support TIME or DATETIME in the future
+	 * then these should be defined as distinct types.)
+	 */
 	@AnswerField
-	private Date dateAnswer;
-	
+	private String dateAnswer;
+
 	/**
 	 * List is stored as a delimited string
 	 */
@@ -151,8 +163,8 @@ public class Question extends Item {
 		String basicAnswerType = answerTypeToBasicAnswerType(answerType);
 		if (basicAnswerType == null
 				|| (!basicAnswerType.equals(TYPE_TEXT) && !basicAnswerType.equals(TYPE_NUMBER)
-						&& !basicAnswerType.equals(TYPE_DECIMAL) && !basicAnswerType.equals(TYPE_BOOLEAN) && !basicAnswerType
-						.equals(TYPE_DATE) && !basicAnswerType.equals(TYPE_LIST))) {
+						&& !basicAnswerType.equals(TYPE_DECIMAL) && !basicAnswerType.equals(TYPE_BOOLEAN)
+						&& !basicAnswerType.equals(TYPE_DATE) && !basicAnswerType.equals(TYPE_LIST))) {
 			throw new IllegalArgumentException("answerType " + answerType + " is invalid");
 		}
 		this.answerType = answerType;
@@ -223,24 +235,40 @@ public class Question extends Item {
 
 	public Date getDateAnswer() {
 		checkType(TYPE_DATE);
-		return dateAnswer;
+		try {
+			return dateAnswer == null ? null : DATE_TRANSPORT_FORMAT.parse(dateAnswer);
+		} catch (ParseException e) {
+			// can't actually happen because we formatted the string in the first place
+			throw new IllegalStateException();
+		}
 	}
 
 	public void setDateAnswer(Date dateAnswer) {
 		checkType(TYPE_DATE);
-		this.dateAnswer = dateAnswer;
+		this.dateAnswer = DATE_TRANSPORT_FORMAT.format(dateAnswer);
 	}
-	
+
+	/**
+	 * For internal use only.
+	 * 
+	 * @param dateAnswer
+	 * @throws ParseException
+	 */
+	public void setDateAnswer(String dateAnswer) throws ParseException {
+		checkType(TYPE_DATE);
+		this.dateAnswer = DATE_TRANSPORT_FORMAT.format(DATE_TRANSPORT_FORMAT.parse(dateAnswer));
+	}
+
 	public String getListAnswer() {
 		checkType(TYPE_LIST);
 		return listAnswer;
 	}
-	
+
 	public void setListAnswer(String listAnswer) {
 		checkType(TYPE_LIST);
 		this.listAnswer = listAnswer;
 	}
-	
+
 	public List<String> getAnswerAsList() {
 		checkType(TYPE_LIST);
 		if (this.listAnswer == null) {
@@ -292,7 +320,7 @@ public class Question extends Item {
 			return booleanAnswer;
 		}
 		if (basicAnswerType.equals(TYPE_DATE)) {
-			return dateAnswer;
+			return getDateAnswer();
 		}
 		if (basicAnswerType.equals(TYPE_LIST)) {
 			return listAnswer;
@@ -333,8 +361,7 @@ public class Question extends Item {
 	}
 
 	/**
-	 * Splits some text into words delimited by the specified delimiter. Make public for
-	 * use within rule logic.
+	 * Splits some text into words delimited by the specified delimiter. Make public for use within rule logic.
 	 * 
 	 * Occurrences of the delimiter d within the text are expected to be escaped as \d
 	 * 
@@ -375,7 +402,8 @@ public class Question extends Item {
 	/**
 	 * Annotation used by the ChangeCollector to identify answer fields.
 	 */
-	@Retention(RUNTIME) @Target({FIELD})
+	@Retention(RUNTIME)
+	@Target( { FIELD })
 	public @interface AnswerField {
 	}
 
