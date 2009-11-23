@@ -18,7 +18,7 @@ package org.tohu;
 /**
  * Defines an association between the answer to a Question and a property on a real domain model object instance.
  * 
- * The Pixie Dust keeps the model in sync with the answer on the Question.
+ * The Tohu built-in rules keeps the model in sync with the answer on the Question.
  * 
  * All the basic Java types are supported. Adapters can be plugged in for custom extensions. (See
  * <code>org.tohu.domain.DomainModelSupport.registerAdapter</code>.)

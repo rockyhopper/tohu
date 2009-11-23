@@ -21,7 +21,7 @@ package org.tohu;
  * </p>
  * 
  * <p>
- * <code>InvalidAnswer</code> objects are created automatically by the Pixie Dust for:
+ * <code>InvalidAnswer</code> objects are created automatically by the Tohu built-in rules for:
  * </p>
  * 
  * <ul>

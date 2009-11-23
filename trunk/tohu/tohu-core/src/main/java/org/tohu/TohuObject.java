@@ -40,7 +40,7 @@ public abstract class TohuObject implements Cloneable, Serializable {
 	}
 
 	/**
-	 * This is invoked by the Pixie Dust. Do not call it directly.
+	 * This is invoked by the Tohu built-in rules. Do not call it directly.
 	 *
 	 * @param active
 	 */

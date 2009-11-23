@@ -22,7 +22,7 @@ import java.io.Serializable;
  * 
  * The answer is always a String since it models what the user has typed in.
  * 
- * When an Answer is inserted into the working memory, the Pixie Dust (TM) automatically converts copies the value onto the
+ * When an Answer is inserted into the working memory, the Tohu built-in rules automatically converts copies the value onto the
  * corresponding Question (converting the data type as necessary). The Answer is then retracted from the working memory. If the
  * data type conversion fails then an InvalidAnswer object is asserted.
  * 
