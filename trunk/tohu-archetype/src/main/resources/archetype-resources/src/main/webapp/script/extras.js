@@ -1,9 +1,10 @@
 /*
 * Overriding because "requiredMissing" errors are hidden so we need to inform user that all fields are required. 
 */
-function notifyErrors() {
-	alert("Please answer all questions.");
+function onShowError(actionId, action){
+	alert("Please answer all mandatory questions.");
 }
+
 
 function overrideReturnEnforceErrors() {
 	return false;
