@@ -60,7 +60,7 @@ import java.util.List;
  * TODO the get/setListAnswer methods should be using String[] not String for consistency with all the other methods that deal
  * with lists of values (e.g. Group.get/setItems). The list is represented INTERNALLY as a string but that detail should not be
  * exposed outside of this class. Note that the setter method will need to be overloaded though with a String version for use by
- * the pixie-dust rules because the internal representation is what is sent to the client via XML and so Question.drl needs to
+ * the Tohu built-in rules because the internal representation is what is sent to the client via XML and so Question.drl needs to
  * handle it when it comes back. The String version of this setter should be marked as "internal use only". See get/setDateAnswer
  * as a comparison as dates are stored internally as strings but the methods expose them as Date. ListAnswer should follow this
  * same pattern.
@@ -154,7 +154,7 @@ public class Question extends Item {
 	}
 
 	/**
-	 * If set to true then the Pixie Dust will create an <code>InvalidAnswer</code> if this question is not answered.
+	 * If set to true then the Tohu built-in rules will create an <code>InvalidAnswer</code> if this question is not answered.
 	 * 
 	 * @param required
 	 */

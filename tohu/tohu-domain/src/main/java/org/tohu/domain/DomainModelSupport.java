@@ -23,7 +23,7 @@ import org.tohu.Question;
 
 /**
  * <p>
- * Utility class used by the Pixie Dust rules for translating between <code>Question</code> answers and arbitrary Java classes
+ * Utility class used by the Tohu built-in rules for translating between <code>Question</code> answers and arbitrary Java classes
  * used in a custom domain model.
  * </p>
  * 

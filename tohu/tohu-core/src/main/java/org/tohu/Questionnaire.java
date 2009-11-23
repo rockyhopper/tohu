@@ -118,7 +118,7 @@ public class Questionnaire extends Group {
 	}
 
 	/**
-	 * This is invoked by the Pixie Dust. Do not call it directly.
+	 * This is invoked by the Tohu built-in rules. Do not call it directly.
 	 * 
 	 * @param invalidAnswers
 	 */
@@ -223,7 +223,7 @@ public class Questionnaire extends Group {
 	}
 
 	/**
-	 * This is invoked by the Pixie Dust. Do not call it directly.
+	 * This is invoked by the Tohu built-in rules. Do not call it directly.
 	 * 
 	 * @param availableItems
 	 */
