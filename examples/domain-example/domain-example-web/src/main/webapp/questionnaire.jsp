@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%@ include file="/jsps/include.jspf" %>
+<% pageContext.include("/jsps/include.jspf"); %>
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 <script type="text/javascript">
 $(document).ready(function() {

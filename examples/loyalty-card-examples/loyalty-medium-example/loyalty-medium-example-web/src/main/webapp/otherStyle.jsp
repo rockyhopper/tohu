@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%@ include file="/jsps/include.jspf" %>
+<% pageContext.include("/jsps/include.jspf"); %>
 
 <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
