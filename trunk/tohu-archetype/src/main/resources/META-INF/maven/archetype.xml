@@ -5,6 +5,7 @@
 	<resource>src/main/resources/rules/ContactDetailsPage.drl</resource>
 	<resource>src/main/resources/rules/LoyaltyCard.drl</resource>
     <resource filtered="false">src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls</resource>
+    <resource filtered="false">src/main/resources/spreadsheet/Copyright.drl</resource>
     <resource>src/main/resources/scanner.properties</resource>
     <resource>src/main/webapp/index.jsp</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
@@ -14,6 +15,7 @@
     <resource>src/main/webapp/script/extras.js</resource>
 	<resource>src/main/java/org/drools/executionserver/ExecutionServerHelper.java</resource>
 	<resource>src/main/java/org/tohu/utility/pdf/PdfServlet.java</resource>
+	<resource>src/test/java/org/tohu/utility/GenerateDRLFromSpreadsheet.java</resource>
   </resources>
   <!-- 
   <sources>
