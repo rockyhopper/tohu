@@ -36,7 +36,8 @@
   <build>
     <finalName>tohu-domain</finalName>
     <filters>
-    	<filter>src/main/filters/${user.name}.properties</filter>
+<!--     	<filter>src/main/filters/${user.name}.properties</filter> -->
+    	<filter>src/main/filters/username.properties</filter>
     </filters>
     <resources>
       <resource>

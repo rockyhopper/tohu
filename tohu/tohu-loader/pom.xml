@@ -48,7 +48,8 @@
   </dependencies>
   <build>
   	<filters>
-  		<filter>src/main/filters/${user.name}.properties</filter>
+<!--     	<filter>src/main/filters/${user.name}.properties</filter> -->
+    	<filter>src/main/filters/username.properties</filter>
   	</filters>
   	<testResources>
   		<testResource>
