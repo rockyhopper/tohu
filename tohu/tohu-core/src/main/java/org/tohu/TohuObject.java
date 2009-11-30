@@ -35,6 +35,10 @@ public abstract class TohuObject implements Cloneable, Serializable {
 	 */
 	public abstract String getId();
 
+	/**
+	 * True if this item is active
+	 * @return true if this item is active
+	 */
 	public boolean isActive() {
 		return active;
 	}
