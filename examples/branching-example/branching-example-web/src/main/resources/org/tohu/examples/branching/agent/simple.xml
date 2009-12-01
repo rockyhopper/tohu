@@ -7,6 +7,6 @@
     <resource type="DRL" source="classpath:org/tohu/Queries.drl" />
     <resource type="DRL" source="classpath:org/tohu/Question.drl" />
     <resource type="DRL" source="classpath:org/tohu/ReadOnly.drl" />
-    <resource type="DRL" source="classpath:org/tohu/examples/branching/Simple.drl" />
+    <resource type="DRL" source="url:http://localhost:8085/drools-guvnor/org.drools.guvnor.Guvnor/package/org.tohu.examples.branching/LATEST.drl" />
   </add>
 </change-set>
