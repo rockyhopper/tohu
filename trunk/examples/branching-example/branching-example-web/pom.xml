@@ -37,7 +37,7 @@
           </webAppSourceDirectory>
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8080</port>
+							<port>8081</port>
 							<maxIdleTime>600000</maxIdleTime>
 						</connector>
 					</connectors>
@@ -58,7 +58,7 @@
 								<artifactItem>
 									<groupId>org.tohu</groupId>
 									<artifactId>tohu-jquery-client</artifactId>
-									<version>1.2.0-SNAPSHOT</version>
+									<version>1.1.0</version>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
