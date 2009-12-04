@@ -35,10 +35,6 @@
 
   <build>
     <finalName>tohu-core</finalName>
-    <filters>
-<!--     	<filter>src/main/filters/${user.name}.properties</filter> -->
-    	<filter>src/main/filters/username.properties</filter>
-    </filters>
     <resources>
       <resource>
         <directory>src/main/rules</directory>
@@ -86,6 +82,7 @@
   </dependencies>
   <properties>
     <site-deploy>${basedir}/../</site-deploy>
+    <tohu.core.log.level>INFO</tohu.core.log.level>
   </properties>
 
 </project>
