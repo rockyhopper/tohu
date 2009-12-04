@@ -47,10 +47,6 @@
     
   </dependencies>
   <build>
-  	<filters>
-<!--     	<filter>src/main/filters/${user.name}.properties</filter> -->
-    	<filter>src/main/filters/username.properties</filter>
-  	</filters>
   	<testResources>
   		<testResource>
   			<directory>src/test/resources</directory>
@@ -97,6 +93,7 @@
     <rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
     <rules-import-dir>${project-to-load}/src/main/resources/rules</rules-import-dir>
     <drools-destination-dir>${project-to-load}/src/main/resources/rules</drools-destination-dir>
+	<tohu.loader.log.level>INFO</tohu.loader.log.level>  
   </properties>
   
 </project>
