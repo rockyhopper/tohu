@@ -255,8 +255,8 @@ public abstract class AbstractSeleniumTest {
 	 * Activates the specified action.
 	 * @param quesionID
 	 */
-	protected void clickControl(String actionID) {
-		selenium.click(actionID);
+	protected void mouseDownControl(String actionID) {
+		selenium.mouseDown(actionID);
 		waitWhileGUIIsBusy("clickControl: actionID=" + actionID);
 	}
 

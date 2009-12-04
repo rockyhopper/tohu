@@ -32,6 +32,7 @@ var READONLY_STYLE = 4;
 var IMAGE_STYLE = 5;
 var BUTTON_STYLE = 6;
 
+
 /**
  * Create a new Questionnaire and display it.
  * 
@@ -239,7 +240,7 @@ function attachChangeHandler(obj) {
 		debug("attachChangeHandler() radio");
 		input.find(":radio").unbind();
 		input.find(":radio").click(function() {
-			if ($(this).attr("checked")) {
+			if ($(this).attr("checked")) {				
 				handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);
 			}
 		});
@@ -313,7 +314,7 @@ function attachChangeHandler(obj) {
 				} else {
 					handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);
 				}
-			});
+			});		
 		}
 		input.keydown(function(event) {
 			if (event.keyCode == 9) {
@@ -402,7 +403,7 @@ function createQuestion(obj) {
 	var result = addToParent(obj.hierarchy, html);
 	attachChangeHandler(obj);
 	addQuestionWidgets(obj);
-	checkQuestionReadonly(obj);
+	checkQuestionReadonly(obj);	
 	return result;
 }
 
@@ -487,7 +488,7 @@ function updateError(obj) {
 	debugObject("updateError() obj=", obj);
 	getJQElement(obj.id + "_reason").text(obj.reason);
 }
- */
+
 
 /**
  * Create a control for the Questionnaire and display it.
@@ -503,17 +504,20 @@ function createControl(obj) {
 	}
 	else {
 		// Default.
-		html = "<a id=\"" + obj.id + "\" href=\"#\" class=\"" + getObjectClass(obj)
-			+ "\">" + obj.label + "</a>";
+		html = "<a id=\"" + obj.id + "\" href=\"#\" class=\"" + getObjectClass(obj) + "\">" + 
+					obj.label +
+			   "</a>";			
 	}
 	var result = addToParent(obj.hierarchy, html);
-	// Attach event handler.
-	getJQElement(obj.id).unbind().click(function () {
-		handleActionEvent(obj.id, obj.actionType, obj.action);
-	});
+	getJQElement(obj.id).unbind().mousedown( 
+		function() {
+			handleActionEvent(this);
+		}
+	);
 	return result;
 }
 
+	
 /**
  * Update a previously displayed Control.
  * 
@@ -521,18 +525,6 @@ function createControl(obj) {
  */
 function updateControl(obj) {
 	debugObject("updateControl() obj=", obj);
-	var element = getJQElement(obj.id);
-	if (element.is("input")) {
-		element.attr("value", obj.label);
-	}
-	else {
-		element.text(obj.label);
-	}
-	setElementClass(obj.id, getObjectClass(obj));
-	// Attach event handler.
-	element.unbind().click(function () {
-		handleActionEvent(obj.id, obj.actionType, obj.action);
-	});
 }
 
 /**
@@ -542,8 +534,8 @@ function updateControl(obj) {
  */
 function deleteAnyObjectType(obj) {
 	debugObject("deleteAnyObjectType() obj=", obj);
-	if (obj.error) {
-		getJQElement(obj.id + "_errors").empty();
+	if (obj.error) {		
+	    getJQElement(obj.id + "_errors").empty();
 	}
 	else {
 		removeElement(obj.id);
