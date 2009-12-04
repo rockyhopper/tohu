@@ -34,11 +34,7 @@
   <name>Tohu :: XML Protocol</name>
 
   <build>
-    <finalName>tohu-xml</finalName>
-    <filters>
-<!--     	<filter>src/main/filters/${user.name}.properties</filter> -->
-    	<filter>src/main/filters/username.properties</filter>
-    </filters>    
+    <finalName>tohu-xml</finalName>    
     <resources>
       <resource>
         <directory>src/main/rules</directory>
@@ -95,7 +91,8 @@
 
   </dependencies>
   <properties>
-    <site-deploy>${basedir}/../</site-deploy>
+	  <tohu.xml.log.level>INFO</tohu.xml.log.level>
+	  <site-deploy>${basedir}/../</site-deploy>
   </properties>
 
 </project>
