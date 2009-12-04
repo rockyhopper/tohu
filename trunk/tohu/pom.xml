@@ -55,6 +55,17 @@
       <artifactId>mvel2</artifactId>
       <version>2.0.12</version>
     </dependency>
+    <!-- LOGGING DEPENDENCIES - LOG4J -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>    
   </dependencies>
 
   <repositories>
@@ -175,11 +186,12 @@
     </repository>
   </distributionManagement>
   <properties>
-	  <drools-version>5.1.0.M1</drools-version>
+     <drools-version>5.1.0.M1</drools-version>
      <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
      <cobertura.total-branch-rate>80</cobertura.total-branch-rate>
      <cobertura.total-line-rate>80</cobertura.total-line-rate>
      <cobertura.halt-on-failure>false</cobertura.halt-on-failure>
      <site-deploy>${basedir}/</site-deploy>
+     <thirdparty.log.level>INFO</thirdparty.log.level>
   </properties>
 </project>
