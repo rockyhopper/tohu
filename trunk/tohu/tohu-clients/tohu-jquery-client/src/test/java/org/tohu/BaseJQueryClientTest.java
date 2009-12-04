@@ -474,18 +474,18 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 						new String[] { "2", "Item 2.3.2" } },
 				new String[][] { new String[] { "ErrorType1", "Item 2.3 Error" } });
 
-			clickControl("questionnaire1_action_1");
+			mouseDownControl("questionnaire1_action_1");
 			checkQuestionnaire(
 				"questionnaire2",
 				new String[] { "questionnaire2Style" },
 				"Questionnaire 2",
 				new String[] { "group6" });
 
-			clickControl("questionnaire2_action_1");
+			mouseDownControl("questionnaire2_action_1");
 			checkAlert("You must fix all errors first.");
 
 			setTextAnswer("item_6_1", "Test Text");
-			clickControl("questionnaire2_action_1");
+			mouseDownControl("questionnaire2_action_1");
 			checkQuestionnaire(
 				"questionnaire3",
 				null,
@@ -758,7 +758,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 		try {
 			openURL(new String[] { "ajaxCall=initialErrorPage" });		
 			// attempt to navigate to next page
-			clickControl("questionnaire1_action_1");
+			mouseDownControl("questionnaire1_action_1");
 			// check an error alert was generated
 			checkAlert("Not all mandatory questions have being answered");
 			// check we are still on the same page of the app
@@ -791,7 +791,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 					"Questionnaire 1",
 					new String[] { "group1"});
 			// navigate forward, as there are no errors
-			clickControl("questionnaire1_action_1");			
+			mouseDownControl("questionnaire1_action_1");			
 			// check we are now on page for quesionaire 2
 			checkQuestionnaire(
 					"questionnaire2",
@@ -799,7 +799,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 					"Questionnaire 2",
 					new String[] { "group6" });
 			// navigate back to previous page. The generated xml payload will include an error			
-			clickControl("questionnaire2_action_0");
+			mouseDownControl("questionnaire2_action_0");
 			// check we are back to quesionaire 1
 			checkQuestionnaire(
 					"questionnaire1",
@@ -807,7 +807,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 					"Questionnaire 1",
 					new String[] { "group1"});			
 			// try to navigate forward again
-			clickControl("questionnaire1_action_1");
+			mouseDownControl("questionnaire1_action_1");
 			// check an error alert was generated
 			checkAlert("Not all mandatory questions have being answered");			
 			// check we are still on the same questionaire

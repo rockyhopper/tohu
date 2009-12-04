@@ -133,6 +133,7 @@ function preProcessServerChanges(response) {
 
 	var xml = string2xml(response);
 	if (xml != null) {
+
 		// Process delete list.
 		preProcessServerDeleteList("result > * > delete > *", xml, retVal);
 
@@ -143,17 +144,37 @@ function preProcessServerChanges(response) {
 		preProcessServerCreateList("result > * > create > entry", xml, true, retVal);
 
 		if (temporaryState.questionnaireChanged) {
-			var actions = getQuestionnaireActions(persistentState.questionnaire);
-			// Remove all existing Actions.
-			for (actionID in persistentState.actions) {
-				retVal.deleteList.push(new DeleteObject(false, actionID));
+			var possibleActions = getQuestionnaireActions(persistentState.questionnaire);			
+			var temporaryActions = new Array();						
+			// iterate through all the possible actions			
+			for (var i = 0; i < possibleActions.length; i++) {
+				var possibleAction = possibleActions[i];
+				var existingActionFound = false;
+				for (actionID in persistentState.actions) {
+					var existingAction = persistentState.actions[actionID];
+					// if the newly created current action is the same as an existing one
+					// then update it the existing one with the new details.					
+					if (existingAction.id == possibleAction.id) {
+						existingAction.presentationStyles = possibleAction.presentationStyles;
+						existingAction.label = possibleAction.label;
+						existingAction.actionType = possibleAction.actionType;
+						existingAction.action = possibleAction.action;
+						existingAction.hierarchy = possibleAction.hierarchy;
+						temporaryActions[existingAction.id] = existingAction;
+						// we will need to update the html element representing
+						// this action.
+						retVal.updateList.push(existingAction);
+						existingActionFound = true;
+					}
+				}
+				// if the current "possibleAction" did not exist before
+				// then add it to the createList 
+				if (existingActionFound == false) {
+					retVal.createList.push(possibleAction);
+					temporaryActions[possibleAction.id] = possibleAction;
+				}				
 			}
-			persistentState.actions = new Array();
-			// Add generated Actions.
-			for (var i = 0; i < actions.length; i++) {
-				retVal.createList.push(actions[i]);
-				persistentState.actions[actions[i].id] = actions[i];
-			}
+			persistentState.actions = temporaryActions;
 		}
 	}
 	

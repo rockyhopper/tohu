@@ -27,7 +27,7 @@ var actionURL = null;
 
 // Optional ID of a hidden input to store the isGUIBusy flag in so the selenium test client can see it.
 var isGUIBusyID = null;;
-
+	
 /**
  * Sets the Action URL.
  * 
@@ -131,7 +131,7 @@ function onQuestionnaireLoad(rootID, defaultKnowledgebase) {
  */
 function refreshScreen(resultSet, lastFocusID, tabForward) {
 	debug("refreshScreen() lastFocusID=" + lastFocusID + " tabForward=" + tabForward);
-
+		
 	// Do application-specific pre processing, if any.
 	if (window.preRefreshScreen) {
 		preRefreshScreen(resultSet, lastFocusID);
@@ -165,7 +165,8 @@ function refreshScreen(resultSet, lastFocusID, tabForward) {
 	// Do application-specific post processing, if any.
 	if (window.postRefreshScreen) {
 		postRefreshScreen(resultSet, lastFocusID);
-	}
+	}	
+
 }
 
 /**
@@ -302,6 +303,7 @@ function processUpdateList(theList) {
 	}
 }
 
+
 /**
  * Called whenever the answer to a question is changed.
  * 
@@ -311,7 +313,8 @@ function processUpdateList(theList) {
  */
 function handleChangeEvent(questionID, newValue, tabForward) {
 	debug("handleChangeEvent() questionID=" + questionID + " newValue=" + newValue + " tabForward=" + tabForward);
-	guiBusy("change");
+	
+	guiBusy("change");	
 	
 	// Do application-specific pre processing, if any.
 	if (window.preChangeEvent) {
@@ -322,9 +325,9 @@ function handleChangeEvent(questionID, newValue, tabForward) {
 		debug("handleChangeEvent() default handling overridden for question: " + questionID);
 	}
 	else {
-		refreshScreen(setQuestionAnswer(questionID, newValue), questionID, tabForward);
+		refreshScreen(setQuestionAnswer(questionID, newValue), questionID, tabForward);			
 	}
-
+	
 	// Do application-specific post processing, if any.
 	if (window.postChangeEvent) {
 		postChangeEvent(questionID, newValue);
@@ -336,14 +339,36 @@ function handleChangeEvent(questionID, newValue, tabForward) {
 /**
  * Called whenever a Control is activated.
  * 
- * @param actionID String Unique ID of the Action.
- * @param actionType String Type of Action, one of "setActive", "showError" or "completion.
- * @param action String Details of Action.
+ * @param element of the html element which fired the event
+ *
  */
-function handleActionEvent(actionID, actionType, action) {
-	debug("handleActionEvent() actionID=" + actionID + " actionType=" + actionType + " action=" + action);
-	guiBusy("action");
+function handleActionEvent(element) {
+
+	 /*
+	  * Browsers have their own implementation on how
+	  * they fire simultaneous events in what ever order they want.
+	  * Currently we handle 2 events onChange and onClick.
+	  * However some browsers invoke the click handler before 
+	  * the change handler.  Adding the code below ensures that the
+	  * change handler is called before proceeding to carry on with 
+	  * the rest of the processing within this function.  
+	  * Therefore the rest of this function will have visibility to
+	  * any change in state to the client side objects.
+	  * 
+	  * explicit indicate we are on this element 
+	  * causes onchange handler to be called
+	  */
+	element.tabIndex = 0;
+	element.focus(); 
+	 		
+	// state of client side objects could have changed.  Now 
+	// retrieve the necessary information
+	var actionID = persistentState.actions[element.id].id;
+	var actionType = persistentState.actions[element.id].actionType;
+	var action = persistentState.actions[element.id].action;		
 	
+	guiBusy("action");
+
 	// Do application-specific pre processing, if any.
 	if (window.preActionEvent) {
 		preActionEvent(actionID, actionType, action);
@@ -355,11 +380,11 @@ function handleActionEvent(actionID, actionType, action) {
 	else {
 		switch (actionType) {
 		case "setActive":
-			// Clear everything and start again.
+			// Clear everything and start again.				
 			getJQElement(htmlRootID).empty();
 			refreshScreen(setActiveItem(action), null, null);
 			break;
-		case "showError":			
+		case "showError":								
 			if (window.onShowError) {
 				onShowError(actionID, action);
 				break;
@@ -379,13 +404,14 @@ function handleActionEvent(actionID, actionType, action) {
 					"dynamicUI_main.handleActionEvent", "actionID=" + actionID + " action=" + action);
 		}
 	}
-
+	
 	// Do application-specific post processing, if any.
 	if (window.postActionEvent) {
 		postActionEvent(actionID, actionType, action);
 	}
 
-	guiReady();
+	guiReady();			
+
 }
 
 /**
