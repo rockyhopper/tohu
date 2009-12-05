@@ -37,8 +37,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Questionnaire extends Group {
 
+	private static final String DEFAULT_CLIENT_DATE_FORMAT = "dd/mm/yyyy";
+
 	private static final Logger logger = LoggerFactory.getLogger(Questionnaire.class);
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String COMPLETION_ACTION_RETURN = "#return";
@@ -54,6 +56,8 @@ public class Questionnaire extends Group {
 	private boolean enableActionValidation;
 
 	private String availableItems;
+
+	private String clientDateFormat = DEFAULT_CLIENT_DATE_FORMAT;
 
 	public Questionnaire() {
 		super.setActive(true);
@@ -229,8 +233,8 @@ public class Questionnaire extends Group {
 	 */
 	public void setAvailableItems(String[] availableItems) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Available Items are: " + Arrays.toString(availableItems));	
-		}		
+			logger.debug("Available Items are: " + Arrays.toString(availableItems));
+		}
 		if (availableItems == null) {
 			this.availableItems = null;
 		} else {
@@ -247,6 +251,22 @@ public class Questionnaire extends Group {
 				this.availableItems = null;
 			}
 		}
+	}
+
+	public String getClientDateFormat() {
+		return clientDateFormat;
+	}
+
+	/**
+	 * Set the format used to display/enter dates on the client.
+	 * 
+	 * TODO this should use some industry-standard for specifying date formats. No change required at this end to achieve that but
+	 * we will need to change the javascript end to convert the standard format into whatever is required by JQuery.
+	 * 
+	 * @param clientDateFormat
+	 */
+	public void setClientDateFormat(String clientDateFormat) {
+		this.clientDateFormat = clientDateFormat;
 	}
 
 }

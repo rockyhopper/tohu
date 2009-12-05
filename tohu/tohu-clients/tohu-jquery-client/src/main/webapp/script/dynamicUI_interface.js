@@ -588,6 +588,8 @@ function createFactObject(xml, isDelete) {
 	case "org.tohu.Questionnaire":
 		obj = new QuestionnaireObject();
 		obj.id = getChildText(jq, "id");
+		// TODO this meeds some more work to convert date formats specified in some industry standard way into those supported by the JQuery $.datePicker.formatDate function 
+		obj.clientDateFormat = getChildText(jq, "clientDateFormat", "").replace(/yy/g, "y");
 		obj.presentationStyles = getChildText(jq, "presentationStyles");
 		obj.label = getChildText(jq, "label", "");
 		items = getChildText(jq, "items");
