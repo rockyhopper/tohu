@@ -201,10 +201,9 @@ function buildQuestionInput(obj) {
 				return "";
 			}
 		}
-		// TODO don't hard code date format
 		if (!isBlank(obj.answer)) {
 			try {
-				obj.answer = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate("yy-mm-dd", obj.answer));
+				obj.answer = $.datepicker.formatDate(persistentState.questionnaire.clientDateFormat, $.datepicker.parseDate("yy-mm-dd", obj.answer));
 			}
 			catch (ex) {
 				if (!handleError(ERROR_TYPES.INVALID_DATE, [ obj.answer ], "dynamicUI_html.buildQuestionInput", ex)) {
@@ -293,8 +292,7 @@ function attachChangeHandler(obj) {
 				var value = $(this).attr("value");
 				try {
 					if (!isBlank(value)) {
-						// Note: this is necessary to so that typing a 2-digit year works correctly
-						value = $.datepicker.formatDate("yy-mm-dd", $.datepicker.parseDate("dd/mm/yy", value));
+						value = $.datepicker.formatDate("yy-mm-dd", $.datepicker.parseDate(persistentState.questionnaire.clientDateFormat, value));
 					}
 					handleChangeEvent(obj.id, value, questionTabForward);
 				}
@@ -347,7 +345,7 @@ function addQuestionWidgets(obj) {
 				buttonImage: 'images/calendar.gif',
 				changeMonth: true,
 				changeYear: true,
-				dateFormat: 'dd/mm/yy',
+				dateFormat: persistentState.questionnaire.clientDateFormat,
 				showOn: 'button'
 			});
 		}
