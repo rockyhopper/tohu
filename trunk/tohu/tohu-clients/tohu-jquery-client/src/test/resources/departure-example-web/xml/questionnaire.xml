@@ -216,6 +216,7 @@
 			<row>
 				<org.tohu.Questionnaire>
 					<id>myQuestionnaire</id>
+					<clientDateFormat>dd/mm/yyyy</clientDateFormat>
 					<active>true</active>
 					<label>EARTH PASSENGER DEPARTURE CARD</label>
 					<items>group1,group2,group3,group4</items>

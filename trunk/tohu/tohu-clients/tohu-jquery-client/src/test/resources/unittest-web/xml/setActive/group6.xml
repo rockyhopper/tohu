@@ -20,6 +20,7 @@
 			<row>
 				<org.tohu.Questionnaire>
 					<id>questionnaire2</id>
+					<clientDateFormat>dd/mm/yyyy</clientDateFormat>
 					<presentationStyles>questionnaire2Style</presentationStyles>
 					<active>true</active>
 					<label>Questionnaire 2</label>
