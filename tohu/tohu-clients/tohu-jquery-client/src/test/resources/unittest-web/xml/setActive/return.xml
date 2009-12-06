@@ -7,6 +7,7 @@
 			<row>
 				<org.tohu.Questionnaire>
 					<id>questionnaire3</id>
+					<clientDateFormat>dd/mm/yyyy</clientDateFormat>
 					<active>true</active>
 					<label>All Done</label>
 					<invalidAnswers>false</invalidAnswers>
