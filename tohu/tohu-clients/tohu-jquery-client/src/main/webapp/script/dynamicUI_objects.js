@@ -22,7 +22,7 @@
 // State Objects.
 
 /**
- * Custom object for the temporary interface state (only exists for the duration of the current AJAX call).
+ * Custom object for the temporary interface state (Stateless - only exists for the duration of the current AJAX call).
  */
 function TemporaryStateObject() {
 	// Boolean flag indicating if the Questionnaire fact has been created.
@@ -36,7 +36,7 @@ function TemporaryStateObject() {
 }
 
 /**
- * Custom object for the persistent interface state (exists across AJAX calls).
+ * Custom object for the persistent interface state (Stateful - exists across AJAX calls).
  */
 function PersistentStateObject() {
 	// The Questionnaire fact object. 
