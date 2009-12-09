@@ -25,7 +25,7 @@ var droolsURL = null;
 var droolsBusy = false;
 
 /**
- * Gets the Drools URL.
+* Gets the URL to the rules servlet
  *
  * @return The URL String.
  */
@@ -34,7 +34,7 @@ function getDroolsURL() {
 }
 
 /**
- * Sets the Drools URL.
+ * Sets the URL to the rules servlet
  * 
  * @param url URL string.
  */

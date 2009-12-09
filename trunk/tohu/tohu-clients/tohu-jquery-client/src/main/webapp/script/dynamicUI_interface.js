@@ -98,7 +98,10 @@ function setActiveItem(activeItem) {
 //==================================================================================================
 
 /**
- * Pre-process the full AJAX response (i.e. the whole questionnaire).
+ * This function will re-create the content section representing the
+ * questionnaire being processed and what "active group" is being currently
+ * handled.  additionally the action points will be dynamically determined 
+ * by the questionnaire and what state they are in (e.g validation errors exist)
  * 
  * @param response The XML string of the AJAX response.
  * @return A ResultSetObject with only the createList populated.
@@ -123,8 +126,14 @@ function preProcessServerQuestionnaire(response) {
 }
 
 /**
- * Pre-process the incremental AJAX response (i.e. just the changes).
- * 
+ * This function will convert the String response into an XML 
+ * DOM.
+ *
+ * The XML DOM is then itereated through using JQuery to 
+ * extract all the Fact Objects which will create, update, 
+ * or delete HTML elements, thus refreshing the content to 
+ * reflect the response of the rules engine
+ *
  * @param response The XML string of the AJAX response.
  * @return A ResultSetObject.
  */
@@ -167,7 +176,7 @@ function preProcessServerChanges(response) {
 						existingActionFound = true;
 					}
 				}
-				// if the current "possibleAction" did not exist before
+				// if the current "possibleAction" did not exist before,
 				// then add it to the createList 
 				if (existingActionFound == false) {
 					retVal.createList.push(possibleAction);
@@ -183,7 +192,10 @@ function preProcessServerChanges(response) {
 }
 
 /**
- * Pre-process the newly created facts.
+ * Iterate through the XML response looking for Fact Objects to be created and 
+ * update the ResultSetObject with these new Fact Objects.
+ * The ResultSetObject will be referenced later to determine which content
+ * needs to be added during this rendering process.
  * 
  * @param jQueryPath String The JQuery selection path for the created facts in the ajax response.
  * @param xml XMLDOM The ajax response.
@@ -269,7 +281,8 @@ function preProcessServerCreateList(jQueryPath, xml, changes, resultSet) {
 }
 
 /**
- * Pre-process a newly created fact object.
+ * Update the persistentState and temporaryState to reflect the 
+ * current "Fact Object"  being processed from the XML response. 
  * 
  * @param obj Fact object.
  */
@@ -304,7 +317,10 @@ function preProcessServerCreateObject(obj) {
 }
 
 /**
- * Pre-process the updated facts.
+ * Iterate through the XML response looking for Fact Objects to be updated and 
+ * update the ResultSetObject with these Fact Objects.
+ * The ResultSetObject will be referenced later to determine which content
+ * needs to be updated during this rendering process.
  * 
  * @param jQueryPath String The JQuery selection path for the updated facts in the ajax response.
  * @param xml XMLDOM The ajax response.
@@ -327,7 +343,9 @@ function preProcessServerUpdateList(jQueryPath, xml, resultSet) {
 }
 
 /**
- * Pre-process an updated fact object.
+ * update the Fact, TemporaryState and PersistentState Objects
+ * and check if the Facts Object needs to add children to the 
+ * the existing hierarchy
  *
  * @param obj Fact object.
  */
@@ -346,7 +364,10 @@ function preProcessServerUpdateObject(obj) {
 }
 
 /**
- * Pre-process the deleted facts.
+ * Iterate through the XML response looking for Fact Objects to be deleted and 
+ * Update the ResultSetObject with these Fact Objects.
+ * The ResultSetObject will be referenced later to determine which content
+ * needs to be removed during this rendering process.
  * 
  * @param jQueryPath String The JQuery selection path for the deleted facts in the ajax response.
  * @param xml XMLDOM The ajax response.
@@ -368,7 +389,8 @@ function preProcessServerDeleteList(jQueryPath, xml, resultSet) {
 }
 
 /**
- * Pre-process a deleted fact object.
+ * update the hierarchy reflecting that this
+ * Fact Object is to be deleted.
  *
  * @param obj Fact object.
  */
@@ -384,7 +406,7 @@ function preProcessServerDeleteObject(obj) {
 }
 
 /**
- * Add the object's children to the hierarchy, assumes the object itself has already been added.
+ * Add the Fact Object's children to the hierarchy, assumes the object itself has already been added.
  * 
  * @param obj Fact object.
  */
@@ -416,7 +438,7 @@ function buildHierarchy(obj) {
 }
 
 /**
- * Sort a list of objects so parents appear before their children (by level then by parentID then
+ * Sort a list of Fact Objects so parents appear before their children (by level then by parentID then
  * by position).
  * 
  * @param obj1 First object to compare.
