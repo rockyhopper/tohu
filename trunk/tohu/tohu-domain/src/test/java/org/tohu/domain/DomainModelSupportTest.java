@@ -24,12 +24,16 @@ import java.util.Date;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.DummyData;
 import org.tohu.Question;
 import org.tohu.domain.DomainModelSupport;
 
 public class DomainModelSupportTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(DomainModelSupportTest.class);
+	
 	private DummyData data;
 
 	@Before
@@ -115,7 +119,7 @@ public class DomainModelSupportTest {
 
 	private void setTextProperty(String property, String value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_TEXT, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -126,7 +130,7 @@ public class DomainModelSupportTest {
 
 	private String getTextProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			String value = (String) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_TEXT);
 			return value;
@@ -137,7 +141,7 @@ public class DomainModelSupportTest {
 
 	private void setNumberProperty(String property, Long value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_NUMBER, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -148,7 +152,7 @@ public class DomainModelSupportTest {
 
 	private Long getNumberProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			Long value = (Long) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_NUMBER);
 			return value;
@@ -159,7 +163,7 @@ public class DomainModelSupportTest {
 
 	private void setDecimalProperty(String property, BigDecimal value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_DECIMAL, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -170,7 +174,7 @@ public class DomainModelSupportTest {
 
 	private BigDecimal getDecimalProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			BigDecimal value = (BigDecimal) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_DECIMAL);
 			return value;
@@ -181,7 +185,7 @@ public class DomainModelSupportTest {
 
 	private void setBooleanProperty(String property, Boolean value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_BOOLEAN, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -192,7 +196,7 @@ public class DomainModelSupportTest {
 
 	private Boolean getBooleanProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			Boolean value = (Boolean) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_BOOLEAN);
 			return value;
@@ -203,7 +207,7 @@ public class DomainModelSupportTest {
 
 	private void setDateProperty(String property, Date value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_DATE, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -214,7 +218,7 @@ public class DomainModelSupportTest {
 
 	private Date getDateProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			Date value = (Date) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_DATE);
 			return value;
@@ -225,7 +229,7 @@ public class DomainModelSupportTest {
 	
 	private void setListProperty(String property, String value) {
 		try {
-			System.out.println("Setting " + property);
+			logger.debug("Setting " + property);
 			Class<?> propertyClass = PropertyUtils.getPropertyType(data, property);
 			Object v = DomainModelSupport.answerToObject(Question.TYPE_LIST, value, propertyClass);
 			PropertyUtils.setProperty(data, property, v);
@@ -236,7 +240,7 @@ public class DomainModelSupportTest {
 	
 	private String getListProperty(String property) {
 		try {
-			System.out.println("Getting " + property);
+			logger.debug("Getting " + property);
 			Object propertyValue = PropertyUtils.getProperty(data, property);
 			String value = (String) DomainModelSupport.objectToAnswer(propertyValue, Question.TYPE_LIST);
 			return value;
