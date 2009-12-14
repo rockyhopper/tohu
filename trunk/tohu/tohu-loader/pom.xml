@@ -86,6 +86,8 @@
       </plugin>
     </plugins>
   </build>
+  
+  <!-- note these properties can all be overriden by re-declaring them in your active Maven profile -->
   <properties>
     <site-deploy>${basedir}/../</site-deploy>
     <project-to-load>../../TestProject</project-to-load>
