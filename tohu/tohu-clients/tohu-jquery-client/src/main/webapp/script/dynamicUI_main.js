@@ -68,8 +68,14 @@ function initializeGUI(rootID, defaultKnowledgebase) {
 	
 	htmlRootID = rootID;
 
-	var baseURL = jQuery.url.attr("protocol") + "://" + jQuery.url.attr("host") + ":"
-			+ jQuery.url.attr("port") + "/" + jQuery.url.segment(0);
+	var baseURL = jQuery.url.attr("protocol") + "://" + jQuery.url.attr("host");
+
+	// Port number is not always guaranteed to be used.
+	if (jQuery.url.attr("port") != null ) {
+		baseURL = baseURL + ":" + jQuery.url.attr("port");
+	}
+	baseURL = baseURL + "/" + jQuery.url.segment(0);
+	
 	debug("initializeGUI() baseURL=" + baseURL);
 	
 	if (getDroolsURL() == null) {
