@@ -163,7 +163,7 @@ function buildQuestionInput(obj) {
 				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"file\" value=\"" + obj.answer + "\" class=\"answer\">";
 			}
 			else {
-				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + obj.answer + "\" class=\"answer\">";
+				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
 			}
 		}
 		break;
