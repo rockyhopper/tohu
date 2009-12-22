@@ -77,7 +77,7 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 				"group4",
 				new String[] { "group4Style" },
 				"Group 4",
-				new String[] { "item_4_1", "item_4_3", "item_4_4" });
+				new String[] { "item_4_1", "item_4_3", "item_4_4", "item_4_5" });
 			checkNote(
 				"/form/div[@id='questionnaire1']/div/div[@id='group1']/div",
 				WidgetType.IMAGE,
@@ -237,6 +237,19 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 							new String[] { "baz", "baz" },
 							new String[] { "qux", "qux" },
 							new String[] { "quux", "quux" }},
+					new String[][] {});
+			checkQuestion(
+					"/form/div[@id='questionnaire1']/div/div[@id='group1']/div/div[@id='group4']/div",
+					WidgetType.FIELD,
+					"item_4_5",
+					new String[] { "item_4_5Style" },
+					"Item 4.5",
+					"Text Field with special characters",
+					false,
+					false,
+					AnswerType.TEXT,
+					"Text <>&'\"!@#$%^*()_-+={}[]:;?/,.`\\<>&'\"!@#$%^*()_-+={}[]:;?/,.`\\",
+					null,
 					new String[][] {});
 			checkControl(
 				"/form/div[@id='questionnaire1_controls']",

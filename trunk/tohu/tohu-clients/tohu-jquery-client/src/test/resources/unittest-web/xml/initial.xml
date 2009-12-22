@@ -50,7 +50,7 @@
 					<presentationStyles>group4Style</presentationStyles>
 					<active>true</active>
 					<label>Group 4</label>
-					<items>item_4_1,item_4_2,item_4_3,item_4_4</items>
+					<items>item_4_1,item_4_2,item_4_3,item_4_4,item_4_5</items>
 				</org.tohu.Group>
 				<fact-handle externalForm="group4Handle" />
 			</row>
@@ -232,6 +232,19 @@
 					<possibleAnswers>foo=foo,bar=bar,baz=baz,qux=qux,quux=quux</possibleAnswers>
 				</org.tohu.Question>
 				<fact-handle externalForm="item_4_4Handle" />
+			</row>
+			<row>
+				<org.tohu.Question>
+					<id>item_4_5</id>
+					<presentationStyles>item_4_5Style</presentationStyles>
+					<active>true</active>
+					<preLabel>Item 4.5</preLabel>
+					<postLabel>Text Field with special characters</postLabel>
+					<required>false</required>
+					<answerType>text</answerType>
+					<textAnswer>Text &lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\&lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\</textAnswer>
+				</org.tohu.Question>
+				<fact-handle externalForm="item_4_5Handle" />
 			</row>
 		</query-results>
 	</result>
