@@ -10,7 +10,8 @@
   <artifactId>tohu-loader</artifactId>
   <packaging>jar</packaging>
   <name>Tohu :: Loader</name>
-   <dependencies>
+  
+  <dependencies>
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -45,15 +46,20 @@
       <version>${project.version}</version>
     </dependency>
     
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>		
+	</dependency>	    
   </dependencies>
+  
   <build>
   	<testResources>
   		<testResource>
+  			<filtering>true</filtering>  		
   			<directory>src/test/resources</directory>
   			<includes>
   				<include>log4j.properties</include>
   			</includes>
-  			<filtering>true</filtering>
   		</testResource>
   	</testResources>
     <plugins>

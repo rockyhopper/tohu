@@ -89,7 +89,13 @@
       <version>${project.version}</version>
     </dependency>
 
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>		
+	</dependency>
+	
   </dependencies>
+
   <properties>
 	  <tohu.xml.log.level>INFO</tohu.xml.log.level>
 	  <site-deploy>${basedir}/../</site-deploy>
