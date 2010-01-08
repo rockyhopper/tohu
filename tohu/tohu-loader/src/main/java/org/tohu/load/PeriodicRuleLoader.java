@@ -21,6 +21,9 @@ import java.util.List;
 
 import org.tohu.load.questionnaire.TohuSpreadsheetLoader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Monitors a file every few seconds and if it is modified then the Tohu rules
  * are regenerated.
@@ -29,6 +32,8 @@ import org.tohu.load.questionnaire.TohuSpreadsheetLoader;
  */
 public class PeriodicRuleLoader {
 
+	private static final Logger logger = LoggerFactory.getLogger(PeriodicRuleLoader.class);
+	
 	/** Name of the rule file */
 	private String ruleFile;
 	/** Temporary working directory */
@@ -80,29 +85,29 @@ public class PeriodicRuleLoader {
 		File file = new File(ruleFile);
 		if (!file.exists()) {
 			abort = true;
-			System.out.println("ERROR: Rule File does not exist: " + file.getAbsolutePath());
+			logger.debug("ERROR: Rule File does not exist: " + file.getAbsolutePath());
 		}
 		file = new File(outputDir);
 		if (!file.exists()) {
-			System.out.println("Warning: Output Directory does not exist: " + file.getAbsolutePath());
+			logger.debug("Warning: Output Directory does not exist: " + file.getAbsolutePath());
 		}
 
 		file = new File(importDir);
 		if (!file.exists()) {
 			abort = true;
-			System.out.println("ERROR: Import Directory does not exist: " + file.getAbsolutePath());
+			logger.debug("ERROR: Import Directory does not exist: " + file.getAbsolutePath());
 		}
 		
 		file = new File(droolsDir);
 		if (!file.exists()) {
-			System.out.println("Warning: Drools Directory does not exist: " + file.getAbsolutePath());
+			logger.debug("Warning: Drools Directory does not exist: " + file.getAbsolutePath());
 		}
 		
 		if (abort) {
 			throw new IllegalArgumentException("Required file or directory does not exist: " + ruleFile + " or " + importDir);
 		}
 		
-		System.out.println("\n\nScanning every " + seconds + " seconds ...\n");
+		logger.debug("\n\nScanning every " + seconds + " seconds ...\n");
 		
 		for (;;) {
 			try {
@@ -118,8 +123,9 @@ public class PeriodicRuleLoader {
 	 */
 	void examineRules() {
 		File file = new File(ruleFile);
+		logger.debug("Examining Rules");
 		if (file.lastModified() > lastUpdateTime) {
-			System.out.println("Rules updated, start conversion");
+			logger.debug("Rules updated, start conversion");
 			lastUpdateTime = file.lastModified();
 			try {
 				// Wait another second just in case the converter is still streaming data to the file
@@ -127,10 +133,10 @@ public class PeriodicRuleLoader {
 			} catch (InterruptedException ignore) {
 			}
 			loadRules();
-			System.out.println("Rules updated, move files to drools directory: " + droolsDir);
+			logger.debug("Rules updated, move files to drools directory: " + droolsDir);
 			moveRules();
-			System.out.println("Move complete");
-		}
+			logger.debug("Move complete");
+		} 
 	}
 
 	/**
