@@ -27,13 +27,6 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.3.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr</artifactId>
       <version>3.1.1</version>
@@ -44,6 +37,11 @@
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
     </dependency>
     
 	<dependency>
