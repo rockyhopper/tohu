@@ -17,6 +17,8 @@ package org.tohu.load.questionnaire;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
 import org.tohu.load.spreadsheet.sections.SpreadsheetSectionSplitter;
@@ -29,6 +31,8 @@ import org.tohu.write.questionnaire.ApplicationTemplate;
  * @author Derek Rendall
  */
 public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TohuSpreadsheetLoader.class);
 	
 	/** useful section heading to avoid processing rest of spreadsheet - can store temp working stuff after this line */
 	public static final String SHEET_END ="END";
@@ -78,7 +82,7 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		this.seperatePageDirectories = seperatePageDirectories;
 		
 		if (!wbData.loadWorkbook(filename)) {
-			System.out.println("Data not loaded from workbook");
+			logger.debug("Data not loaded from workbook");
 			return false;
 		}
 		
@@ -101,12 +105,12 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 		
 		application = new ExtractApplication(sections).processApp();
 		if (application == null) {
-			System.out.println("No Application Object Created");
+			logger.debug("No Application Object Created");
 			return false;
 		}
 		
 		if (!new ExtractPages(sections, application).processPages()) {
-			System.out.println("Page Extraction failed");
+			logger.debug("Page Extraction failed");
 			return false;
 		}
 		
@@ -123,7 +127,7 @@ public class TohuSpreadsheetLoader implements SpreadsheetSectionConstants {
 	protected boolean createRuleFiles() {
 		boolean processed = new ApplicationTemplate(application).generateDRLFile(outputDirectory, importDirectory, seperatePageDirectories);
 		if (!processed) {
-			System.out.println("Failed to create rule files");
+			logger.debug("Failed to create rule files");
 		}
 		return processed;
 	}

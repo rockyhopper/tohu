@@ -21,6 +21,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Formatter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tohu.write.questionnaire.PageTemplate;
+
 /**
  * Write out an optional <code>Copyright.drl</code> file to the Questionnaire or Page drl files.
  * Simply a read line then write line operation, for the file that sits in the import/include directory
@@ -31,6 +35,8 @@ import java.util.Formatter;
  */
 public class CopyrightWriter {
 
+	private static final Logger logger = LoggerFactory.getLogger(CopyrightWriter.class);
+	
 	protected static boolean fileExists = true;
 	
 	/**
@@ -59,7 +65,7 @@ public class CopyrightWriter {
 	            reader.close();  // Close to unlock.
 	    	}
 	    	else {
-	    		System.out.println("No copyright file found at " + filename);
+	    		logger.debug("No copyright file found at " + filename);
 	    		fileExists = false;
 	    	}
 		}

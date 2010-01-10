@@ -36,6 +36,8 @@ import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Group;
 import org.tohu.Item;
 import org.tohu.Note;
@@ -48,6 +50,8 @@ import org.tohu.Questionnaire;
  */
 public class ActiveTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(ActiveTest.class);
+	
 	private KnowledgeBase knowledgeBase;
 
 	/**
@@ -58,7 +62,7 @@ public class ActiveTest {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Active.drl"), ResourceType.DRL);
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Queries.drl"), ResourceType.DRL);
-		System.out.println(knowledgeBuilder.getErrors());
+		logger.debug(Arrays.toString(knowledgeBuilder.getErrors().toArray()));
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
 		knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());

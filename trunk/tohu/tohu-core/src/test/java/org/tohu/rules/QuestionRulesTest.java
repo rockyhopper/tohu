@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.drools.ClassObjectFilter;
@@ -35,6 +36,8 @@ import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Answer;
 import org.tohu.InvalidAnswer;
 import org.tohu.MultipleChoiceQuestion;
@@ -47,6 +50,8 @@ import org.tohu.MultipleChoiceQuestion.PossibleAnswer;
  */
 public class QuestionRulesTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(QuestionRulesTest.class);
+	
 	private KnowledgeBase knowledgeBase;
 
 	/**
@@ -57,7 +62,7 @@ public class QuestionRulesTest {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Question.drl"), ResourceType.DRL);
 		if (knowledgeBuilder.hasErrors()) {
-			System.out.println(knowledgeBuilder.getErrors());
+			logger.debug(Arrays.toString(knowledgeBuilder.getErrors().toArray()));
 		}
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();

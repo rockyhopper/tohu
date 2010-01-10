@@ -15,23 +15,26 @@
  */
 package org.tohu;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
+
 import java.io.IOException;
 import java.util.concurrent.locks.LockSupport;
-
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
 
 import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.lang.StringUtils;
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
-//import org.mortbay.http.NCSARequestLog;
-//import org.mortbay.http.RequestLog;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.util.URI;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
@@ -41,6 +44,9 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author John Bebbington
  */
 public abstract class AbstractSeleniumTest {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AbstractSeleniumTest.class);
+	
 	/** Supported browser types */
 	public static enum BrowserType {
 		FIREFOX, IEXPLORER, SAFARI
@@ -906,7 +912,7 @@ public abstract class AbstractSeleniumTest {
 	 */
 	protected static void handleException(String msg, Exception ex) throws Exception {
 		error(msg, ex);
-		System.err.println(selenium.retrieveLastRemoteControlLogs());
+		logger.error(selenium.retrieveLastRemoteControlLogs());
 		//Thread.sleep(60000);
 		throw ex;
 	}
@@ -916,8 +922,8 @@ public abstract class AbstractSeleniumTest {
 	 * @param msg The message.
 	 */
 	protected static void debug(String msg) {
-		if (DEBUG) {
-			System.out.println("time=" + (System.currentTimeMillis() - startTime) + ": " + msg);
+		if (logger.isDebugEnabled()) {
+			logger.debug("time=" + (System.currentTimeMillis() - startTime) + ": " + msg);
 		}
 	}
 
@@ -927,7 +933,7 @@ public abstract class AbstractSeleniumTest {
 	 * @param ex Optional exception.
 	 */
 	protected static void error(String msg, Exception ex) {
-		System.err.println("time=" + (System.currentTimeMillis() - startTime) + ": " + msg);
+		logger.error("time=" + (System.currentTimeMillis() - startTime) + ": " + msg);
 		if (ex != null) {
 			ex.printStackTrace();
 		}

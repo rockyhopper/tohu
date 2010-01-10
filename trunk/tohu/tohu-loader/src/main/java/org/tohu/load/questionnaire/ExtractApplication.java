@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.LookupTable;
 import org.tohu.domain.questionnaire.conditions.ConditionClause;
@@ -38,6 +40,8 @@ import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
  */
 public class ExtractApplication implements SpreadsheetSectionConstants {
 	// TODO all the validations - removing spaces, checking types etc
+	
+	private static final Logger logger = LoggerFactory.getLogger(ExtractApplication.class);
 	
 	private Application application = new Application();
 	private SpreadsheetSection applicationSection;
@@ -145,7 +149,7 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 				application.setActionValidation(value);
 			}
 			else {
-				System.out.println("Unknown Application key: " + key);
+				logger.debug("Unknown Application key: " + key);
 			}
 		}
 	}
@@ -210,7 +214,7 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 				continue;
 			}
 			
-			System.out.println("Unknown List key: " + key);
+			logger.debug("Unknown List key: " + key);
 		}
 		ConditionClause cc = null;
 		if (itemName != null) {

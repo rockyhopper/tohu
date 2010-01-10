@@ -17,6 +17,8 @@ package org.tohu.write.questionnaire.helpers;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.framework.ConditionConstants;
 import org.tohu.domain.questionnaire.framework.PageElementConstants;
 
@@ -28,6 +30,8 @@ import org.tohu.domain.questionnaire.framework.PageElementConstants;
  */
 public class FieldTypeHelper implements PageElementConstants, ConditionConstants {
 
+	private static final Logger logger = LoggerFactory.getLogger(FieldTypeHelper.class);
+	
 	/**
 	 * If operation has quotes, remove quotes and then do no further mapping.
 	 * If is "is", map to "=="
@@ -147,7 +151,7 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 			return TYPE_LIST;
 		}
 		
-		System.out.println("Converting type: " + theFieldType + " to Text");
+		logger.debug("Converting type: " + theFieldType + " to Text");
 		return TYPE_TEXT;
 	}
 	
@@ -175,7 +179,7 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 			return "dateAnswer";
 		}
 		
-		System.out.println("Converting type: " + theFieldType + " to Text");
+		logger.debug("Converting type: " + theFieldType + " to Text");
 		return "textAnswer";
 	}
 	
@@ -204,7 +208,7 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 			return "Date";
 		}
 		
-		System.out.println("Converting type : " + theFieldType + " to Java Class String");
+		logger.debug("Converting type : " + theFieldType + " to Java Class String");
 		return "String";
 	}
 	
@@ -226,7 +230,7 @@ public class FieldTypeHelper implements PageElementConstants, ConditionConstants
 			return "doubleValue()";
 		}
 		
-		System.out.println("Converting number method type: " + theFieldType + " to Text");
+		logger.debug("Converting number method type: " + theFieldType + " to Text");
 		return "toString()";
 	}
 }

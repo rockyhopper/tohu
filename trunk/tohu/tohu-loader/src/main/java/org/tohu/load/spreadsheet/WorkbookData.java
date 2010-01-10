@@ -26,6 +26,8 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data for the workbook, split into the constituent sheets. 
@@ -33,6 +35,8 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
  * @author Derek Rendall
  */
 public class WorkbookData {
+	
+	private static final Logger logger = LoggerFactory.getLogger(WorkbookData.class);
 	
 	private HashMap<String, SpreadsheetData>data = new HashMap<String, SpreadsheetData>();
 	private List<String> sheetList = new ArrayList<String>(20);
@@ -46,7 +50,7 @@ public class WorkbookData {
 	 */
 	public boolean loadWorkbook(String filename) {
 		try {
-			System.out.println("\n\n\nPROCESSING FILE: " + filename);
+			logger.debug("\n\n\nPROCESSING FILE: " + filename);
 			InputStream inp = new FileInputStream(filename);
 			HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
 			for (int i = 0; i < wb.getNumberOfSheets(); i++) {
@@ -54,7 +58,7 @@ public class WorkbookData {
 				SpreadsheetData sheetData = new SpreadsheetData(sheet);
 				String sheetName = sheet.getSheetName();
 				if (sheetName.indexOf("!") >= 0) {
-					System.out.println("Ignoring sheet named: " + sheetName);
+					logger.debug("Ignoring sheet named: " + sheetName);
 					continue;
 				}
 				data.put(sheetName, sheetData);

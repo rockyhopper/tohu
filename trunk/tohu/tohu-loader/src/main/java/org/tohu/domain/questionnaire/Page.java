@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Group;
 
 /**
@@ -42,6 +44,9 @@ import org.tohu.Group;
  * @author Derek Rendall
  */
 public class Page {
+	
+	private static final Logger logger = LoggerFactory.getLogger(Page.class);
+	
 	/** Normal pages may or may not have conditions that dictate when they are visible */
 	public static final String PAGE_TYPE_NORMAL = "Normal";
 	/** Branch pages are ones that are displayed when an Answer record is created */
@@ -81,7 +86,7 @@ public class Page {
 		parentPageElement = element;
 		displayAfter = element.getPostLabel();
 		element.setPostLabel(null);
-		//System.out.println("Creating page " + id + " for sheet: " + sheetName + " with initialState " +initialState);
+		//logger.debug("Creating page " + id + " for sheet: " + sheetName + " with initialState " +initialState);
 	    addElement(element);
 		if ((getDisplayAfter() == null) && (!isVisible()) && (currentPage != null)) {
 			setDisplayAfter(currentPage.getId());
@@ -156,12 +161,10 @@ public class Page {
 	 */
 	public void addElement(PageElement element) {
 		if (element.isARepeatingElement()) {
-			System.out.println("Info: ignoring request to add repeating element " + getId() + " to page");
+			logger.debug("Info: ignoring request to add repeating element " + getId() + " to page");
 			return;
 		}
-		//System.out.println("Adding element for " + element.getId() + element.getDepth());
 		if (element.getLookupTableId() != null) {
-			//System.out.println("Adding lookup for " + element.getValuesListId());
 			elementLookup.put(element.getLookupTableId(), new Integer(elements.size()));
 		}
 		elementLookup.put(element.getId(), new Integer(elements.size()));
