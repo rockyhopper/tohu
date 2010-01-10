@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
@@ -33,6 +34,8 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.DomainModelAssociation;
 import org.tohu.DummyData;
 import org.tohu.Question;
@@ -42,6 +45,8 @@ import org.tohu.Question;
  */
 public class DomainModelRulesTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(DomainModelRulesTest.class);
+	
 	private KnowledgeBase knowledgeBase;
 
 	private DummyData data;
@@ -117,7 +122,7 @@ public class DomainModelRulesTest {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/DomainModel.drl"), ResourceType.DRL);
 		if (knowledgeBuilder.hasErrors()) {
-			System.out.println(knowledgeBuilder.getErrors());
+			logger.debug(Arrays.toString(knowledgeBuilder.getErrors().toArray()));
 		}
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();

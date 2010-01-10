@@ -18,6 +18,8 @@ package org.tohu.load.questionnaire;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
 import org.tohu.load.spreadsheet.SpreadsheetRow;
@@ -37,6 +39,8 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 	
 	// TODO all the validations - removing spaces, checking types etc
 
+	private static final Logger logger = LoggerFactory.getLogger(ExtractPages.class);
+	
 	private Application application;
 	private List<SpreadsheetSection> data;
 	protected Page currentPage;
@@ -63,7 +67,7 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 			}
 			
 			if (!processSectionData(section)) {
-				System.out.println("Failed to process section " + section.getSectionHeadingString() + " for sheet " + section.getSheetName());
+				logger.debug("Failed to process section " + section.getSectionHeadingString() + " for sheet " + section.getSheetName());
 				return false;
 			}
 		}
@@ -86,7 +90,7 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 		if (section.getSectionHeadingString().startsWith(PAGE_ITEMS_UPPER)) {
 			currentPage = new ExtractItems(application, currentPage).processSectionData(section);
 			if (currentPage == null) {
-				System.out.println("Warning: no current page returned for section. " + section.toString());
+				logger.debug("Warning: no current page returned for section. " + section.toString());
 				return true;
 			}
 			return true;
@@ -99,7 +103,7 @@ public class ExtractPages implements SpreadsheetSectionConstants {
 			}
 			if (section.getSectionHeadingString().startsWith(TohuSpreadsheetLoader.SHEET_END)) {
 				// ignore the rest of the rows, although should never have got here
-				System.out.println("Did not expect to be processing a Sheet End section - ignoring!");
+				logger.debug("Did not expect to be processing a Sheet End section - ignoring!");
 				break;
 			}
 			

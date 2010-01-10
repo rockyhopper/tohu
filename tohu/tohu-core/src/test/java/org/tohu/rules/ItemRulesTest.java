@@ -18,6 +18,8 @@ package org.tohu.rules;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
+
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
@@ -28,6 +30,8 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.ConsequenceException;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Note;
 
 /**
@@ -36,6 +40,8 @@ import org.tohu.Note;
  */
 public class ItemRulesTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(ItemRulesTest.class);
+	
 	private KnowledgeBase knowledgeBase;
 
 	/**
@@ -46,7 +52,7 @@ public class ItemRulesTest {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Item.drl"), ResourceType.DRL);
 		if (knowledgeBuilder.hasErrors()) {
-			System.out.println(knowledgeBuilder.getErrors());
+			logger.debug(Arrays.toString(knowledgeBuilder.getErrors().toArray()));
 		}
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();

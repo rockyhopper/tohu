@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
@@ -36,6 +38,8 @@ import org.tohu.write.questionnaire.helpers.CopyrightWriter;
  * @author Derek Rendall
  */
 public class PageTemplate {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PageTemplate.class);
 	
 	protected Page pg;
 	
@@ -68,7 +72,7 @@ public class PageTemplate {
 			subDirectory = directory;
 		}
 	    String fileName = subDirectory + "/" + pg.getId().replace(' ', '_') + ".drl";
-	    //System.out.println("Preparing to write file: " + fileName);
+	    //logger.debug("Preparing to write file: " + fileName);
 	    try {
 	    	File outdir = new File(subDirectory);
 	        
@@ -89,11 +93,11 @@ public class PageTemplate {
 	        writeDRLFileContents(application, fmtFile);
 	        fmtFile.close();
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			logger.debug(e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
-	    System.out.println("The " + fileName + " file has been written");  
+	    logger.debug("The " + fileName + " file has been written");  
 	    return true;
 	}
 	
@@ -125,9 +129,7 @@ public class PageTemplate {
 	    fmt.format("import org.tohu.Answer;\n");
 	    fmt.format("import org.tohu.Questionnaire;\n");
 	    fmt.format("import org.tohu.support.TohuDataItemObject;\n\n");
-	    fmt.format("import %s.*;\n\n", application.getApplicationClass());	// needed for the definitions of the display facts
-	    
-	    //System.out.println("Processing Page " + getId() + " elements: " + elements.size() + " validations: " + validations.size());
+	    fmt.format("import %s.*;\n\n", application.getApplicationClass());	// needed for the definitions of the display facts	   
 	    
 	    if ((pg.getElements() != null) && (pg.getElements().size() > 0)) {
 			writeDRLForPageElement(application, fmt, pg.getElements().get(0));

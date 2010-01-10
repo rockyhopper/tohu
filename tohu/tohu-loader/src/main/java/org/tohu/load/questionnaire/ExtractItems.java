@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
@@ -58,6 +60,8 @@ import org.tohu.load.spreadsheet.sections.SpreadsheetSection;
  */
 public class ExtractItems implements SpreadsheetSectionConstants {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ExtractItems.class);
+	
 	/** provides ability to lookup an element defined previously, if needed */
 	private Application application;
 	protected Page currentPage;
@@ -96,7 +100,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		PageElement currentParent = getElementAtDepth(currentDepth);
 		PageElement newGroup = new PageElement();
 		String tempStr = "_CHILDREN";
-		System.out.println("Warning: creating new Intermediate Group: " + currentParent.getId()+tempStr + " current depth = " + currentDepth);
+		logger.debug("Warning: creating new Intermediate Group: " + currentParent.getId()+tempStr + " current depth = " + currentDepth);
 		newGroup.setId(currentParent.getId() + tempStr, currentDepth, element.getRowNumber());
 		newGroup.setType("Group");
 
@@ -146,12 +150,12 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		// now check to see if we need to add an automatic group
 		// Note: depth == 1 will mean that there is a page group created, therefore no problem
 		if ((depth > 1) && (depth > currentDepth) && (!getElementAtDepth(currentDepth).isAGroupType()) && (!element.isABranchedPage())) {
-			//System.out.println("Item at current depth: " + getElementAtDepth(currentDepth).getId());
+			//logger.debug("Item at current depth: " + getElementAtDepth(currentDepth).getId());
 			createNormalIntermediateGroup(element);
 		}
 		
 		if (!element.isAPageElement() && (currentElementsAtDepth.size() == 0)) {
-			//System.out.println("About to create a default master page");
+			//logger.debug("About to create a default master page");
 			PageElement masterElement = new PageElement();
 			masterElement.setId("DefaultPage", 0, 0);
 			masterElement.setType("Page");
@@ -165,12 +169,12 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 		
 		// Add it into the right position on the working lists
 		if (depth > currentElementsAtDepth.size()) {
-			//System.out.println("Setting element " + element.getId() + " to depth " + currentElementsAtDepth.size() + 1);
+			//logger.debug("Setting element " + element.getId() + " to depth " + currentElementsAtDepth.size() + 1);
 			currentElementsAtDepth.add(element);
 			currentPageAtDepth.add(currentPage);
 		}
 		else {
-			//System.out.println("Setting element " + element.getId() + " at depth " + depth);
+			//logger.debug("Setting element " + element.getId() + " at depth " + depth);
 			currentElementsAtDepth.set(depth - 1, element);
 			for (int i = (currentElementsAtDepth.size() - 1); i >= depth ; i--) {
 				currentElementsAtDepth.remove(i);
@@ -230,11 +234,11 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 				continue;
 			}
 			
-			//System.out.println("Processing row " + spreadsheetRow.getRowNumber());
+			//logger.debug("Processing row " + spreadsheetRow.getRowNumber());
 			
 			PageElement element = extractPageElement(section, spreadsheetRow);
 			
-			//System.out.println("Processing line " + spreadsheetRow.getRowNumber() + " item id " + element.getId() + " depth " + String.valueOf(element.getDepth()));
+			//logger.debug("Processing line " + spreadsheetRow.getRowNumber() + " item id " + element.getId() + " depth " + String.valueOf(element.getDepth()));
 			
 			if (element.getId() != null){
 				// ie not a display fact or impact extension
@@ -287,7 +291,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 			String key = headings.getHeaderTextForColumnInUpperCase(item.getColumn());
 			if (key == null) {
 				// Comment item - ignore
-				System.out.println("Ignoring value: " + item);
+				logger.debug("Ignoring value: " + item);
 				continue;
 			}
 			String value = item.toString();
@@ -347,7 +351,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 				element.setLogicValue(value);
 				continue;
 			}
-			System.out.println("Unknown Section key: " + key);
+			logger.debug("Unknown Section key: " + key);
 		}
 		if ((element.getId() != null) && (element.getType() == null)) {
 			throw new IllegalArgumentException("Row " + String.valueOf(row.getRowNumber() + 1) + " has no type!");
@@ -426,7 +430,7 @@ public class ExtractItems implements SpreadsheetSectionConstants {
 			// first line 
 			String type = PageElementCondition.TYPE_INCLUSION;
 			if (masterElement.isAPageElement()) {
-				//System.out.println("Processing page displayFact: " + value);
+				//logger.debug("Processing page displayFact: " + value);
 				masterElement.setDisplayCondition(new PageElementCondition(type, masterElement.getId(), row, currentPage.getId(), currentPage.isBranchedPage(), currentPage.getDisplayAfter()));
 			}
 			else if (masterElement.isAnAlternateImpactItem()) {

@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
 import org.tohu.domain.questionnaire.PageElement;
@@ -44,6 +46,8 @@ import org.tohu.write.questionnaire.helpers.CopyrightWriter;
  * @author Derek Rendall
  */
 public class ApplicationTemplate {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationTemplate.class);
 	
 	private Application app;
 	
@@ -111,11 +115,11 @@ public class ApplicationTemplate {
 	        
 	        fmtFile.close();
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			logger.debug(e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
-	    System.out.println("The " + fileName + " file has been written");  
+	    logger.debug("The " + fileName + " file has been written");  
 	    int count = 1;
 		for (Iterator<Page> iterator = app.getPageList().iterator(); iterator.hasNext();) {
 			Page pg = iterator.next();

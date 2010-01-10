@@ -161,7 +161,7 @@ public class PeriodicRuleLoader {
 			destFile.delete();
 			boolean result = file.renameTo(destFile);
 			if (!result) {
-				System.err.println("Move failed for " + file.getName());
+				logger.error("Move failed for " + file.getName());
 			}
 		}
 	}

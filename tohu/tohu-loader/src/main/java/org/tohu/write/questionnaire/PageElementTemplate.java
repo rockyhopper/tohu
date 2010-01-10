@@ -21,6 +21,8 @@ import java.util.Formatter;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tohu.Answer;
 import org.tohu.domain.questionnaire.Application;
 import org.tohu.domain.questionnaire.Page;
@@ -57,6 +59,8 @@ import org.tohu.write.questionnaire.helpers.FieldTypeHelper;
  * @author Derek Rendall
  */
 public class PageElementTemplate implements PageElementConstants, ConditionConstants {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PageElementTemplate.class);
 	
 	protected PageElement element;
 	
@@ -229,7 +233,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	    element.setPreLabel(null);
 	    if (message == null) {
 			message = "Invalid value";
-			System.out.println("Warning - validation " + element.getId() + " has no validation message defined.");
+			logger.debug("Warning - validation " + element.getId() + " has no validation message defined.");
 		}
 	    
 	    fmt.format("then\n");
@@ -258,7 +262,7 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	protected void writeSubItems(Application application, Formatter fmt, String variableName, boolean possibleAnswers) throws IOException {
 		if (possibleAnswers && ((element.getLookupTable() == null) || (element.getLookupTable().getEntries().size() == 0))) {
 			// This is ok for a Lookup Object
-			System.out.println("No entries for " + element.getId());
+			logger.debug("No entries for " + element.getId());
 			return;
 		}
 		List<ListEntryTuple> entries = null;
@@ -401,21 +405,20 @@ public class PageElementTemplate implements PageElementConstants, ConditionConst
 	 */
 	public void writeDRLFileContents(Application application, Formatter fmt) throws IOException {
 	    if (element.isARepeatingElement()) {
-	    	System.out.println("Repeating item: " + element.getId());
+	    	logger.debug("Repeating item: " + element.getId());
     		// should have already been defined - don't want it defined again - just
     		// referred to again in the parent element, which should have already been done
     		return;
 	    }
-    	//System.out.println("Processing item: " + this.getId());
 	    
 	    if (element.isAFunctionImpactItem()) {
-	    	//System.out.println("Functional Impact");
+	    	logger.debug("Functional Impact");
 	    	writeFunctionalImpact(application, fmt);
 	    	return;
 	    }
 	    
 	    if (element.isAnAlternateImpactItem()) {
-	    	//System.out.println("Alternate Impact");
+	    	logger.debug("Alternate Impact");
 	    	if (application.addNewAlternateImpact(element.getId())) writeCreationOfAGlobalImpact(application, fmt);
 	    }
 	    else if (element.isAnImpactType() && (element.getLogicElement() == null)) {
