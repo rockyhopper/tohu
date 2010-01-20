@@ -39,11 +39,11 @@ setItems(String [])
 -questionId : String
 -value : String
 --
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>60</x><y>120</y><w>170</w><h>90</h></coordinates><panel_attributes>/Item/
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>50</x><y>120</y><w>180</w><h>90</h></coordinates><panel_attributes>/Item/
 --
--id
--presentationStyles
--category
+-id : String
+-presentationStyles : String
+-category : String
 --
 
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>320</x><y>500</y><w>270</w><h>170</h></coordinates><panel_attributes>MultipleChoiceQuestion
@@ -61,8 +61,8 @@ getPossibleAnswers() : PossibleAnswer []
 hasPossibleAnswer(String) : boolean
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>360</x><y>250</y><w>200</w><h>220</h></coordinates><panel_attributes>Question
 --
--preLabel
--postLabel
+-preLabel : String
+-postLabel : String
 -required : boolean
 -answerType : String
 -textAnswer : String
@@ -75,11 +75,11 @@ hasPossibleAnswer(String) : boolean
 isAnswered() : boolean
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>160</x><y>180</y><w>290</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;270;70</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>230</x><y>250</y><w>100</w><h>50</h></coordinates><panel_attributes>Note
 --
--label
+-label : String
 --</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>120</x><y>180</y><w>180</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;160;70</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>10</x><y>380</y><w>230</w><h>140</h></coordinates><panel_attributes>Questionnaire
 --
 -activeItem : String
--navigationStack
+-navigationStack : List
 -completionAction : String
 -invalidAnswers : boolean
 -enableActionValidation : boolean
@@ -87,9 +87,9 @@ isAnswered() : boolean
 --
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>90</x><y>320</y><w>50</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>420</x><y>440</y><w>50</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>290</x><y>120</y><w>110</w><h>90</h></coordinates><panel_attributes>InvalidAnswer
 --
--questionId
--reason
--type
+-questionId : String
+-reason : String
+-type : String
 --</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>200</x><y>60</y><w>150</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;130;60</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>20</x><y>570</y><w>220</w><h>90</h></coordinates><panel_attributes>Getters and setters shown
 when they have a different type,
 e.g. a comma separated string
