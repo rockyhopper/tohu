@@ -251,6 +251,23 @@ public abstract class BaseJQueryClientTest extends AbstractSeleniumTest {
 					"Text <>&'\"!@#$%^*()_-+={}[]:;?/,.`\\<>&'\"!@#$%^*()_-+={}[]:;?/,.`\\",
 					null,
 					new String[][] {});
+			checkQuestion(
+					"/form/div[@id='questionnaire1']/div/div[@id='group1']/div/div[@id='group4']/div",
+					WidgetType.SELECT,
+					"item_4_6",
+					new String[] { "item_4_6Style" },
+					"Item 4.6",
+					"Text Dropdown List with no null entry",
+					false,
+					false,
+					AnswerType.TEXT,
+					"",
+					new String[][] {
+							new String[] {"", "Please select..."},
+							new String[] {"first", "Item 4.6.1"},
+							new String[] {"second", "Item 4.6.2"},
+							new String[] {"third", "Item 4.6.3"}},
+					new String[][] {});
 			checkControl(
 				"/form/div[@id='questionnaire1_controls']",
 				WidgetType.LINK,

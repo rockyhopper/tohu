@@ -130,13 +130,15 @@ function buildQuestionInput(obj) {
 				var multiAnswers = isMultiSelect ? splitWithEscapes(obj.answer, ',') : [];
 				var multiple = isMultiSelect ? "multiple='true' size='9' " : "size='1' ";
 				html += "<select id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" " + multiple + "class=\"answer\">";
+				var somethingSelected = false;
+				var optionHtml = "";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
 					keyValue = obj.possibleAnswers[i][0];
 					debug("buildQuestionInput() select possibleAnswer=" + keyValue);
 					if (keyValue == "null") {
 						keyValue = "";
 					}
-					html += "<option ";
+					optionHtml += "<option ";
 					var isAnswer = (obj.answer == keyValue);
 					for (var j = 0; j < multiAnswers.length; j++) {
 						if (keyValue == multiAnswers[j]) {
@@ -144,11 +146,15 @@ function buildQuestionInput(obj) {
 						}
 					}
 					if (isAnswer) {
-						html += "selected=\"true\"";
+						optionHtml += "selected=\"true\"";
+						somethingSelected = true;
 					}
-					html += "value=\"" + keyValue + "\">" + obj.possibleAnswers[i][1] + "</option>";
+					optionHtml += "value=\"" + keyValue + "\">" + obj.possibleAnswers[i][1] + "</option>";
 				}
-				html += "</select>";
+				if (!somethingSelected && !isMultiSelect) {
+					optionHtml = "<option value=''>Please select...</option>" + optionHtml;
+				}
+				html += optionHtml + "</select>";
 			}
 		}
 		else {
