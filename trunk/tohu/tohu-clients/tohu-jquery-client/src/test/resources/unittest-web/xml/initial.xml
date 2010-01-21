@@ -50,7 +50,7 @@
 					<presentationStyles>group4Style</presentationStyles>
 					<active>true</active>
 					<label>Group 4</label>
-					<items>item_4_1,item_4_2,item_4_3,item_4_4,item_4_5</items>
+					<items>item_4_1,item_4_2,item_4_3,item_4_4,item_4_5,item_4_6</items>
 				</org.tohu.Group>
 				<fact-handle externalForm="group4Handle" />
 			</row>
@@ -245,6 +245,19 @@
 					<textAnswer>Text &lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\&lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\</textAnswer>
 				</org.tohu.Question>
 				<fact-handle externalForm="item_4_5Handle" />
+			</row>
+			<row>
+				<org.tohu.Question>
+					<id>item_4_6</id>
+					<presentationStyles>item_4_6Style</presentationStyles>
+					<active>true</active>
+					<preLabel>Item 4.6</preLabel>
+					<postLabel>Text Dropdown List with no null entry</postLabel>
+					<required>false</required>
+					<answerType>text</answerType>
+					<possibleAnswers>first=Item 4.6.1,second=Item 4.6.2,third=Item 4.6.3</possibleAnswers>
+				</org.tohu.Question>
+				<fact-handle externalForm="item_4_6Handle" />
 			</row>
 		</query-results>
 	</result>
