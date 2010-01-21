@@ -16,9 +16,13 @@
 package org.tohu;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -141,5 +145,22 @@ public class QuestionTest {
 		q.setAnswerType(Question.TYPE_LIST);
 		q.setListAnswer("one||two");
 		assertEquals("one||two", q.getListAnswer());
+	}
+	
+	@Test
+	public void testDate() throws ParseException {
+		Question q = new Question();
+		q.setAnswerType(Question.TYPE_DATE);
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = f.parse("1999-01-02");
+		q.setAnswer(d);
+		assertEquals(d, q.getAnswer());
+		assertEquals(d, q.getDateAnswer());
+		q.setAnswer(null);
+		assertNull(q.getDateAnswer());
+		q.setDateAnswer((String) null);
+		assertNull(q.getDateAnswer());
+		q.setDateAnswer((Date) null);
+		assertNull(q.getDateAnswer());
 	}
 }

@@ -253,7 +253,7 @@ public class Question extends Item {
 
 	public void setDateAnswer(Date dateAnswer) {
 		checkType(TYPE_DATE);
-		this.dateAnswer = DATE_TRANSPORT_FORMAT.format(dateAnswer);
+		this.dateAnswer = dateAnswer == null ? null : DATE_TRANSPORT_FORMAT.format(dateAnswer);
 	}
 
 	/**
@@ -264,7 +264,7 @@ public class Question extends Item {
 	 */
 	public void setDateAnswer(String dateAnswer) throws ParseException {
 		checkType(TYPE_DATE);
-		this.dateAnswer = DATE_TRANSPORT_FORMAT.format(DATE_TRANSPORT_FORMAT.parse(dateAnswer));
+		this.dateAnswer = dateAnswer == null ? null : DATE_TRANSPORT_FORMAT.format(DATE_TRANSPORT_FORMAT.parse(dateAnswer));
 	}
 
 	public String getListAnswer() {
