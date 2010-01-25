@@ -449,7 +449,7 @@ function createNote(obj) {
  		html += "<img id=\"" + obj.id + "_image\" src=\"" + obj.label + "\"/>";
  	}
  	else {
- 		html += "<p id=\"" + obj.id + "_label\">" + obj.label + "</p>";
+ 		html += "<p id=\"" + obj.id + "_label\">" + xmlEscape(obj.label) + "</p>";
  	}
 	html += "</div>";
 	return addToParent(obj.hierarchy, html);
