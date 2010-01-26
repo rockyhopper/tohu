@@ -72,7 +72,7 @@ function createGroup(obj) {
 	debugObject("createGroup() obj=", obj);
  	var html = "<div id=\"" + obj.id + "\" class=\"";
  	html += getObjectClass(obj);
- 	html += "\"><p id=\"" + obj.id + "_label\">" + obj.label + "</p>";
+ 	html += "\"><p id=\"" + obj.id + "_label\">" + xmlEscape(obj.label) + "</p>";
  	html += "<div id=\"" + obj.id + "_items\" class=\"GroupItems\"></div></div>";
 	return addToParent(obj.hierarchy, html);
 }
@@ -119,7 +119,7 @@ function buildQuestionInput(obj) {
 							html += " checked";
 						}
 						html += " class=\"answer_radio\">";
-						html += "<label for=\"" + radioID + "\">" + obj.possibleAnswers[i][1] + "</label>&nbsp;";
+						html += "<label for=\"" + radioID + "\">" + xmlEscape(obj.possibleAnswers[i][1]) + "</label>&nbsp;";
 					}
 				}
 				html += "</span>";
@@ -149,7 +149,7 @@ function buildQuestionInput(obj) {
 						optionHtml += "selected=\"true\"";
 						somethingSelected = true;
 					}
-					optionHtml += "value=\"" + keyValue + "\">" + obj.possibleAnswers[i][1] + "</option>";
+					optionHtml += "value=\"" + keyValue + "\">" + xmlEscape(obj.possibleAnswers[i][1]) + "</option>";
 				}
 				if (!somethingSelected && !isMultiSelect) {
 					optionHtml = "<option value=''>Please select...</option>" + optionHtml;
@@ -162,11 +162,11 @@ function buildQuestionInput(obj) {
 			if (isSpecialStyle(obj, TEXTAREA_STYLE)) {
 				// Render a text area
 				html += "<textarea id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" class=\"answer\">";
-				html += obj.answer;
+				html += xmlEscape(obj.answer);
 				html += "</textarea>";
 			}
 			else if (isSpecialStyle(obj, FILE_STYLE)) {
-				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"file\" value=\"" + obj.answer + "\" class=\"answer\">";
+				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"file\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
 			}
 			else {
 				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
@@ -217,7 +217,7 @@ function buildQuestionInput(obj) {
 				}
 			}
 		}
-		html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + obj.answer + "\" class=\"answer\">";
+		html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
 		break;
 	
 	default:
@@ -399,9 +399,9 @@ function createQuestion(obj) {
 	if (obj.preLabel == "") {
 		obj.preLabel = "&nbsp;";
 	}
-	html += "<span id=\"" + obj.id + "_preLabel\" class=\"preLabel\">" + obj.preLabel + "</span>&nbsp";
+	html += "<span id=\"" + obj.id + "_preLabel\" class=\"preLabel\">" + xmlEscape(obj.preLabel) + "</span>&nbsp";
 	html += buildQuestionInput(obj);
-	html += "&nbsp;<span id=\"" + obj.id + "_postLabel\" class=\"postLabel\">" + obj.postLabel + "</span>";
+	html += "&nbsp;<span id=\"" + obj.id + "_postLabel\" class=\"postLabel\">" + xmlEscape(obj.postLabel) + "</span>";
 	html += "<div id=\"" + obj.id + "_errors\" class=\"questionErrors\"></div>";
 	html += "</div>";
 	var result = addToParent(obj.hierarchy, html);
@@ -445,11 +445,12 @@ function createNote(obj) {
  	var html = "<div id=\"" + obj.id + "\" class=\"";
  	html += getObjectClass(obj);
  	html += "\">";
+ 	var escapedLabel = xmlEscape(obj.label);
 	if (isSpecialStyle(obj, IMAGE_STYLE)) {
- 		html += "<img id=\"" + obj.id + "_image\" src=\"" + obj.label + "\"/>";
+ 		html += "<img id=\"" + obj.id + "_image\" src=\"" + escapedLabel + "\"/>";
  	}
  	else {
- 		html += "<p id=\"" + obj.id + "_label\">" + xmlEscape(obj.label) + "</p>";
+ 		html += "<p id=\"" + obj.id + "_label\">" + escapedLabel + "</p>";
  	}
 	html += "</div>";
 	return addToParent(obj.hierarchy, html);
@@ -504,12 +505,12 @@ function createControl(obj) {
 	var html;
 	if (isSpecialStyle(obj, BUTTON_STYLE)) {	
 		html = "<input id=\"" + obj.id + "\" name=\"" + obj.id + "\" type=\"button\" class=\""
-			+ getObjectClass(obj) + "\" value=\"" + obj.label + "\"/>";
+			+ getObjectClass(obj) + "\" value=\"" + xmlEscape(obj.label) + "\"/>";
 	}
 	else {
 		// Default.
 		html = "<a id=\"" + obj.id + "\" href=\"#\" class=\"" + getObjectClass(obj) + "\">" + 
-					obj.label +
+					xmlEscape(obj.label) +
 			   "</a>";			
 	}
 	var result = addToParent(obj.hierarchy, html);
