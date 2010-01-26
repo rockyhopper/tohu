@@ -70,7 +70,7 @@ function callDrools(request) {
 			dataType : "text",
 			success : function(response, status) {
 				//if (response.substr(0, 5) != "<?xml") { 
-				//	response = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response;
+				//	response = "<?xml version='1.0' encoding='UTF-8'?>\n" + response;
 				//}
 				retVal = response;
 				debugFull("callDrools() status=" + status + "\nresponse=" + response);

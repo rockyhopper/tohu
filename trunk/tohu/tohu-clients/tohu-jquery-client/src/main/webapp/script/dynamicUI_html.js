@@ -42,11 +42,11 @@ var BUTTON_STYLE = 6;
 function createQuestionnaire(obj, isGUIBusyID) {
 	debugObject("createQuestionnaire() obj=", obj);
 	// Wrap Questionnaire in a HTML form.
-	var html = "<form name=\"myform\" id=\"" + obj.id
-		+ "_form\" method=\"POST\" action=\"#\" ENCTYPE=\"multipart/form-data\">";
+	var html = "<form name='myform' id='" + obj.id
+		+ "_form' method='POST' action='#' ENCTYPE='multipart/form-data'>";
 	if (!isNull(isGUIBusyID)) {
-		html += "<input id=\"" + isGUIBusyID + "\" name=\"" + isGUIBusyID
-			+ "\" type=\"hidden\" tabindex=\"-1\" value=\"true\"/>";
+		html += "<input id='" + isGUIBusyID + "' name='" + isGUIBusyID
+			+ "' type='hidden' tabindex='-1' value='true'/>";
 	}
 	html += "</form>";
 	return addToParent(obj.hierarchy, html);
@@ -59,7 +59,7 @@ function createQuestionnaire(obj, isGUIBusyID) {
  */
 function createControls(obj) {
 	debugObject("createControls() obj=", obj);
-	var html = "<div id=\"" + obj.id + "_controls\" class=\"Controls\"></div>";
+	var html = "<div id='" + obj.id + "_controls' class='Controls'></div>";
 	return addToParent(obj.hierarchy, html);
 }
 
@@ -70,10 +70,10 @@ function createControls(obj) {
  */
 function createGroup(obj) {
 	debugObject("createGroup() obj=", obj);
- 	var html = "<div id=\"" + obj.id + "\" class=\"";
+ 	var html = "<div id='" + obj.id + "' class='";
  	html += getObjectClass(obj);
- 	html += "\"><p id=\"" + obj.id + "_label\">" + xmlEscape(obj.label) + "</p>";
- 	html += "<div id=\"" + obj.id + "_items\" class=\"GroupItems\"></div></div>";
+ 	html += "'><p id='" + obj.id + "_label'>" + xmlEscape(obj.label) + "</p>";
+ 	html += "<div id='" + obj.id + "_items' class='GroupItems'></div></div>";
 	return addToParent(obj.hierarchy, html);
 }
 
@@ -108,18 +108,18 @@ function buildQuestionInput(obj) {
 			var keyValue = null;
 			if (isSpecialStyle(obj, RADIO_STYLE)) {	
 				// Build up a radio-button group for the question.
-				html += "<span id=\"" + obj.id + "_input\" class=\"radioGroup\">";
+				html += "<span id='" + obj.id + "_input' class='radioGroup'>";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
 					keyValue = obj.possibleAnswers[i][0];
 					debug("buildQuestionInput() radio possibleAnswer=" + keyValue);
 					if (keyValue != "null") {
 						var radioID = obj.id + "_input_" + keyValue;
-						html += "<input id=\"" + radioID + "\" name=\"" + obj.id + "\" type=\"radio\" value=\"" + keyValue + "\"";
+						html += "<input id='" + radioID + "' name='" + obj.id + "' type='radio' value='" + keyValue + "'";
 						if (obj.answer == keyValue) {
 							html += " checked";
 						}
-						html += " class=\"answer_radio\">";
-						html += "<label for=\"" + radioID + "\">" + xmlEscape(obj.possibleAnswers[i][1]) + "</label>&nbsp;";
+						html += " class='answer_radio'>";
+						html += "<label for='" + radioID + "'>" + xmlEscape(obj.possibleAnswers[i][1]) + "</label>&nbsp;";
 					}
 				}
 				html += "</span>";
@@ -129,7 +129,7 @@ function buildQuestionInput(obj) {
 				var isMultiSelect = obj.answerType == "list";
 				var multiAnswers = isMultiSelect ? splitWithEscapes(obj.answer, ',') : [];
 				var multiple = isMultiSelect ? "multiple='true' size='9' " : "size='1' ";
-				html += "<select id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" " + multiple + "class=\"answer\">";
+				html += "<select id='" + obj.id + "_input' name='" + obj.id + "' " + multiple + "class='answer'>";
 				var somethingSelected = false;
 				var optionHtml = "";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
@@ -146,10 +146,10 @@ function buildQuestionInput(obj) {
 						}
 					}
 					if (isAnswer) {
-						optionHtml += "selected=\"true\"";
+						optionHtml += "selected='true'";
 						somethingSelected = true;
 					}
-					optionHtml += "value=\"" + keyValue + "\">" + xmlEscape(obj.possibleAnswers[i][1]) + "</option>";
+					optionHtml += "value='" + keyValue + "'>" + xmlEscape(obj.possibleAnswers[i][1]) + "</option>";
 				}
 				if (!somethingSelected && !isMultiSelect) {
 					optionHtml = "<option value=''>Please select...</option>" + optionHtml;
@@ -161,42 +161,42 @@ function buildQuestionInput(obj) {
 			// Not multiple-choice.
 			if (isSpecialStyle(obj, TEXTAREA_STYLE)) {
 				// Render a text area
-				html += "<textarea id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" class=\"answer\">";
+				html += "<textarea id='" + obj.id + "_input' name='" + obj.id + "' class='answer'>";
 				html += xmlEscape(obj.answer);
 				html += "</textarea>";
 			}
 			else if (isSpecialStyle(obj, FILE_STYLE)) {
-				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"file\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
+				html += "<input id='" + obj.id + "_input' name='" + obj.id + "' type='file' value='" + xmlEscape(obj.answer) + "' class='answer'>";
 			}
 			else {
-				html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
+				html += "<input id='" + obj.id + "_input' name='" + obj.id + "' type='text' value='" + xmlEscape(obj.answer) + "' class='answer'>";
 			}
 		}
 		break;
 
 	case "boolean":
 		if (isSpecialStyle(obj, RADIO_STYLE)) {
-			html += "<span id=\"" + obj.id + "_input\" class=\"radioGroup\">";
-			html += "<input id=\"" + obj.id + "_input_true\" name=\"" + obj.id + "\" type=\"radio\" value=\"true\"";
+			html += "<span id='" + obj.id + "_input' class='radioGroup'>";
+			html += "<input id='" + obj.id + "_input_true' name='" + obj.id + "' type='radio' value='true'";
 			if (obj.answer == "true") {
 				html += " checked";
 			}
-			html += " class=\"answer_radio\">";
-			html += "<label for=\"" + obj.id + "_input_true\">Yes</label>&nbsp;";
-			html += "<input id=\"" + obj.id + "_input_false\" name=\"" + obj.id + "\" type=\"radio\" value=\"false\"";
+			html += " class='answer_radio'>";
+			html += "<label for='" + obj.id + "_input_true'>Yes</label>&nbsp;";
+			html += "<input id='" + obj.id + "_input_false' name='" + obj.id + "' type='radio' value='false'";
 			if (obj.answer == "false") {
 				html += " checked";
 			}
-			html += " class=\"answer_radio\">";
-			html += "<label for=\"" + obj.id + "_input_false\">No</label>";
+			html += " class='answer_radio'>";
+			html += "<label for='" + obj.id + "_input_false'>No</label>";
 			html += "</span>";
 		}
 		else {
-			html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"checkbox\"";
+			html += "<input id='" + obj.id + "_input' name='" + obj.id + "' type='checkbox'";
 			if (obj.answer == "true") {
 				html += " checked";
 			}
-			html += " class=\"answer_checkbox\">";
+			html += " class='answer_checkbox'>";
 		}
 		break;
 	
@@ -217,7 +217,7 @@ function buildQuestionInput(obj) {
 				}
 			}
 		}
-		html += "<input id=\"" + obj.id + "_input\" name=\"" + obj.id + "\" type=\"text\" value=\"" + xmlEscape(obj.answer) + "\" class=\"answer\">";
+		html += "<input id='" + obj.id + "_input' name='" + obj.id + "' type='text' value='" + xmlEscape(obj.answer) + "' class='answer'>";
 		break;
 	
 	default:
@@ -393,16 +393,16 @@ function checkQuestionReadonly(obj) {
  */
 function createQuestion(obj) {
 	debugObject("createQuestion() obj=", obj);
-	var html = "<div id=\"" + obj.id + "\" class=\"";
+	var html = "<div id='" + obj.id + "' class='";
 	html += getObjectClass(obj);
-	html += "\">";
+	html += "'>";
 	if (obj.preLabel == "") {
 		obj.preLabel = "&nbsp;";
 	}
-	html += "<span id=\"" + obj.id + "_preLabel\" class=\"preLabel\">" + xmlEscape(obj.preLabel) + "</span>&nbsp";
+	html += "<span id='" + obj.id + "_preLabel' class='preLabel'>" + xmlEscape(obj.preLabel) + "</span>&nbsp";
 	html += buildQuestionInput(obj);
-	html += "&nbsp;<span id=\"" + obj.id + "_postLabel\" class=\"postLabel\">" + xmlEscape(obj.postLabel) + "</span>";
-	html += "<div id=\"" + obj.id + "_errors\" class=\"questionErrors\"></div>";
+	html += "&nbsp;<span id='" + obj.id + "_postLabel' class='postLabel'>" + xmlEscape(obj.postLabel) + "</span>";
+	html += "<div id='" + obj.id + "_errors' class='questionErrors'></div>";
 	html += "</div>";
 	var result = addToParent(obj.hierarchy, html);
 	attachChangeHandler(obj);
@@ -442,15 +442,15 @@ function updateQuestion(obj) {
  */
 function createNote(obj) {
 	debugObject("createNote() obj=", obj);
- 	var html = "<div id=\"" + obj.id + "\" class=\"";
+ 	var html = "<div id='" + obj.id + "' class='";
  	html += getObjectClass(obj);
- 	html += "\">";
+ 	html += "'>";
  	var escapedLabel = xmlEscape(obj.label);
 	if (isSpecialStyle(obj, IMAGE_STYLE)) {
- 		html += "<img id=\"" + obj.id + "_image\" src=\"" + escapedLabel + "\"/>";
+ 		html += "<img id='" + obj.id + "_image' src='" + escapedLabel + "'/>";
  	}
  	else {
- 		html += "<p id=\"" + obj.id + "_label\">" + escapedLabel + "</p>";
+ 		html += "<p id='" + obj.id + "_label'>" + escapedLabel + "</p>";
  	}
 	html += "</div>";
 	return addToParent(obj.hierarchy, html);
@@ -479,9 +479,9 @@ function updateNote(obj) {
  */
 function createError(obj) {
 	debugObject("createError() obj=", obj);
-	var html = "<div id=\"" + obj.id + "\" class=\"";
+	var html = "<div id='" + obj.id + "' class='";
  	html += getObjectClass(obj);
-	html += "\">" + obj.reason + "</div>";
+	html += "'>" + obj.reason + "</div>";
 	return addToParent(obj.hierarchy, html);
 }
 
@@ -504,12 +504,12 @@ function createControl(obj) {
 	debugObject("createControl() obj=", obj);
 	var html;
 	if (isSpecialStyle(obj, BUTTON_STYLE)) {	
-		html = "<input id=\"" + obj.id + "\" name=\"" + obj.id + "\" type=\"button\" class=\""
-			+ getObjectClass(obj) + "\" value=\"" + xmlEscape(obj.label) + "\"/>";
+		html = "<input id='" + obj.id + "' name='" + obj.id + "' type='button' class='"
+			+ getObjectClass(obj) + "' value='" + xmlEscape(obj.label) + "'/>";
 	}
 	else {
 		// Default.
-		html = "<a id=\"" + obj.id + "\" href=\"#\" class=\"" + getObjectClass(obj) + "\">" + 
+		html = "<a id='" + obj.id + "' href='#' class='" + getObjectClass(obj) + "'>" + 
 					xmlEscape(obj.label) +
 			   "</a>";			
 	}
