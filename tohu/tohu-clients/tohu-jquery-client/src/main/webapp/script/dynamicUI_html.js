@@ -481,7 +481,7 @@ function createError(obj) {
 	debugObject("createError() obj=", obj);
 	var html = "<div id='" + obj.id + "' class='";
  	html += getObjectClass(obj);
-	html += "'>" + obj.reason + "</div>";
+	html += "'>" + xmlEscape(obj.reason) + "</div>";
 	return addToParent(obj.hierarchy, html);
 }
 
