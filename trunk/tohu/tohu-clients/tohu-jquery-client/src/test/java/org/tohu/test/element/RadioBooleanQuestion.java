@@ -12,13 +12,13 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-public class RadioBooleanElement extends Element {
+public class RadioBooleanQuestion extends Question {
 
-    public RadioBooleanElement() {
+    public RadioBooleanQuestion() {
         super();
     }
     
-    public RadioBooleanElement(DefaultSelenium selenium) {
+    public RadioBooleanQuestion(DefaultSelenium selenium) {
         super(selenium);
     }
     
@@ -27,7 +27,7 @@ public class RadioBooleanElement extends Element {
      * those of the actual HTML Element accessible through the selenium object.
      *  
      */        
-    public void checkQuestion() {
+    public void check() {
 
         if (selenium == null) {
             throw new RuntimeException("One must set the selenmium field on " +

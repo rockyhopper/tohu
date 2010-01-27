@@ -14,7 +14,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-public abstract class Element {
+public abstract class Question {
     
     protected DefaultSelenium selenium;
     
@@ -36,15 +36,15 @@ public abstract class Element {
     // errors List of possible errors, 1st element Type, 2nd element Reason (null means don't check).    
     public String[][] expectedErrors;
     
-    public Element() {
+    public Question() {
         super();
     }
-    public Element(DefaultSelenium selenium) {
+    public Question(DefaultSelenium selenium) {
         this();
         this.selenium = selenium;
     }
     
-    public abstract void checkQuestion();
+    public abstract void check();
     
     /**
      * checks the expected presentation styles against the actual styles for the question

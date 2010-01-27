@@ -1,7 +1,7 @@
 package org.tohu.test.element;
 
+import org.tohu.test.enums.WidgetType;
 
-import org.tohu.test.AbstractSeleniumTest.WidgetType;
 
 /**
  * Factory method to create Element objects
@@ -11,26 +11,26 @@ import org.tohu.test.AbstractSeleniumTest.WidgetType;
  */
 public class ElementFactory {
 
-    public static Element getElement(WidgetType widgetType) {
+    public static Question getElement(WidgetType widgetType) {
         switch (widgetType) {
             case CHECKBOX : 
-                return new CheckboxElement();
+                return new CheckboxQuestion();
             case DATEPICKER : 
-                return new DatePickerElement();
+                return new DatePickerQuestion();
             case TEXT :
-                return new TextElement();
+                return new TextQuestion();
             case FILE :
-                return new FileElement();
+                return new FileUploadQuestion();
             case RADIO_BOOLEAN:
-                return new RadioBooleanElement();
+                return new RadioBooleanQuestion();
             case RADIO_GROUP:
-                return new RadioGroupElement();
+                return new RadioGroupQuestion();
             case DROPDOWN:
-                return new DropDownElement();
+                return new DropDownQuestion();
             case TEXTAREA:
-                return new TextAreaElement();
+                return new TextAreaQuestion();
             default:
-                return new TextElement();                
+                return new TextQuestion();                
         }
     }
     

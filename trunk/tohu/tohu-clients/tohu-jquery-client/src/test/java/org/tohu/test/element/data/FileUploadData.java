@@ -1,6 +1,6 @@
 package org.tohu.test.element.data;
 
-import org.tohu.test.element.Element;
+import org.tohu.test.element.Question;
 
 /**
  * This class is used to configure all the elements used in the "Dynamic Page" test
@@ -21,7 +21,7 @@ public class FileUploadData {
     * @param questionId -  Tohu id, used to determine what kind 
     *                      of expected data to configure for this question                        
     */    
-    public static void populateTestDataForFileUploadPage(Element element, String questionId){
+    public static void populateTestDataForFileUploadPage(Question element, String questionId){
         if ("item_1_1".equalsIgnoreCase(questionId)) {
             element.expectedId = "item_1_1";
             element.expectedPresentationStyles = new String[] { "item_1_1Style", "file" };
