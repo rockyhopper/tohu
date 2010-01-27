@@ -40,6 +40,7 @@ public class Application {
 	private String note;
 	/** If true, required fields etc will stop the user on the page until problem is fixed up */
 	private String actionValidation = "false";
+	private String markupAllowed = "false";
 	private List<Page> pageList = new ArrayList<Page>();
 	private List<String> imports = new ArrayList<String>();
 	
@@ -130,6 +131,14 @@ public class Application {
 
 	public void setActivePage(String activePage) {
 		this.activePage = activePage;
+	}
+
+	public String getMarkupAllowed() {
+		return markupAllowed;
+	}
+
+	public void setMarkupAllowed(String markupAllowed) {
+		this.markupAllowed = markupAllowed;
 	}
 
 	public void addImport(String name) {

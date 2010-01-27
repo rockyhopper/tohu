@@ -169,6 +169,7 @@ public class ApplicationTemplate {
 	    	fmt.format("\tquestionnaire.setActiveItem(\"%s\");\n", app.getActivePage());
 	    }
 	    fmt.format("\tquestionnaire.setEnableActionValidation(%s);\n", app.getActionValidation());
+	    fmt.format("\tquestionnaire.setMarkupAllowed(%s);\n", app.getMarkupAllowed());
 	    fmt.format("\tinsertLogical(questionnaire);\n");
 	    
 	    fmt.format("end\n\n");

@@ -148,6 +148,9 @@ public class ExtractApplication implements SpreadsheetSectionConstants {
 			else if (key.startsWith("ACTION")) {
 				application.setActionValidation(value);
 			}
+			else if (key.startsWith("MARKUP")) {
+				application.setMarkupAllowed(value);
+			}
 			else {
 				logger.debug("Unknown Application key: " + key);
 			}
