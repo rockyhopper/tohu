@@ -1,6 +1,6 @@
 package org.tohu.test.element.data;
 
-import org.tohu.test.element.Element;
+import org.tohu.test.element.Question;
 
 /**
  * This class is used to configure all the elements used in the "Dynamic Page" test
@@ -24,7 +24,7 @@ public class DynamicPageData {
      * @param itemClicked - Some questions are checked more than once based on a click
      *                      and the expected data changes between each click                       
      */
-    public static void populateTestDataForDynamicPageQuestion(Element element, String questionId, boolean itemClicked) { 
+    public static void populateTestDataForDynamicPageQuestion(Question element, String questionId, boolean itemClicked) { 
         if ("item_4_3".equalsIgnoreCase(questionId)) {
             element.expectedId = "item_4_3";
             element.expectedPresentationStyles = new String[] { "item_4_3Style" };

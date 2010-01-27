@@ -1,23 +1,24 @@
 package org.tohu.test.element;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
 /**
- * File entity to compare the expected content against the real content
+ * TextArea entity to compare the expected content against the real content
  * accessible through the required selenium reference object
  * 
  * @author rb1317
  *
  */
-public class FileElement extends Element {
+public class TextAreaQuestion extends Question {
 
-    public FileElement() {
+    public TextAreaQuestion() {
         super();
     }
     
-    public FileElement(DefaultSelenium selenium) {
+    public TextAreaQuestion(DefaultSelenium selenium) {
         super(selenium);
     }
     
@@ -26,7 +27,7 @@ public class FileElement extends Element {
      * those of the actual HTML Element accessible through the selenium object.
      *  
      */        
-    public void checkQuestion() {
+    public void check() {
 
         if (selenium == null) {
             throw new RuntimeException("One must set the selenmium field on " +
@@ -37,9 +38,19 @@ public class FileElement extends Element {
         checkStyles(expectedId, expectedPresentationStyles, expectedRequired, expectedErrors);
         checkLabels(expectedId, expectedPreLabel, expectedPostLabel);        
         
-        assertTrue(expectedId + " no input", selenium.isElementPresent("css=#" + expectedId + "_input[type=file]"));
+        assertTrue(expectedId + " no textarea", selenium.isElementPresent("css=#" + expectedId + "_input"));                            
+        if (expectedAnswer != null) {
+            assertEquals(expectedId + " wrong answer", expectedAnswer, selenium.getText("css=#" + expectedId + "_input"));
+        }
+        if (expectedReadonly != null) {
+            assertEquals(
+                expectedId + " wrong readonly",
+                expectedReadonly.booleanValue(),
+                selenium.isElementPresent("css=#" + expectedId + " div.readonly_overlay"));
+        }
 
         checkErrors(expectedId, expectedErrors);
+
     }
 
 }

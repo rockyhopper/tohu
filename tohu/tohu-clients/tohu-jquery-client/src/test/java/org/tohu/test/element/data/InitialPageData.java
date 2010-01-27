@@ -1,6 +1,6 @@
 package org.tohu.test.element.data;
 
-import org.tohu.test.element.Element;
+import org.tohu.test.element.Question;
 
 /**
  * This class is used to configure all the elements used in the "Dynamic Page" test
@@ -21,7 +21,7 @@ public class InitialPageData {
     * @param questionId -  Tohu id, used to determine what kind 
     *                      of expected data to configure for this question                        
     */
-    public static void populateTestDataForInitialPageQuestion(Element element, String questionId) {
+    public static void populateTestDataForInitialPageQuestion(Question element, String questionId) {
         
         if ("item_1_3".equalsIgnoreCase(questionId)) {
             element.expectedId = "item_1_3";

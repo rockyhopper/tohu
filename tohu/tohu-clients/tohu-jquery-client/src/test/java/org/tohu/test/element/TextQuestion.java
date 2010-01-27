@@ -12,13 +12,13 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-public class TextElement extends Element {
+public class TextQuestion extends Question {
     
-    public TextElement() {
+    public TextQuestion() {
         super();
     }
     
-    public TextElement(DefaultSelenium selenium) {
+    public TextQuestion(DefaultSelenium selenium) {
         super(selenium);
     }
 
@@ -27,7 +27,7 @@ public class TextElement extends Element {
      * those of the actual HTML Element accessible through the selenium object.
      *  
      */        
-    public void checkQuestion() {
+    public void check() {
 
         if (selenium == null) {
             throw new RuntimeException("One must set the selenmium field on " +

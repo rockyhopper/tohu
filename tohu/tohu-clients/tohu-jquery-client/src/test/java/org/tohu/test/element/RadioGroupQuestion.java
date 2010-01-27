@@ -12,13 +12,13 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-public class RadioGroupElement extends Element {
+public class RadioGroupQuestion extends Question {
 
-    public RadioGroupElement() {
+    public RadioGroupQuestion() {
         super();
     }
     
-    public RadioGroupElement(DefaultSelenium selenium) {
+    public RadioGroupQuestion(DefaultSelenium selenium) {
         super(selenium);
     }
     
@@ -27,7 +27,7 @@ public class RadioGroupElement extends Element {
      * those of the actual HTML Element accessible through the selenium object.
      *  
      */        
-    public void checkQuestion() {
+    public void check() {
 
         if (selenium == null) {
             throw new RuntimeException("One must set the selenmium field on " +

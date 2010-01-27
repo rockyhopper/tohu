@@ -12,13 +12,13 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-public class DropDownElement extends Element {
+public class DropDownQuestion extends Question {
 
-    public DropDownElement() {
+    public DropDownQuestion() {
         super();
     }
     
-    public DropDownElement(DefaultSelenium selenium) {
+    public DropDownQuestion(DefaultSelenium selenium) {
         super(selenium);
     }
     
@@ -27,7 +27,7 @@ public class DropDownElement extends Element {
      * those of the actual HTML Element accessible through the selenium object.
      *  
      */        
-    public void checkQuestion() {
+    public void check() {
 
         if (selenium == null) {
             throw new RuntimeException("One must set the selenmium field on " +
