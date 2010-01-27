@@ -365,6 +365,16 @@ function xmlEscape(text) {
 }
 
 /**
+ * Escape the text unless the Questionnaire specifically allows markup, which defaults to false
+ */
+function usuallyXmlEscape(text) {
+	if (persistentState.questionnaire && persistentState.questionnaire.markupAllowed) {
+		return text;
+	}
+	return xmlEscape(text);
+}
+
+/**
  * Handles standard errors.
  * 
  * @param error The error, one of ERROR_TYPES (see dynamicUI_messages.js).

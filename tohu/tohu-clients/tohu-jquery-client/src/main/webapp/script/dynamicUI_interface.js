@@ -627,6 +627,7 @@ function createFactObject(xml, isDelete) {
 		obj.enableActionValidation = getChildBoolean(jq, "enableActionValidation");
 		obj.hasErrors = getChildBoolean(jq, "invalidAnswers");
 		obj.factHandle = $("fact-handle", xml).attr("externalForm");
+		obj.markupAllowed = getChildBoolean(jq, "markupAllowed");
 		break;
 	case "org.tohu.Group":
 		obj = new GroupObject();

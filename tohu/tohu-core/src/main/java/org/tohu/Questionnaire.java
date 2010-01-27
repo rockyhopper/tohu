@@ -58,6 +58,9 @@ public class Questionnaire extends Group {
 	private String availableItems;
 
 	private String clientDateFormat = DEFAULT_CLIENT_DATE_FORMAT;
+	
+	/** Is HTML markup allowed in questions, errors, etc. */
+	private boolean markupAllowed;
 
 	public Questionnaire() {
 		super.setActive(true);
@@ -269,4 +272,20 @@ public class Questionnaire extends Group {
 		this.clientDateFormat = clientDateFormat;
 	}
 
+	/**
+	 * True if text in Notes, labels, pre-labels and error messages contain HTML markup.
+	 * Note that this defaults to false for security purposes to defend against XSS.
+	 * @return
+	 */
+	public boolean isMarkupAllowed() {
+		return markupAllowed;
+	}
+
+	/**
+	 * Allow or disallow HTML markup in Notes, labels, pre-labels and error messages
+	 * @param markupAllowed
+	 */
+	public void setMarkupAllowed(boolean markupAllowed) {
+		this.markupAllowed = markupAllowed;
+	}
 }

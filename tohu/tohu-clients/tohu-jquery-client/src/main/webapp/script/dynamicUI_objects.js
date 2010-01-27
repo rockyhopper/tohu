@@ -102,6 +102,7 @@ function QuestionnaireObject() {
 	// Boolean flag indicating if the Questionnaire has errors (InvalidAnswers)
 	this.hasErrors = null;
 	this.clientDateFormat = null;
+	this.markupAllowed = null;
 }
 
 /**
