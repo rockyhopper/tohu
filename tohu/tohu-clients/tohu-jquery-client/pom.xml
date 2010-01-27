@@ -64,6 +64,7 @@
 			</testResource>
 			<testResource>
 				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
 			</testResource>
 		</testResources>
 		<plugins>
@@ -115,6 +116,7 @@
 		<target.dir>target/classes</target.dir>
 		<test.target.dir>target/test-classes</test.target.dir>
 		<site-deploy>${basedir}/../</site-deploy>
+		<tohu.client.log.level>INFO</tohu.client.log.level>
 	</properties>
 
 	<profiles>
