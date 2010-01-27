@@ -56,7 +56,7 @@ public class BaseTestFramework {
             this.selenium = Browser.getInstance(browser, urlString);
             elementMap = new HashMap<WidgetType, Question>();
             for(WidgetType widget : WidgetType.values()) {
-                Question element = ElementFactory.getElement(widget);
+                Question element = ElementFactory.getQuestion(widget);
                 element.setSelenium(selenium);
                 elementMap.put(widget, element);          
             }            

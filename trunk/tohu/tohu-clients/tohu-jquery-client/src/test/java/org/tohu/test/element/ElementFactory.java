@@ -11,7 +11,7 @@ import org.tohu.test.enums.WidgetType;
  */
 public class ElementFactory {
 
-    public static Question getElement(WidgetType widgetType) {
+    public static Question getQuestion(WidgetType widgetType) {
         switch (widgetType) {
             case CHECKBOX : 
                 return new CheckboxQuestion();
