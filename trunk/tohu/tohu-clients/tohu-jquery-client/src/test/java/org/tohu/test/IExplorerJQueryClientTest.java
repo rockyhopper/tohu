@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tohu;
+package org.tohu.test;
 
 /**
- * Test Case for the JQuery Client in Firefox.
+ * Test Case for the JQuery Client in Internet Explorer.
  * 
  * @author John Bebbington
  */
-public class FirefoxJQueryClientTest extends BaseJQueryClientTest {
+public class IExplorerJQueryClientTest extends BaseJQueryClientTest {
 
 	@org.junit.BeforeClass
 	public static void oneTimeSetUp() throws Exception {
 		DEBUG = true;
-		debug("FirefoxJQueryClientTest.oneTimeSetUp()");
-		basicSetUp(BrowserType.FIREFOX, "http://localhost:9999/unittest-web", "isGUIBusy", "/html/body/div[@id='bodyContent']");
+		debug("IExplorerJQueryClientTest.oneTimeSetUp()");
+		basicSetUp(BrowserType.IEXPLORER, "http://localhost:9999/unittest-web", "isGUIBusy");
 	}
 
 }
