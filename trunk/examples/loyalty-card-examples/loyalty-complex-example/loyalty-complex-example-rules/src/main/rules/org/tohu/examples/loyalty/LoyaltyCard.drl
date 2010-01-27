@@ -31,7 +31,7 @@ rule "Overview"
 dialect "mvel"
 then
 	Questionnaire questionnaire = new Questionnaire("LoyaltyQuestionnaire");
-	questionnaire.setLabel("Solnet Loyalty Card Signup V3");
+	questionnaire.setLabel("Solnet Loyalty Card Signup");
 	questionnaire.setCompletionAction("extract.pdf");
 	
 	questionnaire.addItem("ContactDetailsPage");
