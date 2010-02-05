@@ -77,15 +77,61 @@ function createGroup(obj) {
 	return addToParent(obj.hierarchy, html);
 }
 
-/**
- * Update a previously displayed Group.
- * 
- * @param obj GroupObject or QuestionnaireObject.
- */
+ /**
+  * Update a previously displayed Group.
+  * 
+  * @param obj GroupObject or QuestionnaireObject.
+  */
 function updateGroup(obj) {
-	debugObject("updateGroup() obj=", obj);
-	setElementClass(obj.id, getObjectClass(obj));
-	getJQElement(obj.id + "_label").text(obj.label);
+ 	debugObject("updateGroup() obj=", obj);
+ 	setElementClass(obj.id, getObjectClass(obj));
+ 	getJQElement(obj.id + "_label").text(obj.label);
+ 	/*
+ 	if (obj.items != null && obj.items.length > 0) {	
+ 		// check if the group's items need to be rebuilt
+ 		// note one can add/delete/update the group's item
+ 		// list dynamically 	
+ 		var remaingGroupItemsArray = recordExistingItems(obj);
+ 		removeAllGroupItems(obj);
+ 		createExistingItems(obj, remaingGroupItemsArray);		
+ 	}
+ 	*/
+}
+
+ /**
+  * only record the existing jq elements which remain 
+  * in the "Group" items list	
+  */
+function recordExistingItems(obj) {
+ 	var existingGroupItemsArray = new Array();
+ 	for(var count = 0; count < obj.items.length; count++) {
+ 		var jq = $("#" + obj.items[count]);
+ 		if (jq != null) {
+ 			existingGroupItemsArray[count] = jq;	
+ 		}			
+ 	}	
+ 	return existingGroupItemsArray;
+}
+
+ /**
+  * remove all jq Elements inside this "Group"
+  */
+function removeAllGroupItems(obj){
+ 	var jqGroupItems = getJQElement(obj.id+"_items").children().remove();	
+}
+  
+ /**
+  * create the correct ordering of the "group" items
+  */
+function createExistingItems(obj, itemsArray) {
+ 	// get the div container for all the "Groups items"
+ 	var previousJQElement = getJQElement(obj.id+"_items");
+ 	// add the jq elements which were recorded
+ 	for(var count = 0; count < itemsArray.length; count++) {
+ 		var jqCurrentElement = itemsArray[count];
+ 		previousJQElement.after(jqCurrentElement);
+ 		previousJQElement = jqCurrentElement;
+ 	}	
 }
 
 /**

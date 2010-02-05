@@ -93,6 +93,7 @@ public class Browser {
         
         selenium = new DefaultSelenium("localhost", 4444, browser.getBrowserName(), baseURL);
         try {
+            selenium.setSpeed("200");
             selenium.start();
         }
         catch (Exception ex) {
