@@ -150,9 +150,10 @@ function refreshScreen(resultSet, lastFocusID, tabForward) {
 	}
 
 	processDeleteList(resultSet.deleteList);
+	//processCreateList(resultSet.createList);	
 	processUpdateList(resultSet.updateList);
-	processCreateList(resultSet.createList);
-
+	processCreateList(resultSet.createList);	
+	
 	// If we tabbed out, explicitly set focus to the next or previous element because it may have
 	// changed if we have added or removed questions.
 	var focusElement = getNextFocusElement(lastFocusID, tabForward);
