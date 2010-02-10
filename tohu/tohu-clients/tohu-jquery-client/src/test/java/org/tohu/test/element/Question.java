@@ -122,6 +122,7 @@ public abstract class Question {
         }        
     }
     
+
     /**
      * checks the expected errors against what the actual errors for the question are
      * 
@@ -130,11 +131,13 @@ public abstract class Question {
      */
     protected void checkErrors(String id, String[][] errors) {
         if (errors != null) {
-            assertTrue(id + " missing error div", selenium.isElementPresent("css=#" + id + "_errors"));
+            assertTrue(id + " missing error container", selenium.isElementPresent("css=#" + id + "_errors"));
+            assertTrue(id + " missing error ul styleClass questionErrors", selenium.isElementPresent("css=#" + id + "_errors.questionErrors"));            
             for (int i = 0; i < errors.length; i++) {
-                assertTrue(id + " missing error '" + errors[i][1] + "'", 
-                           selenium.isElementPresent("css=#" + id + "_error_" + errors[i][0] + "." +  errors[i][1]));
-                assertEquals(errors[i][2], selenium.getText("css=#" + id + "_error_" + errors[i][0]) );
+                assertTrue(id + " missing error container item'" + errors[i][1] + "'", selenium.isElementPresent("css=#" + id + "_error_" + errors[i][0] + ".questionError"));
+                assertTrue(id + " missing error container item style class'" + errors[i][1] + "'", selenium.isElementPresent("css=#" + id + "_error_" + errors[i][0] + "_span." +  errors[i][1]));
+                assertTrue(id + " missing error container item text style class'" + errors[i][1] + "'", selenium.isElementPresent("css=#" + id + "_error_" + errors[i][0] + "_span.InvalidAnswer"));                
+                assertEquals(errors[i][2], selenium.getText("css=#" + id + "_error_" + errors[i][0] + "_span") );
             }
         }        
     }
