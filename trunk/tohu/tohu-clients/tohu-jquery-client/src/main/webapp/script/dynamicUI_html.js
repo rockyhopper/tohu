@@ -134,6 +134,7 @@ function createExistingItems(obj, itemsArray) {
  	}	
 }
 
+
 /**
  * Build the HTML for the Question input(s) and return it.  
  * 
@@ -153,9 +154,10 @@ function buildQuestionInput(obj) {
 		if (multipleChoice) {
 			var keyValue = null;
 			if (isSpecialStyle(obj, RADIO_STYLE)) {	
-				// Build up a radio-button group for the question.
-				html += "<span id='" + obj.id + "_input' class='radioGroup'>";
+				// Build up a radio-button group for the question.				
+				html += "<ul id='" + obj.id + "_input' class='radioList'>";
 				for (var i = 0; i < obj.possibleAnswers.length; i++) {
+					html += "<li class='listItem'>";
 					keyValue = obj.possibleAnswers[i][0];
 					debug("buildQuestionInput() radio possibleAnswer=" + keyValue);
 					if (keyValue != "null") {
@@ -167,8 +169,9 @@ function buildQuestionInput(obj) {
 						html += " class='answer_radio'>";
 						html += "<label for='" + radioID + "'>" + usuallyXmlEscape(obj.possibleAnswers[i][1]) + "</label>&nbsp;";
 					}
+					html += "</li>";					
 				}
-				html += "</span>";
+				html += "</ul>";
 			}
 			else {
 				// Build up a drop-down list for the question.
@@ -287,7 +290,7 @@ function attachChangeHandler(obj) {
 
 	var input = getJQElement(obj.id + "_input");
 	
-	if (input.is("span")) {
+	if ( (input.is("span")) || (input.is("ul")) ){
 		debug("attachChangeHandler() radio");
 		input.find(":radio").unbind();
 		input.find(":radio").click(function() {
@@ -448,7 +451,7 @@ function createQuestion(obj) {
 	html += "<span id='" + obj.id + "_preLabel' class='preLabel'>" + usuallyXmlEscape(obj.preLabel) + "</span>&nbsp";
 	html += buildQuestionInput(obj);
 	html += "&nbsp;<span id='" + obj.id + "_postLabel' class='postLabel'>" + usuallyXmlEscape(obj.postLabel) + "</span>";
-	html += "<div id='" + obj.id + "_errors' class='questionErrors'></div>";
+	html += "<ul id='" + obj.id + "_errors' class='questionErrors'></ul>";
 	html += "</div>";
 	var result = addToParent(obj.hierarchy, html);
 	attachChangeHandler(obj);
@@ -525,9 +528,8 @@ function updateNote(obj) {
  */
 function createError(obj) {
 	debugObject("createError() obj=", obj);
-	var html = "<div id='" + obj.id + "' class='";
- 	html += getObjectClass(obj);
-	html += "'>" + usuallyXmlEscape(obj.reason) + "</div>";
+	var html = "<li id='" + obj.id + "' class='questionError'>";
+	html += "<span id='" + obj.id + "_span' class='" + getObjectClass(obj) + "'>" + usuallyXmlEscape(obj.reason) + "</span></li>";
 	return addToParent(obj.hierarchy, html);
 }
 
