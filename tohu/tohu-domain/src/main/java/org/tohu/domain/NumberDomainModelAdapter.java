@@ -64,7 +64,7 @@ public class NumberDomainModelAdapter implements DomainModelAdapter {
 	 */
 	public Object answerToObject(Object answer, Class<?> clazz) {
 		
-		logger.debug("Answer to Object is: " + answer.toString());
+		logger.debug("Answer to Object is: " + answer);
 		
 		if (answer == null) {
 			if (clazz.isPrimitive()) {
