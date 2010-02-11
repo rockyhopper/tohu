@@ -105,6 +105,10 @@ div,p {
 	*/	
 }
 
+/**************************************/
+/*            MAIN CONTENT            */
+/**************************************/
+
 .Questionnaire {
 	/*
 		style applied to the HTML Questionnaire div container.   
@@ -153,13 +157,6 @@ div,p {
 	*/	
 }
 
-.Note {
-	/*
-		style applied to a HTML paragraph which contains a
-		note relevant to the associated question
-	*/	
-}
-
 .Question {
 	/*
 		style applied to the HTML div container which wraps 
@@ -174,25 +171,31 @@ div,p {
 	*/	
 }
 
-.required {
-	/*
-		styling used to indicate a question is mandatory. 
-		Used by the same HTML div element as the Question 
-		selector. 
-	*/
-}
-
 .Question .preLabel, .preLabel {
 	/*
 		span style for each question's text 
 	*/	
 }
 
-.radioGroup {
+.required {
+    /*
+        styling used to indicate a question is mandatory. 
+        Used by the same HTML div element as the Question 
+        selector. 
+    */
+}
+
+.radioList {
 	/*
-		styling used on a question's answerable options.  
-		Used by a HTML span element 
+		styling used on a HTML UL radio list 
 	*/
+}
+
+.listItem {
+    /*
+        styling used on a list option be it for a question
+        or error 
+    */
 }
 
 .answer_radio{
@@ -208,7 +211,7 @@ div,p {
 	*/
 }
 
-answer_checkbox {
+.answer_checkbox {
 	/*
 		styling used for a question's HTML input checkbox element 
 	*/
@@ -220,11 +223,34 @@ answer_checkbox {
 	*/	
 }
 
+.Note {
+    /*
+        style applied to a HTML paragraph which contains a
+        note relevant to the associated question
+    */  
+}
+
+
+/**************************************/
+/*             ERRORS                 */
+/**************************************/
+
 .questionErrors {
 	/*
-		styling which applies to a HTML div container which wraps 
+		styling which applies to a HTML ul container which wraps 
 		a list of all the errors applicable to the question	
 	*/	
+}
+
+.questionError {
+    /*
+        styling which applies to a HTML li listItem which displays 
+        an error message applicable to the question 
+    */
+}
+
+.error {
+
 }
 
 .error input,
@@ -243,20 +269,25 @@ answer_checkbox {
 	*/	
 }
 
-.InvalidAnswer.requiredMissing {
-	/*
-		styling used to un-display the error message. 
-		used on the same HTML div container as the InvalidAsnwer 
-		selector 
-	*/	
+.InvalidAnswer.nonDisplayed {
+    /*
+        styling used to un-display the error message. 
+        used on the same HTML div container as the InvalidAsnwer 
+        selector 
+    */	
 }
 
-.InvalidAnswer.requiredDisplayed {
-	/*
-		used on the same HTML div container as the InvalidAsnwer 
-		selector  
-	*/		
+.InvalidAnswer.displayed {
+    /*
+        used on the same HTML div container as the InvalidAsnwer 
+        selector  
+    */
 }
+
+
+/**************************************/
+/*             NAVIGATION             */
+/**************************************/
 
 .Controls {
 	/*
@@ -298,4 +329,10 @@ a.Control:link, a.Control:visited, a.Control:hover, a.Control:focus, a.Control:a
 		style defining the display of the "next" navigation point contained 
 		within the controls HTML div container	
 	*/	
+}
+
+.buttons {
+    /*
+        styling for additional buttons
+    */
 }
