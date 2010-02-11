@@ -56,7 +56,12 @@ public class Answer implements Serializable {
 		return value;
 	}
 
+	@Deprecated
 	public void setvalue(String value) {
+		this.value = value;
+	}
+
+	public void setValue(String value) {
 		this.value = value;
 	}
 
