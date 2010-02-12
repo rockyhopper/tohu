@@ -80,6 +80,20 @@
 				</dependencySets>
 			</binaries>
 		</moduleSet>													
+		<moduleSet>
+			<includes>
+				<include>org.sample:SampleProject</include>             
+			</includes>
+			<sources>
+			     <fileSets>
+			         <fileSet>
+			             <excludes>
+			                 <exclude>target/**</exclude>
+			             </excludes>
+			         </fileSet>
+			     </fileSets>
+			</sources>		
+		</moduleSet>		
 	</moduleSets>
 	
 </assembly>
