@@ -4,7 +4,7 @@ package org.tohu.test.enums;
 public enum BrowserType {
     
     /** Supported browser types */
-    FIREFOX("firefoxproxy"), IEXPLORER("iexploreproxy"), SAFARI("safariproxy");
+    FIREFOX("firefoxproxy"), IEXPLORER("iexploreproxy"), SAFARI("*safari"), CHROME("*googlechrome");
     
     private BrowserType() {
         
