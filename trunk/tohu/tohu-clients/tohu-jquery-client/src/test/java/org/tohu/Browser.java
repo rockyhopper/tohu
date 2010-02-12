@@ -100,6 +100,8 @@ public class Browser {
             logger.debug("exception=" + ex);
             if (((browserType.equals(BrowserType.SAFARI)) && ex.toString().contains(
                 "java.lang.RuntimeException: Safari could not be found in the path!"))
+                    || ((browserType.equals(BrowserType.CHROME)) && ex.toString().contains(
+                        "java.lang.RuntimeException: Chrome could not be found in the path!"))                
                     || ((browserType.equals(BrowserType.FIREFOX)) && ex.toString().contains(
                         "java.lang.RuntimeException: Firefox could not be found in the path!"))
                     || ((browserType.equals(BrowserType.IEXPLORER)) && ex.toString().contains(
