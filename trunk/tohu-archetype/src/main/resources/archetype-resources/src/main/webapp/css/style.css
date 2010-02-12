@@ -112,9 +112,19 @@ div,p {
 }
 
 .radioList {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type : none;
 }
 
 .listItem {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type : none; 
 }
 
 .answer_radio{
@@ -142,17 +152,44 @@ div,p {
 	border: 2px solid #ff8080;
 }
 
+.questionErrors {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type: none;
+}
+
+.questionError {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.error {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
 .InvalidAnswer {
-	color: red;
-	font-weight: bold;
-	padding-left: 29.2em;
+    border-width: 1px;
+    border-color : red;
+    border-width : thin;
+    border-style : solid; 
+    color: red;
+    font-size: 0.7em;
+    font-weight: bold;
+    padding: 2px;
 }
 
-.InvalidAnswer.nonDisplayed {
-	display: none;
+.InvalidAnswer.requiredMissing {
+    display: none;
 }
 
-.InvalidAnswer.displayed {
+.InvalidAnswer.requiredDisplayed {
+    display : block;
 }
 
 
