@@ -1,3 +1,6 @@
+
+
+
 ********************************************************************************
 ********************************************************************************
 
@@ -6,9 +9,9 @@
     
         The Tohu framework has successfully being tested on the following webservers
         
-        Jetty 			6.1.10
-        Apache Tomcat 	6.0.14
-        IBM Websphere 	6.1.0.17
+        Jetty 		 	 6.1.10
+        Apache Tomcat 		 6.0.14
+        IBM Websphere 		 6.1.0.17
         
         The Tohu framework has successfully being tested on the following browsers
         
@@ -29,23 +32,27 @@
         extension of this framework for web application purposes.  It is imperative
         that you reference them as part of your build process and include them 
         within your generated distributed WAR file. 
+
+        ----- maven users        
+		The poms's extracted from the binary distribution will automatically 
+        	download and install some of the dependencies (jars)into your maven repository.  Otherwise
+	        one will need to manually add them into your repository using the dependency groupId 
+	        and ArtifactId defined in the poms as a reference when installing them.  Once done, all one
+	        needs to do is run mvn clean install jetty:run.  This will generate a War file and deploy it 
+        	to the Jetty webserver.
         
-        For maven users the poms's extracted from the binary distribution will automatically 
-        download and install some of the dependencies (jars)into your maven repository.  Otherwise
-        one will need to manually add them into your repository using the dependency groupId 
-        and ArtifactId defined in the poms as a reference when installing them.  Once done, all one
-        needs to do is run mvn clean install jetty:run.  This will generate a War file and deploy it 
-        to the Jetty webserver.
+	----- Apache Ant Users
+        	For Ant users, one will need to create an Ant build file with the sample project embedded within
+	        this binary distribution called SampleProject.  The Ant build file will need to configures its
+	        classpath tag to include the dependencies (jars) extracted from the binary distribution and 
+	        use the standard build Ant tags to generate a WAR file.  The War file can be deployed to any
+	        webserver mentioned in section A.
         
-        For Ant users, one will need to create an Ant build file with the sample project embedded within
-        this binary distribution called SampleProject.  The Ant build file will need to configures its
-        classpath tag to include the dependencies (jars) extracted from the binary distribution and 
-        use the standard build Ant tags to generate a WAR file.  The War file can be deployed to any
-        webserver mentioned in section A.
-        
-        For Eclipse users, one can run "mvn eclipse:eclipse" to generate a ".project" file and import
-        the project into eclipse via its "import" facility.  Eclipse will pre-dertermine the project 
-        build path for you.  Then one can deploy to a webserver (e.g. Tomcat) within eclipse.
+	----- Eclipse users
+		one can run "mvn eclipse:eclipse" to generate a ".project" file and import
+	        the project into eclipse via its "import" facility.  Make sure the M2_REPO classpath variable
+	        is defined or alternately you can manually import the jars located in the SampleProject.
+	        Then one can deploy to a webserver (e.g. Tomcat) within eclipse.
 
 
 
@@ -68,8 +75,8 @@
         This file will be referred to as "MyKnowledgeAgent.xml" from here on.
         
         <change-set xmlns='http://drools.org/drools-5.0/change-set' 
-        		    xmlns:xs='http://www.w3.org/2001/XMLSchema-instance' 
-        		              xs:schemaLocation='http://drools.org/drools-5.0/change-set 
+        		 		     xmlns:xs='http://www.w3.org/2001/XMLSchema-instance' 
+        		 		               xs:schemaLocation='http://drools.org/drools-5.0/change-set 
                               drools-change-set-5.0.xsd'>
         
           <add>
@@ -82,12 +89,12 @@
             <resource type="DRL" source="classpath:org/tohu/listener.drl"/>    
             <resource type="DRL" source="classpath:org/tohu/support/SupportQueries.drl" />
             <resource type="DRL" source="classpath:#New_Drool_Files_Path#"/>
-            <!-- 
-            	for linux based systems there's currently a "file handle release" issue, 
-            	so use the following line instead of the above one.  Ensure your webserver 
-            	has access rights to the directory location and its resource contents
-                <resource type="DRL" source="${absolute_path}/#Questionnaire_Path#"/>    	
-            -->
+            	<!-- 
+		     for linux based systems there's currently a "file handle release" issue, 
+		     so use the following line instead of the above one.  Ensure your webserver 
+		     has access rights to the directory location and its resource contents
+		     <resource type="DRL" source="${absolute_path}/#New_Drool_Files_Path#"/> 
+ 		 -->
           </add>
         </change-set> 
         
@@ -97,19 +104,18 @@
         where all your  additional drool files representing your questionnaire are to be 
         found.
         
-        #New_Drool_Files_Path# is the classpath package path to the drool 
-        resources.
+        #New_Drool_Files_Path# is the project source path to where the drool files are located
         
         For example if you had the following resources defined within your Tohu extended 
         project
         
-        src/main/resource/com/companyname/rules/Questionnaire.drl
-        src/main/resource/com/companyname/rules/Page1.drl
-        src/main/resource/com/companyname/rules/Page2.drl
-        src/main/resource/com/companyname/rules/Completion.drl
+        src/main/resource/rules/Questionnaire.drl
+        src/main/resource/rules/Page1.drl
+        src/main/resource/rules/Page2.drl
+        src/main/resource/rules/Completion.drl
         
-        Then this would result in #Questionnaire_Path# being set to 
-        "com.companyname.rules"
+        Then this would result in #New_Drool_Files_Path# being set to 
+        "src/main/resource/rules"
  
 
 ********************************************************************************
@@ -126,35 +132,36 @@
         
         The spreadsheet is located in src\main\resources\spreadsheet\SampleDecisionTreeOnePage.xls.
         
-        ----- maven users
-            For Tohu to pick up changes you first must run the following command
-            "mvn exec:java" 
-            and deploy the web application to jetty
-            "mvn clean package jetty:run"
+	----- maven users
+        	For Tohu to pick up changes you first must run the following command
+		"mvn exec:java"
+		then run the following command in another command line console
+		"mvn clean package jetty:run"
+		which will deploy the web application to jetty
         
-            enter in information into the sample web app. 
-            Then make changes to the spreadsheet.
-            wait 30 seconds.
-            kill the existing user session
-            goto the sample web app home page again 
-            the changes you made in the spreadsheet should be reflects on the web-app.
+            	enter in information into the sample web app.
+	        Then make changes to the spreadsheet.
+            	wait 30 seconds until the drool file is updated.
+            	then clear the browser session.
+            	goto the sample web app home page again by re-entering the url.
+            	the changes you made in the spreadsheet should be reflects on the web-app.
         
         
         ----- Apache Ant Users
-            For Apache Ant users the "mvn exec:java" command is equivalent to running a 
-            Tohu java application called PeriodicRuleLoader. which is found in the Tohu-Loader jar.  
-            It will need the following parameters supplied to it
-            rules spreadsheet file (default is /src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls)
-            rules destination directory (default is /target/temp-rules-dir)
-            rules import directory (default is /src/main/resources/rules)
-            drools destination directory (default is /src/main/resources/rules)
+            	For Apache Ant users the "mvn exec:java" command is equivalent to running a 
+            	Tohu java application called PeriodicRuleLoader. which is found in the Tohu-Loader jar.  
+           	It will need the following parameters supplied to it
+            	rules spreadsheet file (default is /src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls)
+            	rules destination directory (default is /target/temp-rules-dir)
+          	rules import directory (default is /src/main/resources/rules)
+           	drools destination directory (default is /src/main/resources/rules)
 
-            enter in information into the sample web app. 
-            Then make changes to the spreadsheet.
-            wait 30 seconds.
-            kill the existing user session
-            goto the sample web app home page again 
-            the changes you made in the spreadsheet should be reflects on the web-app.
+            	enter in information into the sample web app. 
+            	Then make changes to the spreadsheet.
+            	wait 30 seconds until the drool file is updated.
+            	then clear the browser session.
+            	goto the sample web app home page again by re-entering the url.
+            	the changes you made in the spreadsheet should be reflects on the web-app.
             
 ********************************************************************************
 ********************************************************************************
@@ -166,8 +173,8 @@
         into the webroot directory of your WAR being deployed. 
     
         ----- maven users 
-            This is already done for maven users as the pom extracted from the binary distribution will have the 
-            following defined 
+            	This is already done for maven users as the pom extracted from the binary distribution will have the 
+            	following defined 
     
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -182,9 +189,9 @@
                     <configuration>
                       <artifactItems>
                         <artifactItem>
-            				<groupId>org.tohu</groupId>                
-            				<artifactId>tohu-jquery-client</artifactId>
-            				<version>${tohu.version}</version>
+            		 	<groupId>org.tohu</groupId>                
+            		 	<artifactId>tohu-jquery-client</artifactId>
+            		 	<version>${tohu.version}</version>
                         </artifactItem>
                       </artifactItems>
                     </configuration>
@@ -196,28 +203,28 @@
         ----- Apache Users      
             The following example is how it would be done with Apache Ant
     
-            <target name="init">		
-            	<property file="src/main/filters/${user.name}.properties"/>		
-            	....
-            	....
-            	....
-            	<property name="libs" value="${dirs.base}/libs"/>			
-            	<property name="dirs.base" value="${basedir}"/>
-            	<property name="warDir" value="${dirs.base}/build/war"/>
+            <target name="init">		 		 
+            		 <property file="src/main/filters/${user.name}.properties"/>		 		 
+            		 ....
+            		 ....
+            		 ....
+            		 <property name="libs" value="${dirs.base}/libs"/>		 		 		 
+            		 <property name="dirs.base" value="${basedir}"/>
+            		 <property name="warDir" value="${dirs.base}/build/war"/>
             
             </target>
             
             <target name="unpack">
-            	<unjar src="${libs}/tohu-jquery-client-X.X.X-SNAPSHOT.jar" dest="${warDir}">			
-            	</unjar>
+            		 <unjar src="${libs}/tohu-jquery-client-X.X.X-SNAPSHOT.jar" dest="${warDir}">		 		 		 
+            		 </unjar>
             </target>
             
             <!-- Create the War File -->
             <target name="buildWar" depends="init, .., unpack">
-            	....		
-            	....
-            	<jar jarfile="${earDir}/${warFile}" basedir="${warDir}" />
-            </target>	      
+            		 ....		 		 
+            		 ....
+            		 <jar jarfile="${earDir}/${warFile}" basedir="${warDir}" />
+            </target>		       
 
 
 ********************************************************************************
@@ -256,26 +263,26 @@
         update the underlying invisible radio button when selected. 
         
         /*
-        	customiseable hook
-        	@param obj - Tohu Question Object.
+        		 customiseable hook
+        		 @param obj - Tohu Question Object.
         */
         function postProcessQuestion(obj) {
-        	if (hasStyle(obj, "radio")) {
-        		postProcessRadio(obj.id);	
-        	}
-        	if (hasStyle(obj, "or")) {
-        		postProcessOr(obj.id);		
-        	}		
+        		 if (hasStyle(obj, "radio")) {
+        		 		 postProcessRadio(obj.id);		 
+        		 }
+        		 if (hasStyle(obj, "or")) {
+        		 		 postProcessOr(obj.id);		 		 
+        		 }		 		 
         }
         
         function postProcessRadio(String) {
-        	....
-        	....
+        		 ....
+        		 ....
         }
         
         function postProcessOr(String) {
-        	....
-        	....
+        		 ....
+        		 ....
         }
         
         /**
@@ -286,5 +293,5 @@
          * @return Boolean
          */
         function hasStyle(obj, style) {
-        	return (obj.presentationStyles != null) && (jQuery.inArray(style, obj.presentationStyles.split(",")) >= 0);
+        		 return (obj.presentationStyles != null) && (jQuery.inArray(style, obj.presentationStyles.split(",")) >= 0);
         }
