@@ -36,7 +36,7 @@ public class BaseTestFramework {
       ArrayList<Object []> list = new ArrayList<Object[]>();      
       list.add(new Object[]{BrowserType.IEXPLORER, "http://localhost:9999/unittest-web", "isGUIBusy"}); 
       list.add(new Object[]{BrowserType.FIREFOX, "http://localhost:9999/unittest-web", "isGUIBusy"});
-      list.add(new Object[]{BrowserType.CHROME, "http://localhost:9999/unittest-web", "isGUIBusy"});         
+      //list.add(new Object[]{BrowserType.CHROME, "http://localhost:9999/unittest-web", "isGUIBusy"});         
       //list.add(new Object[]{BrowserType.SAFARI, "http://localhost:9999/unittest-web", "isGUIBusy"});   
       return list; 
     }  
