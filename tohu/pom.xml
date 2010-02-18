@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<!--
 	  Copyright 2009 Solnet Solutions Limited (http://www.solnetsolutions.co.nz/)
@@ -23,7 +24,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>tohu</artifactId>
 	<groupId>org.tohu</groupId>
-	<version>1.2.0</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
     <description>		
@@ -34,8 +35,8 @@
 	<name>Tohu</name>
 	
     <scm>
-        <url>file:///D:/subversion_data/repos/my_repo/my-app-example/tags/tohu-1.2.0</url>
-        <connection>scm:svn:file:///D:/subversion_data/repos/my_repo/my-app-example/tags/tohu-1.2.0</connection>
+        <url>http://svn.jboss.org/repos/tohu/tags</url>
+        <connection>scm:svn:http://svn.jboss.org/repos/tohu/tags</connection>
     </scm>	
             	
 	<dependencies>
