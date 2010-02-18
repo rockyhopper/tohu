@@ -20,11 +20,17 @@
 	  
 	  @author Damon Horrell
 	-->
+	<parent>
+		<groupId>org.jboss</groupId>
+		<artifactId>jboss-parent</artifactId>
+		<version>5-beta-4</version>
+	</parent>
+
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>tohu</artifactId>
 	<groupId>org.tohu</groupId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.0</version>
 	<packaging>pom</packaging>
 	
     <description>		
@@ -213,18 +219,6 @@
 		</plugins>
 	</reporting>  
 	  
-	<distributionManagement>
-	    <site>
-            <id>website</id>
-            <url>file://${site-deploy}../maven-site</url>
-	    </site>
-	    <repository>
-			<id>jboss-releases</id>
-			<name>JBoss Releases Repository</name>
-			<url>dav:https://svn.jboss.org/repos/repository.jboss.org/maven2</url>
-	    </repository>
-	</distributionManagement>
-	
 	<properties>
 		<drools-version>5.1.0.M1</drools-version>
 		<cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
