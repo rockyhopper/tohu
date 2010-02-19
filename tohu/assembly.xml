@@ -10,6 +10,7 @@
   			<directory>${basedir}</directory>	    
 			<includes>	
 				<include>docs/README.TXT</include>
+				<include>docs/ReleaseNotes.txt</include>
 				<include>docs/styleTemplate.css</include>                       				
 			</includes>
 	    </fileSet>
