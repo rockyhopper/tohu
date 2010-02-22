@@ -23,7 +23,7 @@
 	<parent>
 		<artifactId>tohu</artifactId>
 		<groupId>org.tohu</groupId>
-		<version>${1.3.0-SNAPSHOT}</version>
+		<version>1.3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>tohu-jquery-client</artifactId>
