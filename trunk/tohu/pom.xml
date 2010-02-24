@@ -105,7 +105,7 @@
         -->
         <repository>
             <id>temp.local</id>
-            <url>http://anonsvn.jboss.org/repos/tohu/trunk/tohu/lib/</url>
+            <url>http://anonsvn.jboss.org/repos/tohu/trunk/tohu/lib</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -120,7 +120,7 @@
         <module>tohu-domain</module>
         <module>tohu-xml</module>
         <module>tohu-clients</module>
-        <module>tohu-loader</module>
+        <module>tohu-loader</module>      
     </modules>
     
     <build>

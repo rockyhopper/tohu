@@ -40,10 +40,15 @@ var temporaryState = null;
  * @return ResultSetObject
  */
 function getInitialQuestionnaire() {
-	var request = "<batch-execution>\n"
-		+ "  <fire-all-rules />\n"
-		+ "  <query out-identifier='activeObjects' name='activeObjects' />\n"
-		+ "</batch-execution>\n";
+	var request = 
+		"<batch-execution>\n"
+	  + "	<fire-all-rules />\n"
+	  + "	<query out-identifier='activeObjects' name='activeObjects'/>\n"
+	  + "</batch-execution>\n";
+	// allows one to customize the batchExcecutioner
+	if (window.onBatchExecutionInitialQuestionnaire) {
+		request = onBatchExecutionInitialQuestionnaire();
+	}			 	    		
 	persistentState = new PersistentStateObject();
 	temporaryState = new TemporaryStateObject();
 	return preProcessServerQuestionnaire(callDrools(request));
@@ -57,18 +62,23 @@ function getInitialQuestionnaire() {
  * @return ResultSetObject
  */
 function setQuestionAnswer(questionID, answer) {
-	var request = "<batch-execution>\n"
-		+ "  <insert out-identifier='changes'>\n"
-		+ "    <org.tohu.xml.ChangeCollector/>\n"
-		+ "  </insert>\n"
-		+ "  <insert>\n"
-		+ "    <org.tohu.Answer>\n"
-		+ "      <questionId>" + xmlEscape(questionID) + "</questionId>\n"
-		+ "      <value>" + xmlEscape(answer) + "</value>\n"
-		+ "    </org.tohu.Answer>\n"
-		+ "  </insert>\n"
-		+ "  <fire-all-rules />\n"
-		+ "</batch-execution>";
+	var request = 
+		  "<batch-execution>\n"
+		+ "		<insert out-identifier='changes'>\n"
+		+ "			<org.tohu.xml.ChangeCollector/>\n"
+		+ "		</insert>\n"
+		+ "		<insert>\n"
+		+ "			<org.tohu.Answer>\n"
+		+ "				<questionId>" + xmlEscape(questionID) + "</questionId>\n"
+		+ "				<value>" + xmlEscape(answer) + "</value>\n"
+		+ "			</org.tohu.Answer>\n"
+		+ "		</insert>\n"
+		+ "		<fire-all-rules />\n"
+	    + "</batch-execution>";
+	// allows one to customize the batchExcecutioner	
+	if (window.onBatchExecutionQuestionAnswer) {
+		request = onBatchExecutionQuestionAnswer(questionID, answer);
+	}			 	    	    
 	temporaryState = new TemporaryStateObject();
 	return preProcessServerChanges(callDrools(request));
 }
@@ -80,13 +90,18 @@ function setQuestionAnswer(questionID, answer) {
  * @return ResultSetObject
  */
 function setActiveItem(activeItem) {
-	var request = "<batch-execution>\n"
-		+ "  <modify factHandle='" + xmlEscape(persistentState.questionnaire.factHandle) + "'>\n"
-		+ "    <set accessor='activeItem' value='\"" + activeItem + "\"' />\n"
-		+ "  </modify>\n"
-		+ "  <fire-all-rules />\n"
-		+ "  <query out-identifier='activeObjects' name='activeObjects' />\n"
-		+ "</batch-execution>";
+	var request = 
+		  "<batch-execution>\n"
+		+ "		<modify factHandle='" + xmlEscape(persistentState.questionnaire.factHandle) + "'>\n"
+		+ "			<set accessor='activeItem' value='\"" + activeItem + "\"' />\n"
+		+ "		</modify>\n"
+		+ "		<fire-all-rules />\n"
+		+ "		<query out-identifier='activeObjects' name='activeObjects' />\n"
+	    + "</batch-execution>";
+	// allows one to customize the batchExcecutioner	
+	if (window.onBatchExecutionActiveItem) {
+		request = onBatchExecutionActiveItem(activeItem);
+	}			 	    
 	// Clear state and start again.
 	persistentState = new PersistentStateObject();
 	temporaryState = new TemporaryStateObject();
