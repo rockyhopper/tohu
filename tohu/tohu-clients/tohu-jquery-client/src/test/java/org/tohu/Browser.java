@@ -34,9 +34,7 @@ public class Browser {
     /** Background thread to run the Selenium Server */
     protected static SeleniumServerThread seleniumThread = null;
     /** Background thread to run the Jerry Server */
-    protected static JettyServerThread jettyThread = null;
-    /** The test browser type */
-    protected static BrowserType browserType = null;      
+    protected static JettyServerThread jettyThread = null; 
     
     public static DefaultSelenium getInstance(BrowserType browser, String urlString) throws Exception {
       newBrowser(browser, urlString);
@@ -98,16 +96,16 @@ public class Browser {
         }
         catch (Exception ex) {
             logger.debug("exception=" + ex);
-            if (((browserType.equals(BrowserType.SAFARI)) && ex.toString().contains(
+            if (((BrowserType.SAFARI.equals(browser)) && ex.toString().contains(
                 "java.lang.RuntimeException: Safari could not be found in the path!"))
-                    || ((browserType.equals(BrowserType.CHROME)) && ex.toString().contains(
+                    || ((BrowserType.CHROME.equals(browser)) && ex.toString().contains(
                         "java.lang.RuntimeException: Chrome could not be found in the path!"))                
-                    || ((browserType.equals(BrowserType.FIREFOX)) && ex.toString().contains(
+                    || ((BrowserType.FIREFOX.equals(browser)) && ex.toString().contains(
                         "java.lang.RuntimeException: Firefox could not be found in the path!"))
-                    || ((browserType.equals(BrowserType.IEXPLORER)) && ex.toString().contains(
+                    || ((BrowserType.IEXPLORER.equals(browser)) && ex.toString().contains(
                         "java.lang.RuntimeException: Internet Explorer could not be found in the path!"))) {
                 // Browser not installed, treat this as a successful test.
-                logger.debug("Abrowser not installed.");
+                logger.debug("browser [" + browser.getBrowserName() + "] not installed.");
                 assumeTrue(false);
             }
             throw ex;
@@ -137,7 +135,7 @@ public class Browser {
             }
             logger.debug("Done");            
         } catch (Exception ex) {
-            logger.error("error stop browser: " + browserType.getBrowserName(), ex);
+            logger.error("error stopping selenium: ", ex);
             throw ex;
         }
 
