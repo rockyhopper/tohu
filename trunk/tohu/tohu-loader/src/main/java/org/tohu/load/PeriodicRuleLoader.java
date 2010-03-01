@@ -85,29 +85,29 @@ public class PeriodicRuleLoader {
 		File file = new File(ruleFile);
 		if (!file.exists()) {
 			abort = true;
-			logger.debug("ERROR: Rule File does not exist: " + file.getAbsolutePath());
+			logger.error("ERROR: Rule File does not exist: " + file.getAbsolutePath());
 		}
 		file = new File(outputDir);
 		if (!file.exists()) {
-			logger.debug("Warning: Output Directory does not exist: " + file.getAbsolutePath());
+			logger.warn("Warning: Output Directory does not exist: " + file.getAbsolutePath());
 		}
 
 		file = new File(importDir);
 		if (!file.exists()) {
 			abort = true;
-			logger.debug("ERROR: Import Directory does not exist: " + file.getAbsolutePath());
+			logger.error("ERROR: Import Directory does not exist: " + file.getAbsolutePath());
 		}
 		
 		file = new File(droolsDir);
 		if (!file.exists()) {
-			logger.debug("Warning: Drools Directory does not exist: " + file.getAbsolutePath());
+			logger.warn("Warning: Drools Directory does not exist: " + file.getAbsolutePath());
 		}
 		
 		if (abort) {
 			throw new IllegalArgumentException("Required file or directory does not exist: " + ruleFile + " or " + importDir);
 		}
 		
-		logger.debug("\n\nScanning every " + seconds + " seconds ...\n");
+		logger.info("\n\nScanning every " + seconds + " seconds ...\n");
 		
 		for (;;) {
 			try {
@@ -125,7 +125,7 @@ public class PeriodicRuleLoader {
 		File file = new File(ruleFile);
 		logger.debug("Examining Rules");
 		if (file.lastModified() > lastUpdateTime) {
-			logger.debug("Rules updated, start conversion");
+			logger.info("Rules updated, start conversion");
 			lastUpdateTime = file.lastModified();
 			try {
 				// Wait another second just in case the converter is still streaming data to the file
