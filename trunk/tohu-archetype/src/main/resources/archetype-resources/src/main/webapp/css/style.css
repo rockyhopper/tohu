@@ -184,11 +184,11 @@ div,p {
     padding: 2px;
 }
 
-.InvalidAnswer.requiredMissing {
+.InvalidAnswer.nonDisplayed {
     display: none;
 }
 
-.InvalidAnswer.requiredDisplayed {
+.InvalidAnswer.displayed {
     display : block;
 }
 
