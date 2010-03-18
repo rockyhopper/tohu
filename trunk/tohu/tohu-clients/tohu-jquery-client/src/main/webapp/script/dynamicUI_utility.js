@@ -282,15 +282,20 @@ function string2xml(xml) {
 			// Firefox etc
 			var parser = new DOMParser();
 			var dom = parser.parseFromString(xml, 'text/xml');
-			if (dom.documentElement.tagName == "parsererror") {
+			// Chrome will for some reason except pure text, i.e. 
+			// non-xml or non-html text
+			// as a valid string to be converted to xml.  Therefore we've 
+			// tightened up the condition such that we now expect the root 
+			// element to be "execution-results"
+			if (dom.documentElement.tagName != "execution-results") {				
 				if (!handleError(ERROR_TYPES.XML_PARSE, null, "dynamicUI_utility.string2xml(2)",
 						dom.documentElement.firstChild.nodeValue)) {
 					return null;
-				}
+				} 
 			}
 			//debug("string2xml() 2 dom=" + dom);
-			return dom.documentElement;
-		}
+			return dom.documentElement;		
+		} 		
 		handleError(ERROR_TYPES.XML_PARSE, null, "dynamicUI_utility.string2xml(3)", "No XML parser available");
 	}
 	return null;

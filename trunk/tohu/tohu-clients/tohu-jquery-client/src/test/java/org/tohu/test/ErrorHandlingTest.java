@@ -35,13 +35,13 @@ public class ErrorHandlingTest extends IntermediateTestFramework {
     @org.junit.Test
     public void testErrorHandling() throws Exception {
         logger.debug("JQueryClientTest.testErrorHandling()");
-        try {
+        try {            
             setTextAnswer("error_type", "No ID");
-            checkAlert("Fact undefined in the rule base is invalid: no id, revise the rule base.");
+            checkAlert("Fact undefined in the rule base is invalid: no id, revise the rule base."); 
             setTextAnswer("error_type", "Garbage");
-            checkAlert("The rules server has returned invalid XML, contact support.");
+            checkAlert("The rules server has returned invalid XML, contact support.");            
             setTextAnswer("error_type", "HTTP Error");
-            checkAlert("An error has occured calling the rules server, refresh the page and try again.");
+            checkAlert("An error has occured calling the rules server, refresh the page and try again.");       
             setTextAnswer("error_type", "Invalid Fact Type");
             checkAlert("An internal error has occured: unknown tagName: org.tohu.Whatsit, contact support.");
             setTextAnswer("error_type", "Invalid Answer Type");
@@ -50,6 +50,7 @@ public class ErrorHandlingTest extends IntermediateTestFramework {
             checkAlert("A duplicate of the error_type fact has been sent by the rules server, revise the rule base.");
             setTextAnswer("error_type", "No Parent");
             checkAlert("The item_1_1 fact does not have a parent, revise the rule base.");
+         
         }
         catch (Exception ex) {
             handleException("JQueryClientTest.testErrorHandling()", ex);
