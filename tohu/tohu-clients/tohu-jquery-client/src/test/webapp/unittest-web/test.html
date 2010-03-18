@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="../css/ui.theme.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="../css/ui.datepicker.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="../css/jquery.readonly.css" />
-<script type="text/javascript" src="../script/jquery/jquery-1.3.2.js"></script>          
+<script type="text/javascript" src="../script/jquery/jquery-1.3.2.min.js"></script>          
 <script type="text/javascript" src="../script/jquery/ui.core.js"></script>
 <script type="text/javascript" src="../script/jquery/ui.datepicker.js"></script>
 <script type="text/javascript" src="../script/jquery/cookie.js"></script>          
@@ -161,13 +161,13 @@
         if ((newValue == "No ID") || (newValue == "Garbage") || (newValue == "HTTP Error") ||
                 (newValue == "Invalid Fact Type") || (newValue == "Invalid Answer Type") ||
                 (newValue == "Duplicate") || (newValue == "No Parent")) {
-          setDroolsURL(baseDroolsURL + questionID + "/" + newValue + ".xml");
+          setDroolsURL(baseDroolsURL + questionID + "/" + newValue + ".xml");          
         }
-        else {
+        else {            
           setDroolsURL(baseDroolsURL + "blank.xml");
         }
         break;
-    default:
+    default:        
       // Return nothing.
       setDroolsURL(baseDroolsURL + "blank.xml");
     }

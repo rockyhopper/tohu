@@ -54,9 +54,7 @@ public class IntermediateTestFramework extends BaseTestFramework {
      */
     protected void waitWhileGUIIsBusy(String step) {
         logger.debug("step=" + step);
-        selenium.waitForCondition("(selenium.getValue(\"//input[@id='"
-                + isGUIBusyID
-                + "']\") == 'false')", processingTimeout);
+        selenium.waitForCondition("(selenium.getValue(\"id=" + isGUIBusyID + "\") == 'false')", processingTimeout);
         logger.debug("done");
     }
 

@@ -167,7 +167,7 @@ function buildQuestionInput(obj) {
 							html += " checked";
 						}
 						html += " class='answer_radio'>";
-						html += "<label for='" + radioID + "'>" + usuallyXmlEscape(obj.possibleAnswers[i][1]) + "</label>&nbsp;";
+						html += "<label for='" + radioID + "'>" + usuallyXmlEscape(obj.possibleAnswers[i][1]) + "</label>";
 					}
 					html += "</li>";					
 				}
@@ -287,18 +287,17 @@ function buildQuestionInput(obj) {
  */
 function attachChangeHandler(obj) {
 	debugObject("attachChangeHandler() obj=", obj);
-
 	var input = getJQElement(obj.id + "_input");
 	
 	if ( (input.is("span")) || (input.is("ul")) ){
 		debug("attachChangeHandler() radio");
 		input.find(":radio").unbind();
-		input.find(":radio").click(function() {
+		input.find(":radio").click(function() {		
 			if ($(this).attr("checked")) {				
 				handleChangeEvent(obj.id, $(this).attr("value"), questionTabForward);
 			}
 		});
-		input.find(":radio").keydown(function(event) {
+		input.find(":radio").keydown(function(event) {			
 			if (event.keyCode == 9) {
 				if (event.shiftKey) {
 					questionTabForward = false;
@@ -308,14 +307,14 @@ function attachChangeHandler(obj) {
 				}
 			}
 		});
-		input.find(":radio").focus(function() {
+		input.find(":radio").focus(function() {		
 			questionTabForward = null;
 		});
 	}
 	else if (input.is(":checkbox")) {
 		debug("attachChangeHandler() checkbox");
 		input.unbind();
-		input.click(function() {
+		input.click(function() {			
 			var newValue = null;
 			if ($(this).attr("checked")) {
 				newValue = "true";
@@ -325,7 +324,7 @@ function attachChangeHandler(obj) {
 			}
 			handleChangeEvent(obj.id, newValue, questionTabForward);
 		});
-		input.keydown(function(event) {
+		input.keydown(function(event) {			
 			if (event.keyCode == 9) {
 				if (event.shiftKey) {
 					questionTabForward = false;
@@ -335,7 +334,7 @@ function attachChangeHandler(obj) {
 				}
 			}
 		});
-		input.focus(function() {
+		input.focus(function() {		
 			questionTabForward = null;
 		});
 	}
@@ -343,7 +342,7 @@ function attachChangeHandler(obj) {
 		debug("attachChangeHandler() other");
 		input.unbind();
 		if (obj.answerType == "date") {
-			input.change(function() {
+			input.change(function() {				
 				var value = $(this).attr("value");
 				try {
 					if (!isBlank(value)) {
@@ -369,7 +368,7 @@ function attachChangeHandler(obj) {
 				}
 			});		
 		}
-		input.keydown(function(event) {
+		input.keydown(function(event) {			
 			if (event.keyCode == 9) {
 				if (event.shiftKey) {
 					questionTabForward = false;
@@ -379,7 +378,7 @@ function attachChangeHandler(obj) {
 				}
 			}
 		});
-		input.focus(function() {
+		input.focus(function() {			
 			questionTabForward = null;
 		});
 	}
