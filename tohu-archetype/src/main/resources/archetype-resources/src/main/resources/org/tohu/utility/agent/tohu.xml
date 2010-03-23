@@ -7,6 +7,7 @@
     <resource type="DRL" source="http://localhost:8080/${artifactId}/rules/org/tohu/Queries.drl" />
     <resource type="DRL" source="http://localhost:8080/${artifactId}/rules/org/tohu/Question.drl" />
     <resource type="DRL" source="http://localhost:8080/${artifactId}/rules/org/tohu/ReadOnly.drl" />
+    <resource type="DRL" source="http://localhost:8080/${artifactId}/rules/org/tohu/listener.drl" />     
     <resource type="DRL" source="http://localhost:8080/${artifactId}/rules/org/tohu/support/SupportQueries.drl" />
     <resource type="DRL" source="file:src/main/resources/rules" />
   </add>
