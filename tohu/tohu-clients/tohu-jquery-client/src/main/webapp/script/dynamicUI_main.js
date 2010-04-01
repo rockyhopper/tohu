@@ -175,6 +175,9 @@ function refreshScreen(resultSet, lastFocusID, tabForward) {
 		}, 100);
 	}
 	
+	// Turn off autocomplete so that browsers do not change field value without sending AJAX event to the server
+	$(":input").attr("autocomplete", "off");
+	
 	// Do application-specific post processing, if any.
 	if (window.postRefreshScreen) {
 		postRefreshScreen(resultSet, lastFocusID);
