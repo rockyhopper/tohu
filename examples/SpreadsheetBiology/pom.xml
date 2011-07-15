@@ -127,7 +127,8 @@
     <repositories>
     <repository>
       <id>repository.jboss.org</id>
-      <url>http://repository.jboss.org/maven2</url>
+      <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+      <!-- <url>http://repository.jboss.org/maven2</url> -->
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -135,6 +136,7 @@
         <enabled>true</enabled>
       </releases>
     </repository>
+    <!-- 
     <repository>
       <id>snapshots.jboss.org</id>
       <url>http://snapshots.jboss.org/maven2</url>
@@ -145,9 +147,9 @@
         <enabled>false</enabled>
       </releases>
     </repository>
+    -->
     <!--
       TODO this is only temporary until the release versions of drools-execution-server and tohu are in the jboss.org maven repository
-    -->
     <repository>
       <id>temp.local</id>
       <url>http://anonsvn.jboss.org/repos/tohu/trunk/tohu/lib/</url>
@@ -158,6 +160,7 @@
         <enabled>true</enabled>
       </releases>
     </repository>
+    -->
   </repositories>
   
   
