@@ -31,7 +31,7 @@
 			<td><b>Pages</b></td>
 			<td>
 				Dependent questions now shown on a separate page which appears whenever Yes is clicked. i.e. a sub-flow
-				This is achieved via a custom rule which fires when the Yes Answer is received.  The rule use questionnaire.navigationBranch to initiate a branch page flow.
+				This is achieved via a custom rule which fires when the Yes Answer is received.  The rule uses questionnaire.navigationBranch to initiate a branch page flow.
 			</td>
 		</tr>
 	</table>
