@@ -151,3 +151,6 @@ a.next {
 div.InvalidAnswer.requiredMissing {
 	display: none;
 }
+.questionErrors {
+  display:none;
+}
