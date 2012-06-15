@@ -9,7 +9,7 @@ function createIcon(obj, image) {
 	var iconId = obj.id + "_icon";
     if ($("#" + iconId).length == 0) {
 		//var title = $("#" + obj.id + " .preLabel").text();
-    	var html = "<span id=\"" + iconId + "\""; 
+    	var html = "<span id=\"" + iconId + "\">"; 
     	html += "<a href=\"#\" onclick=\"$('" + selector + "').attr('checked', true).click()\">&nbsp;</a>";
     	html += "</span>";
 		$(selector).after(html);
