@@ -172,3 +172,6 @@ div.InvalidAnswer.requiredMissing {
 	display: inline-block;
 }
 
+.questionErrors {
+  display:none;
+}
