@@ -59,7 +59,7 @@
                 <artifactItem>
                   <groupId>org.tohu</groupId>
                   <artifactId>tohu-jquery-client</artifactId>
-                  <version>1.3.0-SNAPSHOT</version>
+                  <version>${tohu.version}</version>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -154,13 +154,13 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>${tohu.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-xml</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>${tohu.version}</version>
     </dependency>
 
     <dependency>
