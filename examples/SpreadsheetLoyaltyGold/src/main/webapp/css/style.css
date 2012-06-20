@@ -148,10 +148,15 @@ a.back, a.next {
 	color: red;
 	font-weight: bold;
 	padding-left: 29.2em;
+	display: block;
 }
 
-div.InvalidAnswer.requiredMissing {
+.InvalidAnswer.required {
 	display: none;
+}
+
+.questionErrors, .radioList {
+    list-style-type: none;
 }
 
 .yesNoButtons {
@@ -170,8 +175,4 @@ div.InvalidAnswer.requiredMissing {
 .yesNoButtons .answer {
 	width: 2em;
 	display: inline-block;
-}
-
-.questionErrors {
-  display:none;
 }

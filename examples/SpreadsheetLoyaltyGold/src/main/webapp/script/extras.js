@@ -1,5 +1,5 @@
 /*
-* Overriding because "requiredMissing" errors are hidden so we need to inform user that all fields are required. 
+* Overriding because "required" errors are hidden so we need to inform user that all fields are required. 
 */
 function onShowError(actionId, action){
 	alert("Please answer all mandatory questions.");
