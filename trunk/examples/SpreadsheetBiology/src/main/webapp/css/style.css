@@ -148,9 +148,10 @@ a.back, a.next {
 	color: red;
 	font-weight: bold;
 	padding-left: 29.2em;
+	display: block;
 }
 
-div.InvalidAnswer.requiredMissing {
+div.InvalidAnswer.required {
 	display: none;
 }
 
