@@ -36,8 +36,12 @@
 	margin-right: 0.2em;
 }
 
-.InvalidAnswer.requiredMissing {
+.InvalidAnswer.required {
 	display: none;
+}
+
+.questionErrors, .radioList {
+    list-style-type: none;
 }
 
 .answer {
@@ -107,8 +111,4 @@
 .Controls a.disabled:link,.Controls a.disabled:visited,.Controls a.disabled:hover,.Controls a.disabled:focus,a.disabled:link,a.disabled:visited,a.disabled:hover,a.disabled:focus
 	{
 	color: black;
-}
-
-.questionErrors {
-  display:none;
 }
