@@ -31,6 +31,7 @@
       <module>simple-example</module>
       <module>branching-example</module>
       <module>domain-example</module>
+      <module>xml-example</module>
       <module>departure-example</module>
       <module>genealogy-example</module>
       <module>loyalty-card-examples</module>
