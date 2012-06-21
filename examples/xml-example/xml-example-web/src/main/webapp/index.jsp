@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-<title>Domain Model</title>
+<title>XML</title>
 </head>
 <body>
 	<p>This page is just a simple JSP, not part of the Tohu questionnaire.</p> 
