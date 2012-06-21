@@ -44,7 +44,7 @@ public class OutputServlet extends HttpServlet {
 		xs.alias("data", java.util.TreeMap.class);
 		xs.registerConverter(new MapEntryConverter());
 		String xml = xs.toXML(answers);
-		request.getSession().setAttribute("xml", xml);
+		request.getSession().setAttribute("xml", xml.replaceAll("&", "&amp;"));
 		response.sendRedirect("../index.jsp");
 	}
 
