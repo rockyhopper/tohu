@@ -34,7 +34,7 @@ dialect "mvel"
 then
 	Questionnaire questionnaire = new Questionnaire("myQuestionnaire");
 	questionnaire.setLabel("Domain Model Example");
-	questionnaire.setItems({"name", "age", "contact"});
+	questionnaire.setItems({"name", "age", "votingPreference", "contact"});
 	questionnaire.setCompletionAction("extract.pdf");
 	insertLogical(questionnaire);
 	
@@ -58,5 +58,28 @@ then
 	question.setAnswerType(Question.TYPE_NUMBER);
 	question.setPreLabel("Age:");
 	insertLogical(question);
-	insertLogical(new DomainModelAssociation(question.getId(), person, question.getId()));
+	insertLogical(new DomainModelAssociation(question.getId(), person, "age"));
+end
+
+rule "voting preference"
+dialect "mvel"
+when
+   person : Person(eligibleToVote == true);
+then
+	MultipleChoiceQuestion multi = new MultipleChoiceQuestion("votingPreference");
+	multi.setAnswerType(Question.TYPE_TEXT);
+	multi.setPreLabel("If an election were held today, who would you vote for?");
+	multi.setPossibleAnswers({
+		new PossibleAnswer(null, "Don't Know"),
+		new PossibleAnswer("nat", "National Party"),
+		new PossibleAnswer("lab", "Labour Party"),
+		new PossibleAnswer("green", "Green Party"),
+		new PossibleAnswer("maori", "Maori Party"),
+		new PossibleAnswer("nzf", "NZ First"),
+		new PossibleAnswer("act", "ACT Party"),
+		new PossibleAnswer("mana", "Mana Party"),
+		new PossibleAnswer("uf", "United Future"),
+		new PossibleAnswer("other", "Other")
+	});
+	insertLogical(multi);
 end
