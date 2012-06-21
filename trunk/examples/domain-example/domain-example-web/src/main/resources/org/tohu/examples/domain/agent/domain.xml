@@ -9,5 +9,6 @@
 		<resource type="DRL" source="classpath:org/tohu/Question.drl" />
 		<resource type="DRL" source="classpath:org/tohu/ReadOnly.drl" />
 		<resource type="DRL" source="classpath:org/tohu/examples/domain/Domain.drl" />
+		<resource type="DRL" source="classpath:org/tohu/examples/domain/Person.drl" />
 	</add>
 </change-set>

@@ -49,6 +49,7 @@ public class OutputServlet extends HttpServlet {
 		writer.write("<br/>");
 		writer.write("person.fullName = " + person.getFullName() + "<br/>");
 		writer.write("person.age = " + person.getAge() + "<br/>");
+		writer.write("person.eligibleToVote = " + person.isEligibleToVote() + "<br/>");
 		writer.close();
 	}
 

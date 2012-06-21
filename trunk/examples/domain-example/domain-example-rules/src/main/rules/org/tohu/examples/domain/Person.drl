@@ -12,43 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-package org.tohu.examples.domain;
-
-
-/**
+ *
  * @author Damon Horrell
  */
-public class Person {
+package org.tohu.examples.domain
 
-	private String fullName;
+import org.tohu.examples.domain.Person;
 
-	private int age;
-
-	private boolean eligibleToVote;
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public boolean isEligibleToVote() {
-		return eligibleToVote;
-	}
-
-	public void setEligibleToVote(boolean eligibleToVote) {
-		this.eligibleToVote = eligibleToVote;
-	}
-
-}
+/*
+ * This rule depends on the domain-model only and hence can be reused in backend systems.
+ */
+rule "eligible to vote?"
+no-loop
+when
+  person : Person(age : age);
+then
+  person.setEligibleToVote(age >= 18);
+  update(person);
+end
