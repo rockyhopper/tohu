@@ -74,7 +74,7 @@
   </repositories>
   
   <properties>
-    <tohu.version>1.3.0-SNAPSHOT</tohu.version>
+    <tohu.version>1.3.0</tohu.version>
     <drools.version>5.1.0.M1</drools.version>
   </properties>
   
