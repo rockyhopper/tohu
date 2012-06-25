@@ -43,7 +43,7 @@ public class DropDownQuestion extends Question {
             for (int i = 0; i < expectedPossibleAnswers.length; i++) {
                 assertEquals(expectedId + " wrong list item " + i,
                              expectedPossibleAnswers[i][1],
-                             selenium.getText("css=#" + expectedId + "_input option[value=" + expectedPossibleAnswers[i][0] + "]"));
+                             selenium.getText("css=#" + expectedId + "_input option[value='" + expectedPossibleAnswers[i][0] + "']"));
             }
             if (expectedAnswer != null) {
                 assertEquals(expectedId + " wrong list item selected",
