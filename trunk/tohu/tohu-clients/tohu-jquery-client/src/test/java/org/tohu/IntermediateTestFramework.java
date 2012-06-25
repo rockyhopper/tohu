@@ -98,7 +98,7 @@ public class IntermediateTestFramework extends BaseTestFramework {
         catch (RuntimeException ex) {
             if ((browser.equals(BrowserType.IEXPLORER))
                     && ex.getMessage().equals(
-                        "ERROR: Command execution failure. Please search the forum at http://clearspace.openqa.org for error details from the log window.  The error message is: Unspecified error.")) {
+                        "ERROR: Command execution failure. Please search the user group at https://groups.google.com/forum/#!forum/selenium-users for error details from the log window.  The error message is: Unspecified error.")) {
                 // For some reason Selenium throws this exception when simulating a click event in
                 // IE running against the Jetty Server/Test Harness, but seems to continue fine if
                 // you ignore it.
