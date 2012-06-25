@@ -24,7 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tohu</artifactId>
     <groupId>org.tohu</groupId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <packaging>pom</packaging>
     
     <description>       
@@ -207,7 +207,7 @@
     </distributionManagement>
     
     <properties>
-        <tohu-version>1.3.0-SNAPSHOT</tohu-version>
+        <tohu-version>1.3.0</tohu-version>
         <drools-version>5.1.0.M1</drools-version>
         <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
         <cobertura.total-branch-rate>1</cobertura.total-branch-rate>
