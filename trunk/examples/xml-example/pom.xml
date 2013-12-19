@@ -32,6 +32,25 @@
       <module>xml-example-web</module>
   </modules>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.tohu</groupId>
+        <artifactId>tohu-core</artifactId>
+        <version>${tohu.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.tohu</groupId>
+        <artifactId>tohu-jquery-client</artifactId>
+        <version>${tohu.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.tohu</groupId>
+        <artifactId>tohu-xml</artifactId>
+        <version>${tohu.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
@@ -72,5 +91,9 @@
     </repository>
     -->
   </repositories>
+  
+  <properties>
+    <tohu.version>1.4.0-SNAPSHOT</tohu.version>
+  </properties>
   
 </project>

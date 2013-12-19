@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<% pageContext.include("/jsps/include.jspf"); %>
+<% pageContext.include("/tohu-jquery-client/jsps/include.jspf"); %>
 <link rel="stylesheet" type="text/css" media="screen" href="css/oldStyle.css" />
 <script type="text/javascript" src="script/oldExtras.js"></script>
 <script type="text/javascript">
