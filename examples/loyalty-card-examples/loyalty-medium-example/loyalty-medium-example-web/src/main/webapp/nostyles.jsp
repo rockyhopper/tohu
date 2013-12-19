@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<% pageContext.include("/jsps/include.jspf"); %>
+<% pageContext.include("/tohu-jquery-client/jsps/include.jspf"); %>
 <script type="text/javascript">
   $(document).ready(function() {
 	    onQuestionnaireLoad("bodyContent", "loyalty");

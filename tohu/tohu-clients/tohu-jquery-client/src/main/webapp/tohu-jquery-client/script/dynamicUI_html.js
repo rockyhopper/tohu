@@ -396,7 +396,7 @@ function addQuestionWidgets(obj) {
 		if (!input.hasClass("hasDatepicker")) {
 			input.datepicker({
 				buttonImageOnly: true,
-				buttonImage: 'images/calendar.gif',
+				buttonImage: 'tohu-jquery-client/images/calendar.gif',
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: persistentState.questionnaire.clientDateFormat,
