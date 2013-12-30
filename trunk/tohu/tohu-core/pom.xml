@@ -76,19 +76,6 @@
       <scope>test</scope>
     </dependency>
 
-	<!--  
-		any external web project requires this
-		artifact, otherwise one will not be
-		able to plug in the framework into 
-		your web app.
-	-->
-	<dependency>
-		<groupId>org.drools</groupId> 
-		<artifactId>drools-execution-server</artifactId> 
-		<version>0.0.4</version>
-		<scope>runtime</scope> 
-	</dependency>
-		
   </dependencies>
   <properties>
     <site-deploy>${basedir}/../</site-deploy>
