@@ -207,7 +207,6 @@
     </distributionManagement>
     
     <properties>
-        <tohu-version>1.4.0-SNAPSHOT</tohu-version>
         <drools-version>5.1.0.M1</drools-version>
         <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
         <cobertura.total-branch-rate>1</cobertura.total-branch-rate>
