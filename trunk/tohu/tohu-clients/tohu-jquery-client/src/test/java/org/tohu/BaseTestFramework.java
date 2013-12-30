@@ -24,59 +24,59 @@ import com.thoughtworks.selenium.DefaultSelenium;
  * @author rb1317
  *
  */
-@RunWith(Parameterized.class)  
+@RunWith(Parameterized.class)
 public class BaseTestFramework {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicPageTest.class);
-   
+
     protected Map<WidgetType, Question> elementMap;
-    
-    @Parameterized.Parameters   
-    public static ArrayList<Object[]> data() { 
-      ArrayList<Object []> list = new ArrayList<Object[]>();              
-      list.add(new Object[]{BrowserType.IEXPLORER, "http://localhost:9999/unittest-web", "isGUIBusy"});         
-      list.add(new Object[]{BrowserType.CHROME, "http://localhost:9999/unittest-web", "isGUIBusy"});                
-      list.add(new Object[]{BrowserType.FIREFOX, "http://localhost:9999/unittest-web", "isGUIBusy"});      
-      //list.add(new Object[]{BrowserType.SAFARI, "http://localhost:9999/unittest-web", "isGUIBusy"});   
-      return list; 
-    }  
-    
+
+    @Parameterized.Parameters
+    public static ArrayList<Object[]> data() {
+      ArrayList<Object []> list = new ArrayList<Object[]>();
+      //list.add(new Object[]{BrowserType.IEXPLORER, "http://localhost:9999/unittest-web", "isGUIBusy"});
+      list.add(new Object[]{BrowserType.CHROME, "http://localhost:9999/unittest-web", "isGUIBusy"});
+      //list.add(new Object[]{BrowserType.FIREFOX, "http://localhost:9999/unittest-web", "isGUIBusy"});
+      //list.add(new Object[]{BrowserType.SAFARI, "http://localhost:9999/unittest-web", "isGUIBusy"});
+      return list;
+    }
+
     public BaseTestFramework() {
         super();
     }
-    
+
     public BaseTestFramework(BrowserType browser, String url, String isGUIBusyID) {
-        this();        
+        this();
         this.browser = browser;
         this.isGUIBusyID = isGUIBusyID;
         this.urlString = url;
     }
-    
+
     @Before
     public void openBrowser() throws Exception {
-        try {            
+        try {
             this.selenium = Browser.getInstance(browser, urlString);
             elementMap = new HashMap<WidgetType, Question>();
             for(WidgetType widget : WidgetType.values()) {
                 Question element = ElementFactory.getQuestion(widget);
                 element.setSelenium(selenium);
-                elementMap.put(widget, element);          
-            }            
-            logger.debug("Opening browser="+browser.getBrowserName()+" with testURL="+ urlString);                        
+                elementMap.put(widget, element);
+            }
+            logger.debug("Opening browser="+browser.getBrowserName()+" with testURL="+ urlString);
         } catch(Exception ex) {
             logger.error("Error creating a selenium process for Browser: " + browser.getBrowserName(), ex);
             throw ex;
-        }                   
+        }
     }
-    
+
     @After
     public void closeBrowser() throws Exception {
         Browser.stop();
     }
-    
+
     protected DefaultSelenium selenium;
     protected String urlString;
     protected String isGUIBusyID;
     protected BrowserType browser;
-    
+
 }
