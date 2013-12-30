@@ -37,6 +37,8 @@ public abstract class Item extends TohuObject {
 	
 	/**
 	 * This is a way of optionally abstractly grouping elements for use outside Tohu.
+	 * 
+	 * TODO determine whether this is useful.  It was added for the tohu-loader stuff but this could have been achieved in another way that didn't require changes to the core model. 
 	 */
 	private String category;
 

@@ -60,6 +60,7 @@ public class Questionnaire extends Group {
 	private String clientDateFormat = DEFAULT_CLIENT_DATE_FORMAT;
 	
 	/** Is HTML markup allowed in questions, errors, etc. */
+	// TODO remove this.  It is specific to the jquery client and should be implemented elsewhere.  The model should be kept independent from any particular UI implementation.  
 	private boolean markupAllowed;
 
 	public Questionnaire() {
@@ -216,6 +217,11 @@ public class Questionnaire extends Group {
 		return enableActionValidation;
 	}
 
+	/**
+	 * Should validation rules be enforced when the user navigates forward?  Defaults to false.
+	 *
+	 * @param enableActionValidation
+	 */
 	public void setEnableActionValidation(boolean enableActionValidation) {
 		this.enableActionValidation = enableActionValidation;
 	}
