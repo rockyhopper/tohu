@@ -38,7 +38,7 @@ public class InitialPageWithErrorsTest extends IntermediateTestFramework {
             // attempt to navigate to next page
             mouseDownControl("questionnaire1_action_1");
             // check an error alert was generated
-            checkAlert("Not all mandatory questions have being answered");
+            checkAlert("You must fix all errors first.");
             // check we are still on the same page of the app
             checkQuestionnaire(
                     "questionnaire1",

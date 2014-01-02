@@ -70,7 +70,7 @@ public class DynamicallyGeneratedErrorsTest extends IntermediateTestFramework {
             // try to navigate forward again
             mouseDownControl("questionnaire1_action_1");
             // check an error alert was generated
-            checkAlert("Not all mandatory questions have being answered");          
+            checkAlert("You must fix all errors first.");          
             // check we are still on the same questionaire
             // because of an existing error
             checkQuestionnaire(

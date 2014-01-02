@@ -595,7 +595,7 @@ function getQuestionnaireActions(questionnaire) {
 		 }
 	 }
 	 obj.actionType = "showError";
-	 obj.action = "Not all mandatory questions have being answered";	 
+	 obj.action = "You must fix all errors first.";	 
 	 return obj;
  }
  
