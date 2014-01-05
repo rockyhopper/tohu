@@ -3,7 +3,7 @@ Brief notes on simple archetype usage
 Do a "mvn install" on this project
 Run similar to following command from the directory that you want to create the new project in:
 
-mvn archetype:create -DarchetypeGroupId=org.tohu -DarchetypeArtifactId=tohu-archetype -DarchetypeVersion=1.4.0-SNAPSHOT -DgroupId=com.mycompany -DartifactId=TestProject
+mvn archetype:create -DarchetypeGroupId=org.tohu -DarchetypeArtifactId=tohu-archetype -DarchetypeVersion=1.3.1 -DgroupId=com.mycompany -DartifactId=TestProject
 
 Then cd to root of the new project and run following:
 
