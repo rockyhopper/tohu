@@ -9,6 +9,7 @@
   <packaging>war</packaging>
   
   <build>
+  	<finalName>SpreadsheetBiology</finalName>
     <plugins>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
