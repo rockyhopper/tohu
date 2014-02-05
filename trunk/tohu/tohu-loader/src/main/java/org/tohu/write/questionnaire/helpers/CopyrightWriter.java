@@ -23,12 +23,10 @@ import java.util.Formatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tohu.write.questionnaire.PageTemplate;
 
 /**
- * Write out an optional <code>Copyright.drl</code> file to the Questionnaire or Page drl files.
- * Simply a read line then write line operation, for the file that sits in the import/include directory
- * (as specified in the parameter to the loading process).
+ * Write out an optional <code>Copyright.drl</code> file to the Questionnaire or Page drl files. Simply a read line then write line
+ * operation, for the file that sits in the import/include directory (as specified in the parameter to the loading process).
  * 
  * 
  * @author Derek Rendall
@@ -36,9 +34,9 @@ import org.tohu.write.questionnaire.PageTemplate;
 public class CopyrightWriter {
 
 	private static final Logger logger = LoggerFactory.getLogger(CopyrightWriter.class);
-	
+
 	protected static boolean fileExists = true;
-	
+
 	/**
 	 * Looks for file named "Copyright.drl"
 	 * 
@@ -51,25 +49,24 @@ public class CopyrightWriter {
 	public static void writeCopyright(Formatter fmtFile, String importDirectory) throws IOException {
 		if (fileExists && (importDirectory != null)) {
 			String filename = importDirectory + "/Copyright.drl";
-	    	File importFile = new File(filename);
-	    	if (importFile.exists()) {
-	            BufferedReader reader = new BufferedReader(new FileReader(importFile));
+			File importFile = new File(filename);
+			if (importFile.exists()) {
+				BufferedReader reader = new BufferedReader(new FileReader(importFile));
 
-	            //... Loop as long as there are input lines.
-	            String line = null;
-	            while ((line=reader.readLine()) != null) {
-	            	fmtFile.format("%s\n", line);
-	            }
+				// ... Loop as long as there are input lines.
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					fmtFile.format("%s\n", line);
+				}
 
-	            //... Close reader and writer.
-	            reader.close();  // Close to unlock.
-	    	}
-	    	else {
-	    		logger.debug("No copyright file found at " + filename);
-	    		fileExists = false;
-	    	}
+				// ... Close reader and writer.
+				reader.close(); // Close to unlock.
+			} else {
+				logger.debug("No copyright file found at " + filename);
+				fileExists = false;
+			}
 		}
-		
+
 	}
 
 }
