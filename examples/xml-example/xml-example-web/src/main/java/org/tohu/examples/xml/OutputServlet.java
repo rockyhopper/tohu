@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.tohu.util.QueryHelper;
+import org.tohu.util.KnowledgeSessionHelper;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -39,7 +39,7 @@ public class OutputServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).getKnowledgeSession();
-		Map<String, Object> answers = new QueryHelper(knowledgeSession).getAnswers();
+		Map<String, Object> answers = new KnowledgeSessionHelper(knowledgeSession).getAnswers();
 		XStream xs = new XStream();
 		xs.alias("data", java.util.TreeMap.class);
 		xs.registerConverter(new MapEntryConverter());

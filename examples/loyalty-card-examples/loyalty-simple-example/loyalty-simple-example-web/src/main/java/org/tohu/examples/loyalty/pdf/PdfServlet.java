@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.tohu.util.QueryHelper;
+import org.tohu.util.KnowledgeSessionHelper;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -50,7 +50,7 @@ public class PdfServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).getKnowledgeSession();
-		Map<String, Object> answers = new QueryHelper(knowledgeSession).getAnswers();
+		Map<String, Object> answers = new KnowledgeSessionHelper(knowledgeSession).getAnswers();
 		try {
 			Document document = new Document();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
