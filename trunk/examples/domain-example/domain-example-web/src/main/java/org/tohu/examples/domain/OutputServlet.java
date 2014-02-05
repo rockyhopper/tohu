@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.drools.ClassObjectFilter;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.tohu.util.QueryHelper;
+import org.tohu.util.KnowledgeSessionHelper;
 
 import drools.rex.ExecutionServerHelper;
 
@@ -39,7 +39,7 @@ public class OutputServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).getKnowledgeSession();
-		Map<String, Object> answers = new QueryHelper(knowledgeSession).getAnswers();
+		Map<String, Object> answers = new KnowledgeSessionHelper(knowledgeSession).getAnswers();
 		Person person = (Person) knowledgeSession.getObjects(new ClassObjectFilter(Person.class)).toArray()[0];
 		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();
