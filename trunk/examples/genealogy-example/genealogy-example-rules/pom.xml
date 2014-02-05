@@ -60,7 +60,6 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>${tohu.version}</version>
     </dependency>
   </dependencies>
 

@@ -157,13 +157,11 @@
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-core</artifactId>
-      <version>${tohu.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.tohu</groupId>
       <artifactId>tohu-xml</artifactId>
-      <version>${tohu.version}</version>
     </dependency>
 
     <dependency>
