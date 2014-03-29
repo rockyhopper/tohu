@@ -1,1 +1,0 @@
-This is only here temporarily.  It should be a component of Drools.
