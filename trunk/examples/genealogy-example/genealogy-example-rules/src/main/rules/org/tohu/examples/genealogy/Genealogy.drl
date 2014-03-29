@@ -145,7 +145,7 @@ function void createPerson(KnowledgeHelper drools, Group parent, String personId
 	Group person = new Group(personId);
 	person.setItems(new String[]{prefix + "fields", prefix + "delete", prefix + "add"});
 	person.setPresentationStyles(new String[]{"person"});
-	drools.insertLogical(person);
+	drools.insert(person);
 }
 
 function int nextIndex(KnowledgeHelper drools) {

@@ -1,4 +1,4 @@
-<%@page import="org.drools.runtime.StatefulKnowledgeSession,drools.rex.ExecutionServerHelper,org.tohu.Answer,java.util.Map,com.thoughtworks.xstream.XStream,org.tohu.examples.xml.MapEntryConverter" %>
+<%@page import="org.drools.runtime.StatefulKnowledgeSession,org.tohu.server.ExecutionServerHelper,org.tohu.Answer,java.util.Map,com.thoughtworks.xstream.XStream,org.tohu.examples.xml.MapEntryConverter" %>
 <%
 	StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).newKnowledgeSession("xml");
 	String xml = (String)request.getParameter("xml");	

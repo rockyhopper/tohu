@@ -110,14 +110,14 @@ end
  * If we fired on Question.answer == true then the rule would fire again when the user returns from the branch.
  */
 rule "show smoking questions"
-dialect "mvel"
 salience 100
-no-loop
 when
 	Answer(questionId == "smoke", value == "true");
 	questionnaire : Questionnaire(branched == false);
 then
-	questionnaire.navigationBranch({"smokingQuestions"}, "smokingQuestions");
+	// TODO the mvel syntax used to work but no longer does.  Is this a bug in Drools or MVEL?
+	//questionnaire.navigationBranch({"smokingQuestions"}, "smokingQuestions");
+	questionnaire.navigationBranch(new String[]{"smokingQuestions"}, "smokingQuestions");
 	update(questionnaire);
 end
 
@@ -126,13 +126,12 @@ end
  * If we fired on Question.answer == true then the rule would fire again when the user returns from the branch.
  */
 rule "show drinking questions"
-dialect "mvel"
 salience 100
-no-loop
 when
 	Answer(questionId == "drink", value == "true");
 	questionnaire : Questionnaire(branched == false);
 then
-	questionnaire.navigationBranch({"drinkingQuestions"}, "drinkingQuestions");
+	//questionnaire.navigationBranch({"drinkingQuestions"}, "drinkingQuestions");
+	questionnaire.navigationBranch(new String[]{"drinkingQuestions"}, "drinkingQuestions");
 	update(questionnaire);
 end

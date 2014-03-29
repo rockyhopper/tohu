@@ -81,13 +81,13 @@ function initializeGUI(rootID, defaultKnowledgebase) {
 	if (getDroolsURL() == null) {
 		// Drools URL not set, use default.
 		if (jQuery.url.param("knowledgebase") != null) {
-			setDroolsURL(baseURL + "/stateful/" + jQuery.url.param("knowledgebase"));
+			setDroolsURL(baseURL + "/tohu?agent=" + jQuery.url.param("knowledgebase"));
 		}
 		else if (!isNull(defaultKnowledgebase)) {
-			setDroolsURL(baseURL + "/stateful/" + defaultKnowledgebase);
+			setDroolsURL(baseURL + "/tohu?agent=" + defaultKnowledgebase);
 		}
 		else {
-			setDroolsURL(baseURL + "/stateful/default");
+			setDroolsURL(baseURL + "/tohu?agent=default");
 		}
 	}
 	

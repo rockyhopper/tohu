@@ -15,7 +15,7 @@
 					<answerType>text</answerType>
 					<textAnswer>Item 2.1 Text</textAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_2_1Handle" />
+				<fact-handle external-form="item_2_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Note>
@@ -24,7 +24,7 @@
 					<active>true</active>
 					<label>images/earth.jpg</label>
 				</org.tohu.Note>
-				<fact-handle externalForm="item_1_1Handle" />
+				<fact-handle external-form="item_1_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -34,7 +34,7 @@
 					<label>Group 3</label>
 					<items>item_3_1,item_3_2,item_3_3</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group3Handle" />
+				<fact-handle external-form="group3Handle" />
 			</row>
 			<row>
 				<org.tohu.InvalidAnswer>
@@ -42,7 +42,7 @@
 					<reason>Item 4.3 Error 2</reason>
 					<type>ErrorType2</type>
 				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item4_3Error2" />
+				<fact-handle external-form="item4_3Error2" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -52,7 +52,7 @@
 					<label>Group 4</label>
 					<items>item_4_1,item_4_2,item_4_3,item_4_4,item_4_5,item_4_6</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group4Handle" />
+				<fact-handle external-form="group4Handle" />
 			</row>
 			<row>
 				<org.tohu.Questionnaire>
@@ -68,7 +68,7 @@
 					<enableActionValidation>false</enableActionValidation>
 					<invalidAnswers>true</invalidAnswers>
 				</org.tohu.Questionnaire>
-				<fact-handle externalForm="questionnaire1Handle" />
+				<fact-handle external-form="questionnaire1Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -80,7 +80,7 @@
 					<required>true</required>
 					<answerType>boolean</answerType>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_4_1Handle" />
+				<fact-handle external-form="item_4_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -90,7 +90,7 @@
 					<label>Group 1</label>
 					<items>item_1_1,item_1_2,group4,item_1_3</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group1Handle" />
+				<fact-handle external-form="group1Handle" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -100,7 +100,7 @@
 					<label>Group 2</label>
 					<items>item_2_1,item_2_2,item_2_3</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group2Handle" />
+				<fact-handle external-form="group2Handle" />
 			</row>
 			<row>
 				<org.tohu.Note>
@@ -109,7 +109,7 @@
 					<active>true</active>
 					<label>Item 1.2</label>
 				</org.tohu.Note>
-				<fact-handle externalForm="item_1_2Handle" />
+				<fact-handle external-form="item_1_2Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -122,7 +122,7 @@
 					<answerType>date</answerType>
 					<dateAnswer>2009-06-16</dateAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_1_3Handle" />
+				<fact-handle external-form="item_1_3Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -135,7 +135,7 @@
 					<answerType>text</answerType>
 					<textAnswer>Item 2.2 Text</textAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_2_2Handle" />
+				<fact-handle external-form="item_2_2Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -149,7 +149,7 @@
 					<numberAnswer>1</numberAnswer>
 					<possibleAnswers>null=Please specify...,0=Item 2.3.0,1=Item 2.3.1,2=Item 2.3.2</possibleAnswers>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_2_3Handle" />
+				<fact-handle external-form="item_2_3Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -163,7 +163,7 @@
 					<decimalAnswer>0.3</decimalAnswer>
 					<possibleAnswers>0.1=Item 3.1.0.1,0.2=Item 3.1.0.2,0.3=Item 3.1.0.3</possibleAnswers>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_3_1Handle" />
+				<fact-handle external-form="item_3_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -176,7 +176,7 @@
 					<answerType>text</answerType>
 					<possibleAnswers>null=Please specify...,first=Item 3.2.1,second=Item 3.2.2,third=Item 3.2.3</possibleAnswers>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_3_2Handle" />
+				<fact-handle external-form="item_3_2Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -188,7 +188,7 @@
 					<required>true</required>
 					<answerType>date</answerType>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_3_3Handle" />
+				<fact-handle external-form="item_3_3Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -201,7 +201,7 @@
 					<answerType>boolean</answerType>
 					<booleanAnswer>true</booleanAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_4_3Handle" />
+				<fact-handle external-form="item_4_3Handle" />
 			</row>
 			<row>
 				<org.tohu.InvalidAnswer>
@@ -209,7 +209,7 @@
 					<reason>Item 2.3 Error</reason>
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item2_3Error" />
+				<fact-handle external-form="item2_3Error" />
 			</row>
 			<row>
 				<org.tohu.InvalidAnswer>
@@ -217,7 +217,7 @@
 					<reason>Item 4.3 Error 1</reason>
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item4_3Error1" />
+				<fact-handle external-form="item4_3Error1" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -231,7 +231,7 @@
 					<listAnswer>foo||qux</listAnswer>
 					<possibleAnswers>foo=foo,bar=bar,baz=baz,qux=qux,quux=quux</possibleAnswers>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_4_4Handle" />
+				<fact-handle external-form="item_4_4Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -244,7 +244,7 @@
 					<answerType>text</answerType>
 					<textAnswer>Text &lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\&lt;&gt;&amp;&#39;&quot;!@#$%^*()_-+={}[]:;?/,.`\</textAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_4_5Handle" />
+				<fact-handle external-form="item_4_5Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -257,7 +257,7 @@
 					<answerType>text</answerType>
 					<possibleAnswers>first=Item 4.6.1,second=Item 4.6.2,third=Item 4.6.3</possibleAnswers>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_4_6Handle" />
+				<fact-handle external-form="item_4_6Handle" />
 			</row>
 		</query-results>
 	</result>

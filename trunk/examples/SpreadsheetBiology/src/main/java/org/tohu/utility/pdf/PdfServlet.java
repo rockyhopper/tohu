@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.drools.executionserver.ExecutionServerHelper;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.tohu.server.ExecutionServerHelper;
 import org.tohu.util.KnowledgeSessionHelper;
 
 import com.lowagie.text.Document;

@@ -8,24 +8,11 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
-  <listener>
-    <listener-class>drools.rex.StatefulListener</listener-class>
-  </listener>
-
-  <listener>
-    <listener-class>drools.rex.AgentListener</listener-class>
-  </listener>
-
   <servlet>
-    <servlet-name>stateless</servlet-name>
-    <servlet-class>drools.rex.StatelessServer</servlet-class>
+    <servlet-name>tohu</servlet-name>
+    <servlet-class>org.tohu.server.TohuExecutionServer</servlet-class>
   </servlet>
-
-  <servlet>
-    <servlet-name>stateful</servlet-name>
-    <servlet-class>drools.rex.StatefulServer</servlet-class>
-  </servlet>
-
+  
   <servlet>
     <servlet-name>pdfservlet</servlet-name>
     <servlet-class>org.tohu.examples.loyalty.pdf.PdfServlet</servlet-class>
@@ -37,13 +24,8 @@
   </context-param>
 
   <servlet-mapping>
-    <servlet-name>stateless</servlet-name>
-    <url-pattern>/stateless/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>stateful</servlet-name>
-    <url-pattern>/stateful/*</url-pattern>
+    <servlet-name>tohu</servlet-name>
+    <url-pattern>/tohu/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

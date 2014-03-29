@@ -19,7 +19,7 @@
  * Javascript for JQuery Dynamic UI ajax calls.
  */
 
-// URL for AJAX calls to Drools Execution Server.
+// URL for AJAX calls to Tohu Execution Server.
 var droolsURL = null;
 
 var droolsBusy = false;
@@ -43,7 +43,7 @@ function setDroolsURL(url) {
 }
 
 /**
- * Makes an AJAX request to the Drools Execution Server.
+ * Makes an AJAX request to the Tohu Execution Server.
  * 
  * @param request XML string to send to Drools.
  * @return XML string returned from Drools.
@@ -98,7 +98,7 @@ function callDrools(request) {
 }
 
 /**
- * Makes an AJAX request to the Drools Execution Server to delete the session.
+ * Makes an AJAX request to the Tohu Execution Server to delete the session.
  */
 function resetDrools() {
 	debug("resetDrools()");

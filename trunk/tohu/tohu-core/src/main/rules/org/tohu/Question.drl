@@ -22,7 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 rule "retract all prior validation errors when a new answer is given"
-salience 4 # before: "copy new answers into the corresponding questions"
+salience 4 // before: "copy new answers into the corresponding questions"
 when
 	Answer(questionId : questionId);
 	invalidAnswer : InvalidAnswer( questionId == questionId )
@@ -31,7 +31,7 @@ then
 end
 
 rule "copy new answers into the corresponding questions"
-salience 3 # before: "discard invalid multiple choice answers"
+salience 3 // before: "discard invalid multiple choice answers"
 when
 	answer : Answer(questionId : questionId);
 	question : Question(id == questionId)
@@ -79,7 +79,7 @@ then
 end
 
 rule "discard invalid multiple choice answers"
-salience 2 # before: "copy question answers to the underlying domain model"
+salience 2 // before: "copy question answers to the underlying domain model"
 when
 	question : MultipleChoiceQuestion(answered == true, answer : answer, possibleAnswers : possibleAnswers);
 then
@@ -108,7 +108,7 @@ then
 end
 
 rule "retract orphan answers"
-salience -1 # after: any rules that create questions
+salience -1 // after: any rules that create questions
 when
 	answer : Answer(questionId : questionId);
 	not(exists(Question(id == questionId)));
@@ -119,7 +119,7 @@ then
 end
 	
 rule "required questions answered"
-salience -1 # after: any rules that create questions
+salience -1 // after: any rules that create questions
 when
 	question : Question(required == true, answered == false);
 then
@@ -129,7 +129,7 @@ then
 end
 
 rule "has invalid answers"
-salience -2 # after: any rules that create invalid answers
+salience -2 // after: any rules that create invalid answers
 when
 	questionnaire : Questionnaire(invalidAnswers == false);
 	exists(InvalidAnswer());
@@ -139,7 +139,7 @@ then
 end
 
 rule "doesn't have invalid answers"
-salience -2 # after: any rules that create invalid answers
+salience -2 // after: any rules that create invalid answers
 when
 	questionnaire : Questionnaire(invalidAnswers == true);
 	not(exists(InvalidAnswer()));

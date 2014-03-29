@@ -16,5 +16,5 @@
 			</update>
 		</org.tohu.xml.ChangeCollector>
 	</result>
-	<fact-handle identifier="changes" externalForm="changesHandle" />
+	<fact-handle identifier="changes" external-form="changesHandle" />
 </execution-results> 
