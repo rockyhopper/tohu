@@ -31,6 +31,7 @@ rule "sections"
 dialect "mvel"
 then
 	Questionnaire questionnaire = new Questionnaire("myQuestionnaire");
+	questionnaire.setMarkupAllowed(true);
 	questionnaire.setLabel("EARTH PASSENGER DEPARTURE CARD");
 	questionnaire.setItems({"group1", "group2", "group3", "group4"});
 	questionnaire.setCompletionAction("extract.pdf");
