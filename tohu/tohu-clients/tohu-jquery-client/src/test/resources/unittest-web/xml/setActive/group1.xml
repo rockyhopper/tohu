@@ -18,7 +18,7 @@
           			<enableActionValidation>true</enableActionValidation>
 					<invalidAnswers>true</invalidAnswers>
 				</org.tohu.Questionnaire>
-				<fact-handle externalForm="questionnaire1Handle" />
+				<fact-handle external-form="questionnaire1Handle" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -28,7 +28,7 @@
 					<label>Group 1</label>
 					<items>item_1_1,item_1_2,item_1_3</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group1Handle" />
+				<fact-handle external-form="group1Handle" />
 			</row>
 			<row>
 				<org.tohu.Note>
@@ -37,7 +37,7 @@
 					<active>true</active>
 					<label>images/earth.jpg</label>
 				</org.tohu.Note>
-				<fact-handle externalForm="item_1_1Handle" />
+				<fact-handle external-form="item_1_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Note>
@@ -46,7 +46,7 @@
 					<active>true</active>
 					<label>Item 1.2</label>
 				</org.tohu.Note>
-				<fact-handle externalForm="item_1_2Handle" />
+				<fact-handle external-form="item_1_2Handle" />
 			</row>
 			<row>
 				<org.tohu.Question>
@@ -59,7 +59,7 @@
 					<answerType>date</answerType>
 					<dateAnswer></dateAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_1_3Handle" />
+				<fact-handle external-form="item_1_3Handle" />
 			</row>
 									<row>
 				<org.tohu.InvalidAnswer>
@@ -67,7 +67,7 @@
 					<reason>Item 1.3 Error</reason>
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item1_3Error" />
+				<fact-handle external-form="item1_3Error" />
 			</row>
 		</query-results>
 	</result>

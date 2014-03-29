@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.drools.executionserver;
+package org.tohu.server;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,8 +23,8 @@ import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 /**
- * TODO this functionality should be available in the Execution Server itself
- *
+ * Manages a session-scoped KnowledgeSession.
+ * 
  * @author Damon Horrell
  */
 public class ExecutionServerHelper {
@@ -35,14 +35,28 @@ public class ExecutionServerHelper {
 
 	private HttpSession session;
 
+	/**
+	 * Constructs an ExecutionServerHelper for an HTTP session.
+	 * 
+	 * @param session
+	 */
 	public ExecutionServerHelper(HttpSession session) {
 		this.session = session;
 	}
 
+	/**
+	 * Returns the current knowledge session.
+	 * 
+	 * @return
+	 */
 	public StatefulKnowledgeSession getKnowledgeSession() {
 		return (StatefulKnowledgeSession) session.getAttribute(KNOWLEDGE_SESSION);
 	}
 
+	/**
+	 * Removes the knowledge session from the HTTP session.
+	 * 
+	 */
 	public void removeKnowledgeSession() {
 		StatefulKnowledgeSession knowledgeSession = getKnowledgeSession();
 		if (knowledgeSession != null) {
@@ -51,14 +65,19 @@ public class ExecutionServerHelper {
 		}
 	}
 
+	/**
+	 * Creates a new knowledge session for the specified agent name.
+	 * 
+	 * @param agentName
+	 * @return
+	 */
 	public StatefulKnowledgeSession newKnowledgeSession(String agentName) {
 		removeKnowledgeSession();
 		String agentFile = "/" + agentName + ".xml";
 		String agentConfigDir = session.getServletContext().getInitParameter(AGENT_CONFIG_DIRECTORY);
 		KnowledgeAgent knowledgeAgent = KnowledgeAgentFactory.newKnowledgeAgent(agentFile);
 		if (agentConfigDir.startsWith("classpath:")) {
-			knowledgeAgent.applyChangeSet(ResourceFactory.newClassPathResource(agentConfigDir.replace("classpath:", "")
-					+ agentFile));
+			knowledgeAgent.applyChangeSet(ResourceFactory.newClassPathResource(agentConfigDir.replace("classpath:", "") + agentFile));
 		} else {
 			knowledgeAgent.applyChangeSet(ResourceFactory.newUrlResource(agentConfigDir + agentFile));
 		}

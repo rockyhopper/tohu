@@ -18,7 +18,7 @@
 						<answerType>number</answerType>
 						<possibleAnswers>null=Please specify...,0=Item 5.2.0,1=Item 5.2.1,2=Item 5.2.2</possibleAnswers>
 					</org.tohu.Question>
-					<fact-handle externalForm="item_5_2Handle"/> 
+					<fact-handle external-form="item_5_2Handle"/> 
 				</entry>
 				<entry>
 					<org.tohu.Question>
@@ -30,7 +30,7 @@
 						<required>true</required>
 						<answerType>text</answerType>
 					</org.tohu.Question>
-					<fact-handle externalForm="item_5_1Handle"/> 
+					<fact-handle external-form="item_5_1Handle"/> 
 				</entry>
 				<entry>
 					<org.tohu.Group>
@@ -40,7 +40,7 @@
 						<label>Group 5</label>
 						<items>item_5_1,item_5_2,item_5_3</items>
 					</org.tohu.Group>
-					<fact-handle externalForm="group5Handle"/> 
+					<fact-handle external-form="group5Handle"/> 
 				</entry>
 			</create>
 			<update>
@@ -77,5 +77,5 @@
 			</update>
 		</org.tohu.xml.ChangeCollector>
 	</result>
-	<fact-handle identifier="changes" externalForm="changesHandle" />
+	<fact-handle identifier="changes" external-form="changesHandle" />
 </execution-results> 

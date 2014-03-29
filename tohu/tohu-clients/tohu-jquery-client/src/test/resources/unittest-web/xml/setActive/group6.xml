@@ -15,7 +15,7 @@
 					<answerType>text</answerType>
 					<textAnswer>Item 6.1 Text</textAnswer>
 				</org.tohu.Question>
-				<fact-handle externalForm="item_6_1Handle" />
+				<fact-handle external-form="item_6_1Handle" />
 			</row>
 			<row>
 				<org.tohu.Questionnaire>
@@ -31,7 +31,7 @@
 					<invalidAnswers>true</invalidAnswers>
 					<enableActionValidation>false</enableActionValidation>						
 				</org.tohu.Questionnaire>
-				<fact-handle externalForm="questionnaire2Handle" />
+				<fact-handle external-form="questionnaire2Handle" />
 			</row>
 			<row>
 				<org.tohu.InvalidAnswer>
@@ -39,7 +39,7 @@
 					<reason>Item 6.1 Error</reason>
 					<type>ErrorType1</type>
 				</org.tohu.InvalidAnswer>
-				<fact-handle externalForm="item6_1Error" />
+				<fact-handle external-form="item6_1Error" />
 			</row>
 			<row>
 				<org.tohu.Group>
@@ -49,7 +49,7 @@
 					<label>Group 6</label>
 					<items>item_6_1,item_6_2</items>
 				</org.tohu.Group>
-				<fact-handle externalForm="group6Handle" />
+				<fact-handle external-form="group6Handle" />
 			</row>
 			<row>
 				<org.tohu.Note>
@@ -58,7 +58,7 @@
 					<active>true</active>
 					<label>Item 6.2</label>
 				</org.tohu.Note>
-				<fact-handle externalForm="item_6_2Handle" />
+				<fact-handle external-form="item_6_2Handle" />
 			</row>
 		</query-results>
 	</result>

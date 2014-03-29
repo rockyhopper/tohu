@@ -16,7 +16,7 @@
  * @author John Bebbington
  *
  *
- * Javascript for the interface between the JQuery Dynamic UI and the Drools Execution Server.
+ * Javascript for the interface between the JQuery Dynamic UI and the Tohu Execution Server.
  * 
  * Pre-processes ajax responses into 1-3 ordered lists (create, update and delete) of custom
  * javascript objects representing Facts. In the case of the create list the parent facts will
@@ -92,8 +92,8 @@ function setQuestionAnswer(questionID, answer) {
 function setActiveItem(activeItem) {
 	var request = 
 		  "<batch-execution>\n"
-		+ "		<modify factHandle='" + xmlEscape(persistentState.questionnaire.factHandle) + "'>\n"
-		+ "			<set accessor='activeItem' value='\"" + activeItem + "\"' />\n"
+		+ "		<modify fact-handle='" + xmlEscape(persistentState.questionnaire.factHandle) + "'>\n"
+		+ "			<set accessor='activeItem' value='" + activeItem + "' />\n"
 		+ "		</modify>\n"
 		+ "		<fire-all-rules />\n"
 		+ "		<query out-identifier='activeObjects' name='activeObjects' />\n"
@@ -641,7 +641,7 @@ function createFactObject(xml, isDelete) {
 		obj.completionAction = getChildText(jq, "completionAction");
 		obj.enableActionValidation = getChildBoolean(jq, "enableActionValidation");
 		obj.hasErrors = getChildBoolean(jq, "invalidAnswers");
-		obj.factHandle = $("fact-handle", xml).attr("externalForm");
+		obj.factHandle = $("fact-handle", xml).attr("external-form");
 		obj.markupAllowed = getChildBoolean(jq, "markupAllowed");
 		break;
 	case "org.tohu.Group":

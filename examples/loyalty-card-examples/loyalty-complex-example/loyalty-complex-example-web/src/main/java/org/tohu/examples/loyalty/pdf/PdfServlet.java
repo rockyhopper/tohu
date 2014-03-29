@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.tohu.server.ExecutionServerHelper;
 import org.tohu.util.KnowledgeSessionHelper;
 
 import com.lowagie.text.Document;
@@ -35,8 +36,6 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
-import drools.rex.ExecutionServerHelper;
 
 /**
  * Example of how you could extract the questions and their answers out. This calls the execution server and uses the output to

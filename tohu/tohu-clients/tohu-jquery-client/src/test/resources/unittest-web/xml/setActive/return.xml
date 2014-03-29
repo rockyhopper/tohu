@@ -13,7 +13,7 @@
 					<invalidAnswers>false</invalidAnswers>
 					<enableActionValidation>false</enableActionValidation>	
 				</org.tohu.Questionnaire>
-				<fact-handle externalForm="questionnaire3Handle" />
+				<fact-handle external-form="questionnaire3Handle" />
 			</row>
 		</query-results>
 	</result>
