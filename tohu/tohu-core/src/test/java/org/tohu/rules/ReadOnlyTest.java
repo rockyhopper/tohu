@@ -49,8 +49,8 @@ public class ReadOnlyTest {
 	public void setUp() throws Exception {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Active.drl"), ResourceType.DRL);
-		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/Queries.drl"), ResourceType.DRL);
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("org/tohu/ReadOnly.drl"), ResourceType.DRL);
+		System.out.println(knowledgeBuilder.getErrors());
 		assertFalse(knowledgeBuilder.hasErrors());
 		knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
 		knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
