@@ -1,16 +1,14 @@
 package org.tohu.listener;
 
-import org.drools.event.rule.ActivationCancelledEvent;
-import org.drools.event.rule.ActivationCreatedEvent;
-import org.drools.event.rule.AfterActivationFiredEvent;
-import org.drools.event.rule.AgendaEventListener;
-import org.drools.event.rule.AgendaGroupPoppedEvent;
-import org.drools.event.rule.AgendaGroupPushedEvent;
-import org.drools.event.rule.BeforeActivationFiredEvent;
-import org.drools.event.rule.RuleFlowGroupActivatedEvent;
-import org.drools.event.rule.RuleFlowGroupDeactivatedEvent;
-import org.drools.runtime.rule.AgendaGroup;
-import org.drools.runtime.rule.Activation;
+import org.kie.api.event.rule.AfterMatchFiredEvent;
+import org.kie.api.event.rule.AgendaEventListener;
+import org.kie.api.event.rule.AgendaGroupPoppedEvent;
+import org.kie.api.event.rule.AgendaGroupPushedEvent;
+import org.kie.api.event.rule.BeforeMatchFiredEvent;
+import org.kie.api.event.rule.MatchCancelledEvent;
+import org.kie.api.event.rule.MatchCreatedEvent;
+import org.kie.api.event.rule.RuleFlowGroupActivatedEvent;
+import org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,85 +17,67 @@ public class DebugAgendaEventListener implements AgendaEventListener {
 	private final static Logger logger = LoggerFactory.getLogger(DebugAgendaEventListener.class);
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#activationCreated(org.drools.event.rule.ActivationCreatedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#matchCreated(org.kie.api.event.rule.MatchCreatedEvent)
 	 */
-	public void activationCreated(ActivationCreatedEvent activationcreatedevent) {
-		Activation activation = activationcreatedevent.getActivation();
-		String debugStr = "==>[ActivationCreated(" + activation.getPropagationContext().getPropagationNumber() + "): rule="
-				+ activation.getRule().getName() + ";]";
-		logger.debug(debugStr);
+	public void matchCreated(MatchCreatedEvent event) {
+		logger.debug("matchCreated " + event.getMatch().getRule().getName());
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#activationCancelled(org.drools.event.rule.ActivationCancelledEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#matchCancelled(org.kie.api.event.rule.MatchCancelledEvent)
 	 */
-	public void activationCancelled(ActivationCancelledEvent activationcancelledevent) {
-		Activation activation = activationcancelledevent.getActivation();
-		String debugStr = "==>[activationCancelled(" + activation.getPropagationContext().getPropagationNumber() + "): rule="
-				+ activation.getRule().getName() + ";]";
-		logger.debug(debugStr);
+	public void matchCancelled(MatchCancelledEvent event) {
+		logger.debug("matchCancelled " + event.getMatch().getRule().getName());
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#beforeActivationFired(org.drools.event.rule.BeforeActivationFiredEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#beforeMatchFired(org.kie.api.event.rule.BeforeMatchFiredEvent)
 	 */
-	public void beforeActivationFired(BeforeActivationFiredEvent beforeactivationfiredevent) {
-		Activation activation = beforeactivationfiredevent.getActivation();
-		String debugStr = "==>[beforeActivationFired(" + activation.getPropagationContext().getPropagationNumber() + "): rule="
-				+ activation.getRule().getName() + ";]";
-		logger.debug(debugStr);
+	public void beforeMatchFired(BeforeMatchFiredEvent event) {
+		logger.debug("beforeMatchFired " + event.getMatch().getRule().getName());
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#afterActivationFired(org.drools.event.rule.AfterActivationFiredEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#afterMatchFired(org.kie.api.event.rule.AfterMatchFiredEvent)
 	 */
-	public void afterActivationFired(AfterActivationFiredEvent afteractivationfiredevent) {
-		Activation activation = afteractivationfiredevent.getActivation();
-		String debugStr = "==>[afterActivationFired(" + activation.getPropagationContext().getPropagationNumber() + "): rule="
-				+ activation.getRule().getName() + ";]";
-		logger.debug(debugStr);
+	public void afterMatchFired(AfterMatchFiredEvent event) {
+		logger.debug("afterMatchFired " + event.getMatch().getRule().getName());
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#agendaGroupPopped(org.drools.event.rule.AgendaGroupPoppedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#agendaGroupPopped(org.kie.api.event.rule.AgendaGroupPoppedEvent)
 	 */
-	public void agendaGroupPopped(AgendaGroupPoppedEvent agendagrouppoppedevent) {
-		AgendaGroup agendaGroup = agendagrouppoppedevent.getAgendaGroup();
-		String debugStr = "<==[AgendaGroupPopped(" + agendaGroup.getName() + "]";
-		logger.debug(debugStr);
+	public void agendaGroupPopped(AgendaGroupPoppedEvent event) {
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#agendaGroupPushed(org.drools.event.rule.AgendaGroupPushedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#agendaGroupPushed(org.kie.api.event.rule.AgendaGroupPushedEvent)
 	 */
-	public void agendaGroupPushed(AgendaGroupPushedEvent agendagrouppushedevent) {
-		AgendaGroup agendaGroup = agendagrouppushedevent.getAgendaGroup();
-		String debugStr = "<==[agendaGroupPushed(" + agendaGroup.getName() + "]";
-		logger.debug(debugStr);
+	public void agendaGroupPushed(AgendaGroupPushedEvent event) {
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#afterRuleFlowGroupActivated(org.drools.event.rule.RuleFlowGroupActivatedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#beforeRuleFlowGroupActivated(org.kie.api.event.rule.RuleFlowGroupActivatedEvent)
 	 */
-	public void afterRuleFlowGroupActivated(RuleFlowGroupActivatedEvent arg0) {
+	public void beforeRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#afterRuleFlowGroupDeactivated(org.drools.event.rule.RuleFlowGroupDeactivatedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#afterRuleFlowGroupActivated(org.kie.api.event.rule.RuleFlowGroupActivatedEvent)
 	 */
-	public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent arg0) {
+	public void afterRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#beforeRuleFlowGroupActivated(org.drools.event.rule.RuleFlowGroupActivatedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#beforeRuleFlowGroupDeactivated(org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent)
 	 */
-	public void beforeRuleFlowGroupActivated(RuleFlowGroupActivatedEvent arg0) {
+	public void beforeRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
 	}
 
 	/**
-	 * @see org.drools.event.rule.AgendaEventListener#beforeRuleFlowGroupDeactivated(org.drools.event.rule.RuleFlowGroupDeactivatedEvent)
+	 * @see org.kie.api.event.rule.AgendaEventListener#afterRuleFlowGroupDeactivated(org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent)
 	 */
-	public void beforeRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent arg0) {
+	public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
 	}
 
 }

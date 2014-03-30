@@ -8,5 +8,6 @@
     <resource type="DRL" source="classpath:org/tohu/Question.drl" />
     <resource type="DRL" source="classpath:org/tohu/ReadOnly.drl" />
     <resource type="DRL" source="classpath:org/tohu/examples/genealogy/Genealogy.drl" />
+    <!--<resource type="DRL" source="file:../genealogy-example-rules/src/main/rules/org/tohu/examples/genealogy/Genealogy.drl" />-->
   </add>
 </change-set>

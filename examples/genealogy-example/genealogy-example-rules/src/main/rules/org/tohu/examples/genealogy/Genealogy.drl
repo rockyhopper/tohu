@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.spi.KnowledgeHelper;
-import org.drools.runtime.ClassObjectFilter;
+import org.drools.core.spi.KnowledgeHelper;
+import org.kie.api.runtime.ClassObjectFilter;
 
 import org.tohu.Group;
 import org.tohu.Question;
@@ -58,11 +58,11 @@ end
 rule "delete clicked"
 no-loop
 when
-	delete : Question(presentationStyles contains "delete", answer == true);
-	person : Group(items contains delete.id);
+	$delete : Question(presentationStyles contains "delete", answer == true);
+	person : Group(items contains $delete.id);
 then
-	delete.setAnswer(null);
-	update(delete);
+	$delete.setAnswer(null);
+	update($delete);
 
 	retract(person);
 end

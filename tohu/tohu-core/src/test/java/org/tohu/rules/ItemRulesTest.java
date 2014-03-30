@@ -20,16 +20,16 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.ConsequenceException;
 import org.junit.Before;
 import org.junit.Test;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.rule.ConsequenceException;
+import org.kie.internal.KnowledgeBase;
+import org.kie.internal.KnowledgeBaseFactory;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tohu.Note;
@@ -41,7 +41,7 @@ import org.tohu.Note;
 public class ItemRulesTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemRulesTest.class);
-	
+
 	private KnowledgeBase knowledgeBase;
 
 	/**
@@ -71,7 +71,7 @@ public class ItemRulesTest {
 			fail();
 		} catch (ConsequenceException e) {
 			if (e.getCause() instanceof IllegalStateException) {
-				if (((IllegalStateException)e.getCause()).getMessage().equals("Duplicate item id: note")) {
+				if (((IllegalStateException) e.getCause()).getMessage().equals("Duplicate item id: note")) {
 					return;
 				}
 			}

@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.drools.command.Command;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.help.impl.XStreamXML;
+import org.drools.core.runtime.help.impl.XStreamXML;
+import org.kie.api.command.Command;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 
 import com.thoughtworks.xstream.XStream;
 

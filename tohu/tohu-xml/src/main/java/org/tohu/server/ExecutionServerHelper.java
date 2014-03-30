@@ -17,10 +17,12 @@ package org.tohu.server;
 
 import javax.servlet.http.HttpSession;
 
-import org.drools.agent.KnowledgeAgent;
-import org.drools.agent.KnowledgeAgentFactory;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.StatefulKnowledgeSession;
+import org.kie.api.io.Resource;
+import org.kie.api.io.ResourceType;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 
 /**
  * Manages a session-scoped KnowledgeSession.
@@ -75,13 +77,18 @@ public class ExecutionServerHelper {
 		removeKnowledgeSession();
 		String agentFile = "/" + agentName + ".xml";
 		String agentConfigDir = session.getServletContext().getInitParameter(AGENT_CONFIG_DIRECTORY);
-		KnowledgeAgent knowledgeAgent = KnowledgeAgentFactory.newKnowledgeAgent(agentFile);
+		Resource resource;
 		if (agentConfigDir.startsWith("classpath:")) {
-			knowledgeAgent.applyChangeSet(ResourceFactory.newClassPathResource(agentConfigDir.replace("classpath:", "") + agentFile));
+			resource = ResourceFactory.newClassPathResource(agentConfigDir.replace("classpath:", "") + agentFile);
 		} else {
-			knowledgeAgent.applyChangeSet(ResourceFactory.newUrlResource(agentConfigDir + agentFile));
+			resource = ResourceFactory.newUrlResource(agentConfigDir + agentFile);
 		}
-		StatefulKnowledgeSession knowledgeSession = knowledgeAgent.getKnowledgeBase().newStatefulKnowledgeSession();
+		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+		knowledgeBuilder.add(resource, ResourceType.CHANGE_SET);
+		if (knowledgeBuilder.hasErrors()) {
+			throw new RuntimeException("Error in rules: " + knowledgeBuilder.getErrors());
+		}
+		StatefulKnowledgeSession knowledgeSession = knowledgeBuilder.newKnowledgeBase().newStatefulKnowledgeSession();
 		session.setAttribute(KNOWLEDGE_SESSION, knowledgeSession);
 		return knowledgeSession;
 	}

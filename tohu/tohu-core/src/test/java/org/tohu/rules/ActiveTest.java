@@ -24,18 +24,18 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.FactHandle;
-import org.drools.runtime.rule.QueryResults;
-import org.drools.runtime.rule.QueryResultsRow;
 import org.junit.Before;
 import org.junit.Test;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.rule.FactHandle;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
+import org.kie.internal.KnowledgeBase;
+import org.kie.internal.KnowledgeBaseFactory;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tohu.Group;
@@ -51,7 +51,7 @@ import org.tohu.Questionnaire;
 public class ActiveTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActiveTest.class);
-	
+
 	private KnowledgeBase knowledgeBase;
 
 	/**
@@ -99,16 +99,16 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2",
-					"note3", "note4", "note5", "note6" })), itemIds);
+			assertEquals(
+					new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2", "note3",
+							"note4", "note5", "note6" })), itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("group2");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -138,17 +138,14 @@ public class ActiveTest {
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(
-					new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2", "note5" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2", "note5" })), itemIds);
 
 			group1.setItems(new String[] { "note1", "note2" });
 			knowledgeSession.update(handleGroup1, group1);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "note1", "note2" })), itemIds);
 		} finally {
 			knowledgeSession.dispose();
 		}
@@ -176,8 +173,8 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays
-					.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })),
+					itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -232,16 +229,17 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "group3",
-					"group4", "note1", "note2" })), itemIds);
+			assertEquals(
+					new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "group3", "group4", "note1",
+							"note2" })), itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays
-					.asList(new String[] { "questionnaire", "group1", "group3", "group4", "note1" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group3", "group4", "note1" })),
+					itemIds);
 
 			questionnaire.setActiveItem("group2");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -283,8 +281,8 @@ public class ActiveTest {
 			QueryResults queryResults = knowledgeSession.getQueryResults("activeObjects");
 			assertArrayEquals(new String[] { "object" }, queryResults.getIdentifiers());
 			Set<String> itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays
-					.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })), itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group1", "group2", "note1", "note2" })),
+					itemIds);
 
 			questionnaire.setActiveItem("group1");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
@@ -298,8 +296,7 @@ public class ActiveTest {
 			knowledgeSession.fireAllRules();
 			queryResults = knowledgeSession.getQueryResults("activeObjects");
 			itemIds = getItemIds(queryResults);
-			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note1", "note2" })),
-					itemIds);
+			assertEquals(new HashSet<String>(Arrays.asList(new String[] { "questionnaire", "group2", "note1", "note2" })), itemIds);
 
 			questionnaire.setActiveItem("unknown");
 			knowledgeSession.update(handleQuestionnaire, questionnaire);
