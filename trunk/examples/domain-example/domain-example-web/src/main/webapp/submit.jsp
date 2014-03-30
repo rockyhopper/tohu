@@ -1,4 +1,4 @@
-<%@page import="org.drools.runtime.StatefulKnowledgeSession,org.tohu.server.ExecutionServerHelper,org.tohu.examples.domain.Person" %>
+<%@page import="org.kie.internal.runtime.StatefulKnowledgeSession,org.tohu.server.ExecutionServerHelper,org.tohu.examples.domain.Person" %>
 <%
 	StatefulKnowledgeSession knowledgeSession = new ExecutionServerHelper(request.getSession()).newKnowledgeSession("domain");
 	Person person = new Person();

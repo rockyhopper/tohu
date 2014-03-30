@@ -18,7 +18,8 @@ package org.tohu.util;
 import java.util.Collection;
 import java.util.SortedMap;
 
-import org.drools.runtime.StatefulKnowledgeSession;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
+
 
 /**
  * @deprecated use {@link KnowledgeSessionHelper} instead.

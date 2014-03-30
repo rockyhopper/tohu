@@ -15,15 +15,15 @@
  */
 package org.tohu.xml.event;
 
-import org.drools.event.rule.WorkingMemoryEvent;
-import org.drools.runtime.KnowledgeRuntime;
-import org.drools.runtime.rule.FactHandle;
-import org.drools.runtime.rule.PropagationContext;
+import org.kie.api.event.rule.RuleRuntimeEvent;
+import org.kie.api.runtime.KieRuntime;
+import org.kie.api.runtime.rule.FactHandle;
+import org.kie.api.runtime.rule.PropagationContext;
 
 /**
  * @author Damon Horrell
  */
-public class WorkingMemoryEventMock implements WorkingMemoryEvent {
+public class WorkingMemoryEventMock implements RuleRuntimeEvent {
 
 	private String factHandle;
 
@@ -40,16 +40,16 @@ public class WorkingMemoryEventMock implements WorkingMemoryEvent {
 	}
 
 	/**
-	 * @see org.drools.event.rule.WorkingMemoryEvent#getPropagationContext()
+	 * @see org.kie.api.event.rule.WorkingMemoryEvent#getPropagationContext()
 	 */
 	public PropagationContext getPropagationContext() {
 		return null;
 	}
 
 	/**
-	 * @see org.drools.event.KnowledgeRuntimeEvent#getKnowledgeRuntime()
+	 * @see org.kie.api.event.KieRuntimeEvent#getKieRuntime()
 	 */
-	public KnowledgeRuntime getKnowledgeRuntime() {
+	public KieRuntime getKieRuntime() {
 		return null;
 	}
 

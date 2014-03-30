@@ -185,7 +185,7 @@
     </distributionManagement>
     
     <properties>
-        <drools.version>5.6.0.Final</drools.version>
+        <drools.version>6.0.1.Final</drools.version>
         <cobertura-maven-plugin.version>2.2</cobertura-maven-plugin.version>
         <cobertura.total-branch-rate>1</cobertura.total-branch-rate>
         <cobertura.total-line-rate>1</cobertura.total-line-rate>

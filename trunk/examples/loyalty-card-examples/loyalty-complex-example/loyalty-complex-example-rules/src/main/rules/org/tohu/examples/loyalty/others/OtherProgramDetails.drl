@@ -28,8 +28,8 @@ import org.tohu.Note;
 import org.tohu.Question;
 import org.tohu.Questionnaire;
 
-import org.drools.spi.KnowledgeHelper;
-import org.drools.runtime.ClassObjectFilter;
+import org.drools.core.spi.KnowledgeHelper;
+import org.kie.api.runtime.ClassObjectFilter;
 
 
 

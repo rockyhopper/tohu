@@ -15,22 +15,22 @@
  */
 package org.tohu.xml.event;
 
-import org.drools.event.rule.ObjectRetractedEvent;
+import org.kie.api.event.rule.ObjectDeletedEvent;
 
 /**
  * @author Damon Horrell
  */
-public class ObjectRetractedEventMock extends WorkingMemoryEventMock implements ObjectRetractedEvent {
+public class ObjectDeletedEventMock extends WorkingMemoryEventMock implements ObjectDeletedEvent {
 
 	private Object oldObject;
 
-	public ObjectRetractedEventMock(String factHandle, Object oldObject) {
+	public ObjectDeletedEventMock(String factHandle, Object oldObject) {
 		super(factHandle);
 		this.oldObject = oldObject;
 	}
 
 	/**
-	 * @see org.drools.event.rule.ObjectRetractedEvent#getOldObject()
+	 * @see org.kie.api.event.rule.ObjectDeletedEvent#getOldObject()
 	 */
 	public Object getOldObject() {
 		return oldObject;

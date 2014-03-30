@@ -19,9 +19,9 @@ import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.QueryResults;
-import org.drools.runtime.rule.QueryResultsRow;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.tohu.support.TohuDataItemObject;
 
 /**

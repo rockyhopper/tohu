@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.drools.runtime.StatefulKnowledgeSession;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.tohu.server.ExecutionServerHelper;
 import org.tohu.util.KnowledgeSessionHelper;
 

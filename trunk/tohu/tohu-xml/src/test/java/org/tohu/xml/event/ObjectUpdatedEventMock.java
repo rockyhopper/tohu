@@ -15,7 +15,8 @@
  */
 package org.tohu.xml.event;
 
-import org.drools.event.rule.ObjectUpdatedEvent;
+import org.kie.api.event.rule.ObjectUpdatedEvent;
+
 
 /**
  * @author Damon Horrell
@@ -33,14 +34,14 @@ public class ObjectUpdatedEventMock extends WorkingMemoryEventMock implements Ob
 	}
 
 	/**
-	 * @see org.drools.event.rule.ObjectInsertedEvent#getObject()
+	 * @see org.kie.api.event.rule.ObjectUpdatedEvent#getObject()
 	 */
 	public Object getObject() {
 		return object;
 	}
 
 	/**
-	 * @see org.drools.event.rule.ObjectUpdatedEvent#getOldObject()
+	 * @see org.kie.api.event.rule.ObjectUpdatedEvent#getOldObject()
 	 */
 	public Object getOldObject() {
 		return oldObject;

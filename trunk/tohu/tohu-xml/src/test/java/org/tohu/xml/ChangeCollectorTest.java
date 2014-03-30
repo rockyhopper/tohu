@@ -25,20 +25,18 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import org.drools.runtime.rule.FactHandle;
 import org.junit.Before;
 import org.junit.Test;
+import org.kie.api.runtime.rule.FactHandle;
 import org.tohu.Answer;
 import org.tohu.InvalidAnswer;
 import org.tohu.Item;
 import org.tohu.Question;
-import org.tohu.xml.ChangeCollector;
-import org.tohu.xml.ItemId;
+import org.tohu.xml.event.ObjectDeletedEventMock;
 import org.tohu.xml.event.ObjectInsertedEventMock;
-import org.tohu.xml.event.ObjectRetractedEventMock;
 import org.tohu.xml.event.ObjectUpdatedEventMock;
 
 /**
@@ -153,10 +151,10 @@ public class ChangeCollectorTest {
 		c = new ChangeCollector();
 		c.initialise(Arrays.asList(new Object[] { question1, question2, invalidAnswer1, dummy }));
 
-		c.objectRetracted(new ObjectRetractedEventMock("2", question2));
-		c.objectRetracted(new ObjectRetractedEventMock("dummy", dummy));
-		c.objectRetracted(new ObjectRetractedEventMock("1", question1));
-		c.objectRetracted(new ObjectRetractedEventMock("ia1", invalidAnswer1));
+		c.objectDeleted(new ObjectDeletedEventMock("2", question2));
+		c.objectDeleted(new ObjectDeletedEventMock("dummy", dummy));
+		c.objectDeleted(new ObjectDeletedEventMock("1", question1));
+		c.objectDeleted(new ObjectDeletedEventMock("ia1", invalidAnswer1));
 
 		assertNull(c.getCreate());
 		assertNull(c.getUpdate());
@@ -202,8 +200,8 @@ public class ChangeCollectorTest {
 
 		c.objectInserted(new ObjectInsertedEventMock("2", question2));
 		c.objectInserted(new ObjectInsertedEventMock("1", question1));
-		c.objectRetracted(new ObjectRetractedEventMock("3", question3));
-		c.objectRetracted(new ObjectRetractedEventMock("2", question2));
+		c.objectDeleted(new ObjectDeletedEventMock("3", question3));
+		c.objectDeleted(new ObjectDeletedEventMock("2", question2));
 
 		assertEquals(1, c.getCreate().size());
 		createIterator = getCreateSorted(c).entrySet().iterator();
@@ -227,8 +225,8 @@ public class ChangeCollectorTest {
 		question1.setPreLabel("What is answer 1a?");
 		question1.setAnswer("answer1a");
 		c.objectUpdated(new ObjectUpdatedEventMock("1", question1, question1));
-		c.objectRetracted(new ObjectRetractedEventMock("2", question2));
-		c.objectRetracted(new ObjectRetractedEventMock("3", question3));
+		c.objectDeleted(new ObjectDeletedEventMock("2", question2));
+		c.objectDeleted(new ObjectDeletedEventMock("3", question3));
 
 		assertNull(c.getCreate());
 		assertEquals(1, c.getUpdate().size());
@@ -245,7 +243,7 @@ public class ChangeCollectorTest {
 		c = new ChangeCollector();
 		c.initialise(Arrays.asList(new Object[] { question1 }));
 
-		c.objectRetracted(new ObjectRetractedEventMock("1", question1));
+		c.objectDeleted(new ObjectDeletedEventMock("1", question1));
 		question1.setPreLabel("What is answer 1a?");
 		question1.setAnswer("answer1a");
 		c.objectInserted(new ObjectInsertedEventMock("1", question1));
@@ -321,7 +319,7 @@ public class ChangeCollectorTest {
 		question4.setActive(false);
 		c.initialise(Arrays.asList(new Object[] { question4 }));
 
-		c.objectRetracted(new ObjectRetractedEventMock("4", question4));
+		c.objectDeleted(new ObjectDeletedEventMock("4", question4));
 
 		assertNull(c.getCreate());
 		assertNull(c.getUpdate());
@@ -369,7 +367,7 @@ public class ChangeCollectorTest {
 
 		question5.setAnswer("answer5New");
 		c.objectUpdated(new ObjectUpdatedEventMock("5", question5, question5));
-		c.objectRetracted(new ObjectRetractedEventMock("a", answer5New));
+		c.objectDeleted(new ObjectDeletedEventMock("a", answer5New));
 
 		assertNull(c.getCreate());
 		assertNull(c.getUpdate());
@@ -383,7 +381,7 @@ public class ChangeCollectorTest {
 
 		question5.setAnswer("answer5New");
 		c.objectUpdated(new ObjectUpdatedEventMock("5", question5, question5));
-		c.objectRetracted(new ObjectRetractedEventMock("a", answer5Old));
+		c.objectDeleted(new ObjectDeletedEventMock("a", answer5Old));
 
 		assertNull(c.getCreate());
 		assertEquals(1, c.getUpdate().size());
