@@ -232,7 +232,7 @@
 	</dependencies>
 
 	<properties>
-		<tohu-version>1.6.0-SNAPSHOT</tohu-version>
+		<tohu-version>1.6.0</tohu-version>
 		<project-to-load>.</project-to-load>
 		<rules-spreadsheet-file>${project-to-load}/src/main/resources/spreadsheet/SampleDecisionTreeOnePage.xls</rules-spreadsheet-file>
 		<rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
