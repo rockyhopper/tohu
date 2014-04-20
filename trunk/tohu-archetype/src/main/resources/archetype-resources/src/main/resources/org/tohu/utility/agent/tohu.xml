@@ -10,9 +10,9 @@
     <resource type="DRL" source="classpath:org/tohu/listener.drl" />     
     <resource type="DRL" source="classpath:org/tohu/support/SupportQueries.drl" />
     <!-- Note: loading from file: so that it picks up changes to the rules when the spreadsheet is changed.  This works with mvn jetty:run but won't work if the war file is deployed to an app server. -->
-    <resource type="DRL" source="file:src/main/resources/rules" />
 <!--
-    <resource type="DRL" source="classpath:rules" />
+    <resource type="DRL" source="file:src/main/resources/rules" />
 -->
+    <resource type="DRL" source="classpath:rules" />
   </add>
 </change-set>
