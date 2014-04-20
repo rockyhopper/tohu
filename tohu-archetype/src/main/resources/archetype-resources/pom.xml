@@ -6,7 +6,7 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<name>My App</name>
-	<version>${tohu-version}</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<build>
@@ -60,7 +60,7 @@
 									<version>${tohu-version}</version>
 									<includes>tohu-jquery-client/**/*</includes>
 									<type>jar</type>
-									<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+									<outputDirectory>${basedir}/${artifactId}/src/main/webapp</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 									<groupId>org.tohu</groupId>
