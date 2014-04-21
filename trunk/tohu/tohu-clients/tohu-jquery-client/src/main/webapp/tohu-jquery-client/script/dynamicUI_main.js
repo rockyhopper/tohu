@@ -74,7 +74,10 @@ function initializeGUI(rootID, defaultKnowledgebase) {
 	if (jQuery.url.attr("port") != null ) {
 		baseURL = baseURL + ":" + jQuery.url.attr("port");
 	}
-	baseURL = baseURL + "/" + jQuery.url.segment(0);
+	var context = jQuery.url.segment(0);
+	if (context != null) {
+		baseURL = baseURL + "/" + context;
+	}
 	
 	debug("initializeGUI() baseURL=" + baseURL);
 	
