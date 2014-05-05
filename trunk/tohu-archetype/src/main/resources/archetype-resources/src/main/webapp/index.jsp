@@ -7,6 +7,8 @@
 <script type="text/javascript" src="script/extras.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+	// the first argument is the name of the div to populate with the questionnaire
+	// the second argument is the name of the xml file in agent-config-directory that specifies which rules to load
     onQuestionnaireLoad("bodyContent", "tohu");
   });
 </script>
