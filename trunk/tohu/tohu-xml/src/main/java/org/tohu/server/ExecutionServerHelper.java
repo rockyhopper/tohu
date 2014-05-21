@@ -15,6 +15,9 @@
  */
 package org.tohu.server;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.kie.api.io.Resource;
@@ -36,6 +39,10 @@ public class ExecutionServerHelper {
 	private static final String AGENT_CONFIG_DIRECTORY = "agent-config-directory";
 
 	private HttpSession session;
+
+	{
+		ResourceType.addResourceTypeToRegistry("CHANGE_SET", "Change Set", "src/main/resources", "xcs", "xml");
+	}
 
 	/**
 	 * Constructs an ExecutionServerHelper for an HTTP session.
@@ -77,14 +84,29 @@ public class ExecutionServerHelper {
 		removeKnowledgeSession();
 		String agentFile = "/" + agentName + ".xml";
 		String agentConfigDir = session.getServletContext().getInitParameter(AGENT_CONFIG_DIRECTORY);
-		Resource resource;
-		if (agentConfigDir.startsWith("classpath:")) {
-			resource = ResourceFactory.newClassPathResource(agentConfigDir.replace("classpath:", "") + agentFile);
-		} else {
-			resource = ResourceFactory.newUrlResource(agentConfigDir + agentFile);
-		}
+		return newKnowledgeSession(Collections.singletonList(agentConfigDir + agentFile));
+	}
+
+	/**
+	 * Create a knowledge session using the specified resource files.
+	 * 
+	 * These files can be any of the types supported by Drools e.g. .drl, .pkg, etc (Change-set files can have either a .xml or .xcs
+	 * extension.)
+	 * 
+	 * @param fileNames
+	 * @return
+	 */
+	public StatefulKnowledgeSession newKnowledgeSession(List<String> fileNames) {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		knowledgeBuilder.add(resource, ResourceType.CHANGE_SET);
+		for (String fileName : fileNames) {
+			Resource resource;
+			if (fileName.startsWith("classpath:")) {
+				resource = ResourceFactory.newClassPathResource(fileName.replace("classpath:", ""));
+			} else {
+				resource = ResourceFactory.newUrlResource(fileName);
+			}
+			knowledgeBuilder.add(resource, ResourceType.determineResourceType(fileName));
+		}
 		if (knowledgeBuilder.hasErrors()) {
 			throw new RuntimeException("Error in rules: " + knowledgeBuilder.getErrors());
 		}
