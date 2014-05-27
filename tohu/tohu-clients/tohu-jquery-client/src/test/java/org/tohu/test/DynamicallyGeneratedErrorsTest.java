@@ -52,7 +52,7 @@ public class DynamicallyGeneratedErrorsTest extends IntermediateTestFramework {
                     "Questionnaire 1",
                     new String[][] { new String[] {"group1", "Group 1"}});
             // navigate forward, as there are no errors
-            mouseDownControl("questionnaire1_action_1");            
+            clickControl("questionnaire1_action_1");            
             // check we are now on page for quesionaire 2
             checkQuestionnaire(
                     "questionnaire2",
@@ -60,7 +60,7 @@ public class DynamicallyGeneratedErrorsTest extends IntermediateTestFramework {
                     "Questionnaire 2",
                     new String[][] { new String[] {"group6", "Group 6"} });
             // navigate back to previous page. The generated xml payload will include an error          
-            mouseDownControl("questionnaire2_action_0");
+            clickControl("questionnaire2_action_0");
             // check we are back to quesionaire 1
             checkQuestionnaire(
                     "questionnaire1",
@@ -68,7 +68,7 @@ public class DynamicallyGeneratedErrorsTest extends IntermediateTestFramework {
                     "Questionnaire 1",
                     new String[][] { new String[] {"group1", "Group 1"}});          
             // try to navigate forward again
-            mouseDownControl("questionnaire1_action_1");
+            clickControl("questionnaire1_action_1");
             // check an error alert was generated
             checkAlert("You must fix all errors first.");          
             // check we are still on the same questionaire

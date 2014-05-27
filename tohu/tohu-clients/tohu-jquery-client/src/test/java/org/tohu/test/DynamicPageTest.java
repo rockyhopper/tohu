@@ -133,18 +133,18 @@ public class DynamicPageTest extends IntermediateTestFramework {
             DynamicPageData.populateTestDataForDynamicPageQuestion(element, "item_2_3", false);
             element.check();
             
-            mouseDownControl("questionnaire1_action_1");
+            clickControl("questionnaire1_action_1");
             checkQuestionnaire(
                 "questionnaire2",
                 new String[] { "questionnaire2Style" },
                 "Questionnaire 2",
                 new String[][] { new String[] {"group6", "Group 6"} });
 
-            mouseDownControl("questionnaire2_action_1");
+            clickControl("questionnaire2_action_1");
             checkAlert("You must fix all errors first.");
 
             setTextAnswer("item_6_1", "Test Text");
-            mouseDownControl("questionnaire2_action_1");
+            clickControl("questionnaire2_action_1");
             checkQuestionnaire(
                 "questionnaire3",
                 null,

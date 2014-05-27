@@ -36,7 +36,7 @@ public class InitialPageWithErrorsTest extends IntermediateTestFramework {
         logger.debug("JQueryClientTest.testInitialPageWithErrors()");
         try {     
             // attempt to navigate to next page
-            mouseDownControl("questionnaire1_action_1");
+            clickControl("questionnaire1_action_1");
             // check an error alert was generated
             checkAlert("You must fix all errors first.");
             // check we are still on the same page of the app

@@ -561,7 +561,7 @@ function createControl(obj) {
 			   "</a>";			
 	}
 	var result = addToParent(obj.hierarchy, html);
-	getJQElement(obj.id).unbind().mousedown( 
+	getJQElement(obj.id).unbind().click( 
 		function() {
 			handleActionEvent(this);
 		}
