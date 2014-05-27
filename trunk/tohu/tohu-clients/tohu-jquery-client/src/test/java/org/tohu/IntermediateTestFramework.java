@@ -82,8 +82,8 @@ public class IntermediateTestFramework extends BaseTestFramework {
      * Activates the specified action.
      * @param quesionID
      */
-    protected void mouseDownControl(String actionID) {
-        selenium.mouseDown(actionID);
+    protected void clickControl(String actionID) {
+        selenium.click(actionID);
         waitWhileGUIIsBusy("clickControl: actionID=" + actionID);
     }
 
