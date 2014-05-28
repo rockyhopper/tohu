@@ -75,7 +75,8 @@ function initializeGUI(rootID, defaultKnowledgebase) {
 		baseURL = baseURL + ":" + jQuery.url.attr("port");
 	}
 	var context = jQuery.url.segment(0);
-	if (context != null) {
+	// note: if this doesn't work for your app then call setDroolsURL directly instead
+	if (context != null && context.indexOf(".jsp", context.length - 4) == -1) {
 		baseURL = baseURL + "/" + context;
 	}
 	
