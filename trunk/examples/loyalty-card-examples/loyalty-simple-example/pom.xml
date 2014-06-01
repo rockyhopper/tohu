@@ -44,11 +44,6 @@
         <artifactId>tohu-jquery-client</artifactId>
         <version>${tohu.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.tohu</groupId>
-        <artifactId>tohu-xml</artifactId>
-        <version>${tohu.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 

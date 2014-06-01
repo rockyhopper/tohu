@@ -4,14 +4,14 @@ import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.concurrent.locks.LockSupport;
 
 import org.apache.commons.httpclient.HttpConnection;
-import org.mortbay.http.HttpContext;
-import org.mortbay.http.HttpServer;
-import org.mortbay.http.SocketListener;
-import org.mortbay.http.handler.ResourceHandler;
-import org.mortbay.util.URI;
+import org.openqa.jetty.http.HttpContext;
+import org.openqa.jetty.http.HttpServer;
+import org.openqa.jetty.http.SocketListener;
+import org.openqa.jetty.http.handler.ResourceHandler;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
 import org.slf4j.Logger;

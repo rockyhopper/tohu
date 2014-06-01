@@ -36,22 +36,12 @@
     <dependencies>
       <dependency>
         <groupId>org.tohu</groupId>
-        <artifactId>tohu-core</artifactId>
-        <version>${tohu.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.tohu</groupId>
         <artifactId>tohu-domain</artifactId>
         <version>${tohu.version}</version>
       </dependency>
       <dependency>
         <groupId>org.tohu</groupId>
         <artifactId>tohu-jquery-client</artifactId>
-        <version>${tohu.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.tohu</groupId>
-        <artifactId>tohu-xml</artifactId>
         <version>${tohu.version}</version>
       </dependency>
     </dependencies>

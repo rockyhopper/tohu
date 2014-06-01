@@ -61,10 +61,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.tohu</groupId>
-			<artifactId>tohu-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.tohu</groupId>
 			<artifactId>tohu-domain</artifactId>
 		</dependency>
 	</dependencies>

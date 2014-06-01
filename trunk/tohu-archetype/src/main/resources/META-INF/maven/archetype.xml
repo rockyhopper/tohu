@@ -15,6 +15,7 @@
     <resource>src/main/webapp/script/extras.js</resource>
 	<resource>src/main/java/org/tohu/utility/pdf/PdfServlet.java</resource>
 	<resource>src/test/java/org/tohu/utility/GenerateDRLFromSpreadsheet.java</resource>
+	<resource>src/test/jetty-context.xml</resource>
   </resources>
   <!-- 
   <sources>
