@@ -1,0 +1,24 @@
+<assembly>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/webapp/tohu-jquery-client</directory>
+			<includes>
+				<include>css/**/*</include>
+				<include>images/**/*</include>
+				<include>script/**/*</include>
+			</includes>
+			<outputDirectory>META-INF/resources/tohu-jquery-client/${project.version}</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<files>
+		<file>
+			<source>src/main/webapp/tohu-jquery-client/jsps/include.jspf</source>
+			<outputDirectory>META-INF/resources/tohu-jquery-client/jsps</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+	</files>
+</assembly>

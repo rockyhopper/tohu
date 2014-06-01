@@ -15,84 +15,20 @@
 			<!-- configure Jetty -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.10</version>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.15.v20140411</version>
 				<configuration>
+					<webApp>
+						<contextPath>/${project.build.finalName}</contextPath>
+					</webApp>
+					<contextXml>\${basedir}/src/test/jetty-context.xml</contextXml>
 					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8080</port>
 							<maxIdleTime>600000</maxIdleTime>
 						</connector>
 					</connectors>
 				</configuration>
-			</plugin>
-			<!-- delete JQuery client from previous build -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src/main/webapp</directory>
-							<includes>
-								<include>tohu-jquery-client/**/*</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<!-- unpack JQuery client -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.tohu</groupId>
-									<artifactId>tohu-jquery-client</artifactId>
-									<version>${tohu-version}</version>
-									<includes>tohu-jquery-client/**/*</includes>
-									<type>jar</type>
-									<outputDirectory>${basedir}/${artifactId}/src/main/webapp</outputDirectory>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.tohu</groupId>
-									<artifactId>tohu-core</artifactId>
-									<version>${tohu-version}</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
-									<includes>**/*.drl</includes>
-									<excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.tohu</groupId>
-									<artifactId>tohu-loader</artifactId>
-									<version>${tohu-version}</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
-									<includes>**/*.drl</includes>
-									<excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.tohu</groupId>
-									<artifactId>tohu-xml</artifactId>
-									<version>${tohu-version}</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}/rules</outputDirectory>
-									<includes>**/*.drl</includes>
-									<excludes>**/*.class,*.xml,*.properties,*.MF</excludes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -216,14 +152,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.tohu</groupId>
-			<artifactId>tohu-core</artifactId>
+			<artifactId>tohu-jquery-client</artifactId>
 			<version>${tohu-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.tohu</groupId>
-			<artifactId>tohu-xml</artifactId>
-			<version>${tohu-version}</version>
-		</dependency>
+		<!--  Note: remove this dependency if the spreadsheet loader isn't used -->
 		<dependency>
 			<groupId>org.tohu</groupId>
 			<artifactId>tohu-loader</artifactId>
