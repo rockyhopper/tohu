@@ -577,6 +577,8 @@ function createControl(obj) {
  */
 function updateControl(obj) {
 	debugObject("updateControl() obj=", obj);
+	setElementClass(obj.id, getObjectClass(obj));
+	getJQElement(obj.id).text(usuallyXmlEscape(obj.label));
 }
 
 /**
