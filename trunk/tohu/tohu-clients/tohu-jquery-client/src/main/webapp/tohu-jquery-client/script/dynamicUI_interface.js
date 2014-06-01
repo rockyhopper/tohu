@@ -198,6 +198,21 @@ function preProcessServerChanges(response) {
 					temporaryActions[possibleAction.id] = possibleAction;
 				}				
 			}
+			// remove any actions that no longer exist
+			for (actionID in persistentState.actions) {
+				var existingAction = persistentState.actions[actionID];
+				var newActionFound = false;
+				for (var i = 0; i < possibleActions.length; i++) {
+					var possibleAction = possibleActions[i];
+					if (existingAction.id == possibleAction.id) {
+						newActionFound = true;
+					}
+				}
+				if (!newActionFound) {
+					// not found now so add to the deleteList 
+					retVal.deleteList.push(existingAction);
+				}
+			}
 			persistentState.actions = temporaryActions;
 		}
 	}
