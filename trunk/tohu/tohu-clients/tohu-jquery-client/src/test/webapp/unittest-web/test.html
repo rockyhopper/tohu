@@ -158,12 +158,13 @@
       setDroolsURL(baseDroolsURL + questionID + "/" + newValue + ".xml");
       break;
     case "error_type":
-        if ((newValue == "No ID") || (newValue == "Garbage") || (newValue == "HTTP Error") ||
+        if ((newValue == "No ID") || (newValue == "HTTP Error") ||
                 (newValue == "Invalid Fact Type") || (newValue == "Invalid Answer Type") ||
                 (newValue == "Duplicate") || (newValue == "No Parent")) {
           setDroolsURL(baseDroolsURL + questionID + "/" + newValue + ".xml");          
-        }
-        else {            
+        } else if (newValue == "Garbage") {
+            setDroolsURL(baseDroolsURL + questionID + "/" + newValue + ".txt");          
+        } else {            
           setDroolsURL(baseDroolsURL + "blank.xml");
         }
         break;
