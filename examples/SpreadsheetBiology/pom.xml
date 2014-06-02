@@ -109,7 +109,7 @@
 		<dependency>
 			<groupId>httpunit</groupId>
 			<artifactId>httpunit</artifactId>
-			<version>1.6.1</version>
+			<version>1.6.2</version>
 		</dependency>
 
 		<dependency>
@@ -140,7 +140,7 @@
 	</dependencies>
 
 	<properties>
-		<tohu-version>1.6.1</tohu-version>
+		<tohu-version>1.6.2-SNAPSHOT</tohu-version>
 		<project-to-load>.</project-to-load>
 		<rules-spreadsheet-file>${project-to-load}/src/main/resources/spreadsheet/BiologyDecisionTree.xls</rules-spreadsheet-file>
 		<rules-destination-dir>${project-to-load}/target/temp-rules-dir</rules-destination-dir>
