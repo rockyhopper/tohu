@@ -76,4 +76,14 @@ public class TohuExecutionServer extends HttpServlet {
 		writer.close();
 	}
 
+	/**
+	 * @see javax.servlet.http.HttpServlet#doDelete(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		ExecutionServerHelper helper = new ExecutionServerHelper(session);
+		helper.removeKnowledgeSession();
+	}
+
 }
