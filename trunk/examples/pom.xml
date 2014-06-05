@@ -37,6 +37,7 @@
       <module>loyalty-card-examples</module>
       <module>SpreadsheetBiology</module>
       <module>SpreadsheetLoyaltyGold</module>
+      <module>liferay-example</module>
   </modules>
 
 </project>
