@@ -40,7 +40,7 @@ public class ExecutionServerHelper {
 
 	private HttpSession session;
 
-	{
+	static {
 		ResourceType.addResourceTypeToRegistry("CHANGE_SET", "Change Set", "src/main/resources", "xcs", "xml");
 	}
 
