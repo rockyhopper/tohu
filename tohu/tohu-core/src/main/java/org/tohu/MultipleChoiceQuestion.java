@@ -150,7 +150,7 @@ public class MultipleChoiceQuestion extends Question {
 	}
 	
 	/**
-	 * Adds a possible answer.
+	 * Removes a possible answer.
 	 * 
 	 * This method is provided to support the dynamic alteration of possible answers.
 	 * 
@@ -201,7 +201,7 @@ public class MultipleChoiceQuestion extends Question {
 
 	
 	/**
-	 * Removes a possible answer.
+	 * Adds a possible answer.
 	 * 
 	 * This method is provided to support the dynamic alteration of possible answers.
 	 * 
